@@ -9,8 +9,7 @@
 #define LED_H_
 
 //#include "F28x_Project.h"
-#include "F2837xD_device.h"
-#include "F2837xD_gpio.h"
+#include "F28x_Project.h"
 #include <stdint.h>
 
 static inline void

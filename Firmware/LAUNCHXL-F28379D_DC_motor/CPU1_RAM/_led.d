@@ -1,7 +1,8 @@
 # FIXED
 
 _led.obj: ../_led.c
-_led.obj: ../_led.h
+_led.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F28x_Project.h
+_led.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_Cla_typedefs.h
 _led.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/headers/include/F2837xD_device.h
 _led.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/assert.h
 _led.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/_ti_config.h
@@ -42,9 +43,26 @@ _led.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/headers/includ
 _led.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/headers/include/F2837xD_xbar.h
 _led.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/headers/include/F2837xD_xint.h
 _led.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/headers/include/F2837xD_can.h
+_led.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_Examples.h
+_led.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_GlobalPrototypes.h
+_led.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_cputimervars.h
+_led.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_Cla_defines.h
+_led.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_EPwm_defines.h
+_led.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_Adc_defines.h
+_led.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_Emif_defines.h
+_led.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_Gpio_defines.h
+_led.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_I2c_defines.h
+_led.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_Ipc_defines.h
+_led.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_Pie_defines.h
+_led.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_Dma_defines.h
+_led.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_SysCtrl_defines.h
+_led.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_Upp_defines.h
+_led.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_defaultisr.h
+_led.obj: ../_led.h
 
 ../_led.c: 
-../_led.h: 
+C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F28x_Project.h: 
+C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_Cla_typedefs.h: 
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/headers/include/F2837xD_device.h: 
 C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/assert.h: 
 C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/_ti_config.h: 
@@ -85,3 +103,19 @@ C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/headers/include/F2837xD_
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/headers/include/F2837xD_xbar.h: 
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/headers/include/F2837xD_xint.h: 
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/headers/include/F2837xD_can.h: 
+C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_Examples.h: 
+C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_GlobalPrototypes.h: 
+C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_cputimervars.h: 
+C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_Cla_defines.h: 
+C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_EPwm_defines.h: 
+C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_Adc_defines.h: 
+C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_Emif_defines.h: 
+C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_Gpio_defines.h: 
+C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_I2c_defines.h: 
+C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_Ipc_defines.h: 
+C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_Pie_defines.h: 
+C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_Dma_defines.h: 
+C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_SysCtrl_defines.h: 
+C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_Upp_defines.h: 
+C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_defaultisr.h: 
+../_led.h: 

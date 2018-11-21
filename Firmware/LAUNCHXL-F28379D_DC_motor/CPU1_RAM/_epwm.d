@@ -1,7 +1,6 @@
 # FIXED
 
 _epwm.obj: ../_epwm.c
-_epwm.obj: ../_epwm.h
 _epwm.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F28x_Project.h
 _epwm.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_Cla_typedefs.h
 _epwm.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/headers/include/F2837xD_device.h
@@ -59,10 +58,10 @@ _epwm.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/includ
 _epwm.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_SysCtrl_defines.h
 _epwm.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_Upp_defines.h
 _epwm.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_defaultisr.h
+_epwm.obj: ../_epwm.h
 _epwm.obj: ../_led.h
 
 ../_epwm.c: 
-../_epwm.h: 
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F28x_Project.h: 
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_Cla_typedefs.h: 
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/headers/include/F2837xD_device.h: 
@@ -120,4 +119,5 @@ C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_D
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_SysCtrl_defines.h: 
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_Upp_defines.h: 
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_defaultisr.h: 
+../_epwm.h: 
 ../_led.h: 

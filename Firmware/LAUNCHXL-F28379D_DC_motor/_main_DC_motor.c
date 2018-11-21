@@ -53,6 +53,7 @@
 #include "device.h"
 #include "_led.h"
 #include "_epwm.h"
+#include "_dac.h"
 #include <stdint.h>
 
 //
@@ -156,6 +157,7 @@ void main(void)
     InitTZ();
     initEPWM();
     InitGpioLED();
+    InitDAC();
     InitGpioUsed();
     //
     // Start the ePWM clock
@@ -198,10 +200,13 @@ void main(void)
 //        GpioDataRegs.GPBTOGGLE.bit.GPIO34 = 1;
 //        GpioDataRegs.GPASET.bit.GPIO14 = 1;
 //        GpioDataRegs.GPASET.bit.GPIO15 = 1;
-//        GpioDataRegs.GPATOGGLE.bit.GPIO14 = 1;
-//        GpioDataRegs.GPATOGGLE.bit.GPIO15 = 1;
+        GpioDataRegs.GPATOGGLE.bit.GPIO14 = 1;
+        GpioDataRegs.GPATOGGLE.bit.GPIO15 = 1;
 //        GpioDataRegs.GPACLEAR.bit.GPIO14 = 1;
-        GpioDataRegs.GPACLEAR.bit.GPIO15 = 1;
+//        GpioDataRegs.GPACLEAR.bit.GPIO15 = 1;
+        DacaRegs.DACVALS.all = ~(DacaRegs.DACVALS.all);
+        DacbRegs.DACVALS.all = ~(DacbRegs.DACVALS.all);
+        LED_BLUE_toggle();
 
     }
 }

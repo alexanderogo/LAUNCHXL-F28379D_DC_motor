@@ -24,6 +24,7 @@ C_SRCS += \
 ../F2837xD_PieVect.c \
 ../F2837xD_Spi.c \
 ../F2837xD_SysCtrl.c \
+../_dac.c \
 ../_epwm.c \
 ../_led.c \
 ../_main_DC_motor.c 
@@ -36,6 +37,7 @@ C_DEPS += \
 ./F2837xD_PieVect.d \
 ./F2837xD_Spi.d \
 ./F2837xD_SysCtrl.d \
+./_dac.d \
 ./_epwm.d \
 ./_led.d \
 ./_main_DC_motor.d 
@@ -50,6 +52,7 @@ OBJS += \
 ./F2837xD_Spi.obj \
 ./F2837xD_SysCtrl.obj \
 ./F2837xD_usDelay.obj \
+./_dac.obj \
 ./_epwm.obj \
 ./_led.obj \
 ./_main_DC_motor.obj 
@@ -68,6 +71,7 @@ OBJS__QUOTED += \
 "F2837xD_Spi.obj" \
 "F2837xD_SysCtrl.obj" \
 "F2837xD_usDelay.obj" \
+"_dac.obj" \
 "_epwm.obj" \
 "_led.obj" \
 "_main_DC_motor.obj" 
@@ -80,6 +84,7 @@ C_DEPS__QUOTED += \
 "F2837xD_PieVect.d" \
 "F2837xD_Spi.d" \
 "F2837xD_SysCtrl.d" \
+"_dac.d" \
 "_epwm.d" \
 "_led.d" \
 "_main_DC_motor.d" 
@@ -100,6 +105,7 @@ C_SRCS__QUOTED += \
 "../F2837xD_PieVect.c" \
 "../F2837xD_Spi.c" \
 "../F2837xD_SysCtrl.c" \
+"../_dac.c" \
 "../_epwm.c" \
 "../_led.c" \
 "../_main_DC_motor.c" 

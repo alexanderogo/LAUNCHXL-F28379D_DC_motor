@@ -5,27 +5,25 @@
  *      Author: Alexander
  */
 
-#include "_epwm.h"
-#include "_led.h"
 #include "F28x_Project.h"
 #include <stdint.h>
+#include "_epwm.h"
+#include "_led.h"
 
 //
 // Globals
 //
 
-Uint32  EPwm1TZIntCount = 0;
-Uint32  EPwm2TZIntCount = 0;
-
 __interrupt void epwm1_tzint_isr(void)
 {
+    static uint32_t EPwm1TZIntCount = 0;
     EPwm1TZIntCount++;
     //    GpioDataRegs.GPBCLEAR.bit.GPIO34 = 1;
     LED_RED_on();
     GpioDataRegs.GPASET.bit.GPIO14 = 1;
     GpioDataRegs.GPASET.bit.GPIO15 = 1;
     DELAY_US(1e+3);
-    if (EPwm1TZIntCount < 1e+3) {
+    if (EPwm1TZIntCount < 1e+5) {
         LED_RED_off();
     }
     else {
