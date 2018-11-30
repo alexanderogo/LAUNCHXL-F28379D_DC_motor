@@ -69,6 +69,11 @@ void InitTZ(void)
     InitGpioTZ();
 
     EALLOW;
+    InputXbarRegs.INPUT1SELECT = 6;
+    InputXbarRegs.INPUT2SELECT = 7;
+    EDIS;
+
+    EALLOW;
 
     // initialization Trip-Zone (TZ) Submodule
     //
@@ -98,10 +103,10 @@ void InitTZ(void)
 
     EDIS;
 
-    EALLOW;
-    InputXbarRegs.INPUT1SELECT = 6;
-    InputXbarRegs.INPUT2SELECT = 7;
-    EDIS;
+//    EALLOW;
+//    InputXbarRegs.INPUT1SELECT = 6;
+//    InputXbarRegs.INPUT2SELECT = 7;
+//    EDIS;
 }
 
 void InitGpioEPWM1(void)
@@ -387,6 +392,7 @@ void initEPWM(void)
     initEPWMxA(&EPwm1Regs);
     initEPWMxB(&EPwm1Regs);
     initEPWMxSyncOut(&EPwm1Regs);
+    initEPWMxASyncSOC(&EPwm1Regs);
 //    initEPWMxInt(&EPwm1Regs);
 //    initEPWMxASyncSOC(&EPwm1Regs);
 //    initEPWMxBSyncSOC(&EPwm1Regs);

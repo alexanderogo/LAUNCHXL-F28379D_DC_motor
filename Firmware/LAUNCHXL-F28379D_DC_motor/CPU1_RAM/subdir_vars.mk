@@ -18,6 +18,7 @@ ASM_SRCS += \
 
 C_SRCS += \
 ../F2837xD_DefaultISR.c \
+../F2837xD_Dma.c \
 ../F2837xD_GlobalVariableDefs.c \
 ../F2837xD_Gpio.c \
 ../F2837xD_PieCtrl.c \
@@ -31,6 +32,7 @@ C_SRCS += \
 
 C_DEPS += \
 ./F2837xD_DefaultISR.d \
+./F2837xD_Dma.d \
 ./F2837xD_GlobalVariableDefs.d \
 ./F2837xD_Gpio.d \
 ./F2837xD_PieCtrl.d \
@@ -45,6 +47,7 @@ C_DEPS += \
 OBJS += \
 ./F2837xD_CodeStartBranch.obj \
 ./F2837xD_DefaultISR.obj \
+./F2837xD_Dma.obj \
 ./F2837xD_GlobalVariableDefs.obj \
 ./F2837xD_Gpio.obj \
 ./F2837xD_PieCtrl.obj \
@@ -64,6 +67,7 @@ ASM_DEPS += \
 OBJS__QUOTED += \
 "F2837xD_CodeStartBranch.obj" \
 "F2837xD_DefaultISR.obj" \
+"F2837xD_Dma.obj" \
 "F2837xD_GlobalVariableDefs.obj" \
 "F2837xD_Gpio.obj" \
 "F2837xD_PieCtrl.obj" \
@@ -78,6 +82,7 @@ OBJS__QUOTED += \
 
 C_DEPS__QUOTED += \
 "F2837xD_DefaultISR.d" \
+"F2837xD_Dma.d" \
 "F2837xD_GlobalVariableDefs.d" \
 "F2837xD_Gpio.d" \
 "F2837xD_PieCtrl.d" \
@@ -99,6 +104,7 @@ ASM_SRCS__QUOTED += \
 
 C_SRCS__QUOTED += \
 "../F2837xD_DefaultISR.c" \
+"../F2837xD_Dma.c" \
 "../F2837xD_GlobalVariableDefs.c" \
 "../F2837xD_Gpio.c" \
 "../F2837xD_PieCtrl.c" \
