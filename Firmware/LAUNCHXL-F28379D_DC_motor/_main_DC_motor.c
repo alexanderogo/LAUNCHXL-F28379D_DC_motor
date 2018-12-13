@@ -105,6 +105,7 @@ int64_t i = 0;
 float freq_cpu_res = 0;
 uint16_t gpio8 = 1;
 uint16_t gpio9 = 1;
+uint32_t cntdma = 0;
 
 volatile float pwm1 = 0.1;
 volatile float pwm2 = 0.2;
@@ -129,6 +130,7 @@ void main(void)
     EALLOW;
     PieVectTable.EPWM1_TZ_INT = &epwm1_tzint_isr;
 //    PieVectTable.EPWM1_TZ_INT = &EPWM1_TZ_ISR;
+    PieVectTable.EPWM3_INT = &epwm3_int_isr;
     PieVectTable.DMA_CH1_INT= &dmach1_isr;
     PieVectTable.DMA_CH2_INT= &dmach2_isr;
     EDIS;
@@ -164,12 +166,13 @@ void main(void)
     //
     // Enable CPU INT which is connected to chosen INT:
     //
-    IER |= (M_INT2 | M_INT7);
+    IER |= (M_INT2 | M_INT3 | M_INT7);
     //
     // Enable chosen interrupts
     //
     PieCtrlRegs.PIEIER2.bit.INTx1 = 1;  // 2.1 - ePWM1 Trip Zone Interrupt
     PieCtrlRegs.PIEIER2.bit.INTx2 = 1;  // 2.2 - ePWM2 Trip Zone Interrupt
+    PieCtrlRegs.PIEIER3.bit.INTx3 = 1;  // 3.3 - ePWM3 Interrupt
     PieCtrlRegs.PIEIER7.bit.INTx1 = 1;   // DMA1
     //
     // Enable Global Interrupt (INTM) and realtime interrupt (DBGM)
@@ -193,6 +196,12 @@ void main(void)
         fEPWMx2Ph2PinOutInv(&EPwm1Regs, pwm1);
         fEPWMx2Ph2PinOutInv(&EPwm2Regs, pwm2);
         fEPWMx2Ph2PinOutInv(&EPwm3Regs, pwm3);
+        DacaVal = (DacaVal + 1)%4096;
+        DacbVal = (DacbVal + 1)%4096;
+        DacaRegs.DACVALS.all = DacaVal;
+        DacbRegs.DACVALS.all = DacbVal;
+        LED_BLUE_toggle();
+
 //        GpioDataRegs.GPATOGGLE.bit.GPIO31 = 1;
 //        GpioDataRegs.GPBTOGGLE.bit.GPIO34 = 1;
 //        GpioDataRegs.GPASET.bit.GPIO14 = 1;
@@ -201,10 +210,6 @@ void main(void)
 //        GpioDataRegs.GPATOGGLE.bit.GPIO15 = 1;
 //        GpioDataRegs.GPACLEAR.bit.GPIO14 = 1;
 //        GpioDataRegs.GPACLEAR.bit.GPIO15 = 1;
-        DacaRegs.DACVALS.all = DacaVal;
-        DacbRegs.DACVALS.all = DacbVal;
-        LED_BLUE_toggle();
-
     }
 }
 
@@ -241,6 +246,7 @@ __interrupt void dmach2_isr(void)
 {
     static uint32_t dmach2_int_count = 0;
     dmach2_int_count++;
+    cntdma++;
     //
     // Acknowledge this interrupt to receive more interrupts from group 7
     //

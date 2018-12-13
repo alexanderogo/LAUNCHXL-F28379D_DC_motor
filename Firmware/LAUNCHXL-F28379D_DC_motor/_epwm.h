@@ -14,6 +14,7 @@
 #define EPWM_TBPRD                  500U         // PWM period 50 sempl div 4 and 25
 
 __interrupt void epwm1_tzint_isr(void);
+__interrupt void epwm3_int_isr(void);
 
 void InitGpioTZ(void);
 void InitTZ(void);

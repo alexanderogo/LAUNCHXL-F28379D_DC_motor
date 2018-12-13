@@ -14,6 +14,22 @@
 // Globals
 //
 
+uint32_t cntpwm = 0;
+
+__interrupt void epwm3_int_isr(void)
+{
+    static uint32_t EPwm3IntCount = 0;
+    EPwm3IntCount++;
+    cntpwm++;
+//    EALLOW;
+//    SysCtrlRegs.WDKEY = 0xAA;                   // service WD #2
+//    EDIS;
+//    asm ("      ESTOP0");
+//    for(;;);
+    EPwm3Regs.ETCLR.bit.INT = 0x1;
+    PieCtrlRegs.PIEACK.all = PIEACK_GROUP3;
+}
+
 __interrupt void epwm1_tzint_isr(void)
 {
     static uint32_t EPwm1TZIntCount = 0;
@@ -410,7 +426,7 @@ void initEPWM(void)
 //    initEPWMxAB(&EPwm3Regs);
     initEPWMxA(&EPwm3Regs);
     initEPWMxB(&EPwm3Regs);
-//    initEPWMxInt(&EPwm3Regs);
+    initEPWMxInt(&EPwm3Regs);
     initEPWMxSyncIn(&EPwm3Regs, 0);
 //    initEPWMxASyncSOC(&EPwm3Regs);
 //    initEPWMxBSyncSOC(&EPwm3Regs);
