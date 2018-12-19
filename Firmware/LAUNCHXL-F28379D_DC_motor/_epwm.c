@@ -9,6 +9,14 @@
 #include <stdint.h>
 #include "_epwm.h"
 #include "_led.h"
+#include "_globals.h"
+
+extern volatile uint16_t *current1;
+extern volatile uint16_t *current2;
+extern volatile float current1f;
+extern volatile float current2f;
+
+
 
 //
 // Globals
@@ -20,6 +28,41 @@ __interrupt void epwm3_int_isr(void)
 {
     static uint32_t EPwm3IntCount = 0;
     EPwm3IntCount++;
+    int16_t d_count = (EPwm3IntCount-1)%2;
+    if (d_count == 0) {
+        EALLOW;
+        DmaRegs.CH2.CONTROL.bit.RUN = 1;
+        EDIS;
+    }
+    int16_t i = 0;
+    uint32_t acc = 0;
+    uint16_t *it = current1 + 25*((d_count+2-1)%2);
+//    const int16_t offset = 25*((d_count+2-1)%2);
+    #pragma MUST_ITERATE(25, 25)
+    for (i = 0; i < 25; i++) {
+//        acc += current1[i + offset];
+        acc += *it++;
+//        acc += it[i];
+    }
+//    DELAY_US(5);
+    int16_t data_count = 0;
+    int32_t diff_addr = 0;
+    diff_addr = DmaRegs.CH2.DST_ADDR_ACTIVE - DmaRegs.CH2.DST_BEG_ADDR_SHADOW;
+    data_count = diff_addr/25;
+//    int16_t i = 0;
+//    uint32_t acc = 0;
+//    #pragma MUST_ITERATE(25, 25)
+//    for (i = 0; i < 25; i++) {
+//        acc += current1[i + 25*((data_count + 1)%2)];
+//    }
+    static int16_t limit = 0;
+    current1f = (float)acc/25.0f;
+    if ((current1f < 1021) || (current1f > 1027)) {
+        limit++;
+        if (limit > 100) {
+            asm ("      ESTOP0");
+        }
+    }
     cntpwm++;
 //    EALLOW;
 //    SysCtrlRegs.WDKEY = 0xAA;                   // service WD #2
@@ -321,19 +364,19 @@ void initEPWM1(void)
 //    EPwm3Regs.ETSEL.bit.INTEN = 0x1;
 }
 
-void initEPWMxMODE(volatile struct EPWM_REGS *EPwmxRegs)
+void initEPWMxMODE(volatile struct EPWM_REGS *EPwmxRegs, uint16_t epwm_period)
 {
     // initialization EPWM
     EPwmxRegs->TBCTL.bit.CLKDIV = 0x0;          // CLKDIV = 1 (2 for 1kHz)
     EPwmxRegs->TBCTL.bit.HSPCLKDIV = 0x1;        // HSPCLKDIV = 1 (5 for 1kHz)
     EPwmxRegs->TBCTL.bit.CTRMODE = 0x2;          // Up-down count mode
-    EPwmxRegs->TBPRD = EPWM_TBPRD;               // f = 40 kHz - PWM signal for Up-down count mode (f = 20 kHz - PWM signal for Up-count and Down-count modes)
+    EPwmxRegs->TBPRD = epwm_period;               // f = 40 kHz - PWM signal for Up-down count mode (f = 20 kHz - PWM signal for Up-count and Down-count modes)
 }
 
 void initEPWMxAB(volatile struct EPWM_REGS *EPwmxRegs)
 {
     // initialization EPWM
-    EPwmxRegs->CMPA.bit.CMPA = EPWM_TBPRD*2/3;   // Compare level
+    EPwmxRegs->CMPA.bit.CMPA = 0;   // Compare level
     EPwmxRegs->AQCTLA.bit.CAU = 0x1;             // Action When TBCTR = CMPA on Up Count - Clear: force EPWMxA output low
     EPwmxRegs->AQCTLA.bit.CAD = 0x2;             // Action When TBCTR = CMPA on Down Count - Set: force EPWMxA output high
     EPwmxRegs->AQCTLB.bit.CAU = 0x2;             // Action When TBCTR = CMPA on Up Count - Set: force EPWMxB output high
@@ -348,7 +391,7 @@ void initEPWMxAB(volatile struct EPWM_REGS *EPwmxRegs)
 void initEPWMxA(volatile struct EPWM_REGS *EPwmxRegs)
 {
     // initialization EPWM
-    EPwmxRegs->CMPA.bit.CMPA = EPWM_TBPRD*2/3;   // Compare level
+    EPwmxRegs->CMPA.bit.CMPA = 0;   // Compare level
     EPwmxRegs->AQCTLA.bit.CAU = 0x1;             // Action When TBCTR = CMPA on Up Count - Clear: force EPWMxA output low
     EPwmxRegs->AQCTLA.bit.CAD = 0x2;             // Action When TBCTR = CMPA on Down Count - Set: force EPWMxA output high
 }
@@ -356,7 +399,7 @@ void initEPWMxA(volatile struct EPWM_REGS *EPwmxRegs)
 void initEPWMxB(volatile struct EPWM_REGS *EPwmxRegs)
 {
     // initialization EPWM
-    EPwmxRegs->CMPB.bit.CMPB = EPWM_TBPRD*2/3;   // Compare level
+    EPwmxRegs->CMPB.bit.CMPB = 0;   // Compare level
     EPwmxRegs->AQCTLB.bit.CBU = 0x1;             // Action When TBCTR = CMPA on Up Count - Set: force EPWMxB output high
     EPwmxRegs->AQCTLB.bit.CBD = 0x2;             // Action When TBCTR = CMPA on Down Count - Clear: force EPWMxB output low
 }
@@ -403,17 +446,18 @@ void initEPWM(void)
     InitGpioEPWM1();
     InitGpioEPWM2();
     InitGpioEPWM3();
-    initEPWMxMODE(&EPwm1Regs);
+    InitGpioEPWM6();
+    initEPWMxMODE(&EPwm1Regs, EPWM_TBPRD);
 //    initEPWMxAB(&EPwm1Regs);
     initEPWMxA(&EPwm1Regs);
     initEPWMxB(&EPwm1Regs);
     initEPWMxSyncOut(&EPwm1Regs);
-    initEPWMxASyncSOC(&EPwm1Regs);
+//    initEPWMxASyncSOC(&EPwm1Regs);
 //    initEPWMxInt(&EPwm1Regs);
 //    initEPWMxASyncSOC(&EPwm1Regs);
 //    initEPWMxBSyncSOC(&EPwm1Regs);
 
-    initEPWMxMODE(&EPwm2Regs);
+    initEPWMxMODE(&EPwm2Regs, EPWM_TBPRD);
 //    initEPWMxAB(&EPwm2Regs);
     initEPWMxA(&EPwm2Regs);
     initEPWMxB(&EPwm2Regs);
@@ -422,14 +466,23 @@ void initEPWM(void)
 //    initEPWMxASyncSOC(&EPwm2Regs);
 //    initEPWMxBSyncSOC(&EPwm2Regs);
 
-    initEPWMxMODE(&EPwm3Regs);
+    initEPWMxMODE(&EPwm3Regs, EPWM_TBPRD);
 //    initEPWMxAB(&EPwm3Regs);
     initEPWMxA(&EPwm3Regs);
     initEPWMxB(&EPwm3Regs);
     initEPWMxInt(&EPwm3Regs);
-    initEPWMxSyncIn(&EPwm3Regs, 0);
+    initEPWMxSyncIn(&EPwm3Regs, 40);
 //    initEPWMxASyncSOC(&EPwm3Regs);
 //    initEPWMxBSyncSOC(&EPwm3Regs);
+
+    initEPWMxMODE(&EPwm6Regs, EPWM_TBPRD/25);
+//    initEPWMxAB(&EPwm6Regs);
+    initEPWMxA(&EPwm6Regs);
+    initEPWMxB(&EPwm6Regs);
+    initEPWMxInt(&EPwm6Regs);
+    initEPWMxSyncIn(&EPwm6Regs, 0);
+    initEPWMxASyncSOC(&EPwm6Regs);
+//    initEPWMxBSyncSOC(&EPwm6Regs);
 
 //    EPWMxA1Ph1PinOut(&EPwm1Regs, 100);
 //    EPWMxB1Ph1PinOut(&EPwm1Regs, 200);

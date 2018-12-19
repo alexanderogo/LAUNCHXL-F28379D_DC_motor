@@ -28,7 +28,7 @@ void InitGpioEPWM4(void);
 void InitGpioEPWM5(void);
 void InitGpioEPWM6(void);
 void InitGpioEPWM8(void);
-void initEPWMxMODE(volatile struct EPWM_REGS *EPwmxRegs);
+void initEPWMxMODE(volatile struct EPWM_REGS *EPwmxRegs, uint16_t epwm_period);
 void initEPWMxAB(volatile struct EPWM_REGS *EPwmxRegs);
 void initEPWMxA(volatile struct EPWM_REGS *EPwmxRegs);
 void initEPWMxB(volatile struct EPWM_REGS *EPwmxRegs);
@@ -153,12 +153,20 @@ inline void fEPWMx2Ph2PinOutInv(volatile struct EPWM_REGS *EPwmxRegs, float out)
 //    out = (out <= 1.0f) ? out : 1.0f;
 //    out = (out >= - 1.0f) ? out : - 1.0f;
     __fsat(out, 1.0f, -1.0f);
+//    if (out >= 0) {
+//        EPwmxRegs->CMPA.bit.CMPA = EPWM_TBPRD;
+//        EPwmxRegs->CMPB.bit.CMPB = (1.0f - out)*EPWM_TBPRD;
+//    } else {
+//        EPwmxRegs->CMPB.bit.CMPB = EPWM_TBPRD;
+//        EPwmxRegs->CMPA.bit.CMPA = (1.0f + out)*EPWM_TBPRD;
+//    }
+    uint16_t epwm_tbprd = EPwmxRegs->TBPRD;
     if (out >= 0) {
-        EPwmxRegs->CMPA.bit.CMPA = EPWM_TBPRD;
-        EPwmxRegs->CMPB.bit.CMPB = (1.0f - out)*EPWM_TBPRD;
+        EPwmxRegs->CMPA.bit.CMPA = epwm_tbprd;
+        EPwmxRegs->CMPB.bit.CMPB = (1.0f - out)*epwm_tbprd;
     } else {
-        EPwmxRegs->CMPB.bit.CMPB = EPWM_TBPRD;
-        EPwmxRegs->CMPA.bit.CMPA = (1.0f + out)*EPWM_TBPRD;
+        EPwmxRegs->CMPB.bit.CMPB = epwm_tbprd;
+        EPwmxRegs->CMPA.bit.CMPA = (1.0f + out)*epwm_tbprd;
     }
 }
 

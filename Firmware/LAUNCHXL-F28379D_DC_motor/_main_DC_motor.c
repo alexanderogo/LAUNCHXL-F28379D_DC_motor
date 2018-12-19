@@ -48,6 +48,7 @@
 //
 // Included Files
 //
+
 #include "F28x_Project.h"
 #include "driverlib.h"
 #include "device.h"
@@ -55,8 +56,17 @@
 #include "_epwm.h"
 #include "_dac.h"
 #include <stdint.h>
+#include "_globals.h"
 
-#define SIZE_CURR_ARR       0x19U   //0x19U == 25U
+extern volatile uint16_t DMA_Buf[4*SIZE_CURR_ARR];
+extern volatile uint16_t *currents;
+extern volatile uint16_t *current1;
+extern volatile uint16_t *current2;
+
+extern volatile uint16_t *DMADest;
+extern volatile uint16_t *DMASource;
+
+//#define SIZE_CURR_ARR       0x19U   //0x19U == 25U
 
 //
 // Main
@@ -64,12 +74,12 @@
 
 //#define EPWM_TBPRD                  500U         // PWM period 50 sempl div 4 and 25
 
-#pragma DATA_SECTION(DMA_Buf, "ramgs0");    // map the TX data to memory
-volatile Uint16 DMA_Buf[4*SIZE_CURR_ARR];
-volatile Uint16 *currents = DMA_Buf;
-
-volatile Uint16 *DMADest;
-volatile Uint16 *DMASource;
+//#pragma DATA_SECTION(DMA_Buf, "ramgs0");    // map the TX data to memory
+//volatile Uint16 DMA_Buf[4*SIZE_CURR_ARR];
+//volatile Uint16 *currents = DMA_Buf;
+//
+//volatile Uint16 *DMADest;
+//volatile Uint16 *DMASource;
 
 // t_asc = 67ns -> ACQPS+1 > 13.4 -> ACQPS >= 13
 // t_lat = 43 (pre = 6) -> ACQPS = 36 and 4000/(36+1+43) = 50 sample per pwm cycle (50kHz)
@@ -189,17 +199,18 @@ void main(void)
     else {
         freq_cpu_res = 10*(ClkCfgRegs.SYSPLLMULT.bit.IMULT + 0.25*ClkCfgRegs.SYSPLLMULT.bit.FMULT) / (2*ClkCfgRegs.SYSCLKDIVSEL.bit.PLLSYSCLKDIV);
     }
-
+    DacaRegs.DACVALS.all = 1024;
+    DacbRegs.DACVALS.all = 2048;
     for (;;) {
         i++;
         DELAY_US(1e+3);
         fEPWMx2Ph2PinOutInv(&EPwm1Regs, pwm1);
         fEPWMx2Ph2PinOutInv(&EPwm2Regs, pwm2);
         fEPWMx2Ph2PinOutInv(&EPwm3Regs, pwm3);
-        DacaVal = (DacaVal + 1)%4096;
-        DacbVal = (DacbVal + 1)%4096;
-        DacaRegs.DACVALS.all = DacaVal;
-        DacbRegs.DACVALS.all = DacbVal;
+//        DacaVal = (DacaVal + 1)%4096;
+//        DacbVal = (DacbVal + 1)%4096;
+//        DacaRegs.DACVALS.all = DacaVal;
+//        DacbRegs.DACVALS.all = DacbVal;
         LED_BLUE_toggle();
 
 //        GpioDataRegs.GPATOGGLE.bit.GPIO31 = 1;
@@ -275,12 +286,13 @@ void InitADC(volatile struct ADC_REGS *AdcxRegs, uint16_t channel1, uint16_t cha
 
     AdcxRegs->ADCSOC0CTL.bit.CHSEL = channel1;  //SOC0 will convert pin A0
     AdcxRegs->ADCSOC0CTL.bit.ACQPS = 36;//(Uint16)(PWM_PERIOD / SIZE_ARR_CURR); //sample window is 100 SYSCLK cycles
-    AdcxRegs->ADCSOC0CTL.bit.TRIGSEL = 5; //5; //trigger on ePWM1 SOCA/C
+    AdcxRegs->ADCSOC0CTL.bit.TRIGSEL = 15; //5; //trigger on ePWM1 SOCA/C
 
     AdcxRegs->ADCSOC1CTL.bit.CHSEL = channel2;  //SOC0 will convert pin A0
     AdcxRegs->ADCSOC1CTL.bit.ACQPS = 36;//(Uint16)(PWM_PERIOD / SIZE_ARR_CURR); //sample window is 100 SYSCLK cycles
-    AdcxRegs->ADCSOC1CTL.bit.TRIGSEL = 5; //5; //trigger on ePWM1 SOCA/C
-    //AdcxRegs->ADCINTSOCSEL1.bit.SOC2 = 2;
+    AdcxRegs->ADCSOC1CTL.bit.TRIGSEL = 15; //5; //trigger on ePWM1 SOCA/C
+//    AdcxRegs->ADCINTSOCSEL1.bit.SOC0 = 1;
+//    AdcxRegs->ADCINTSOCSEL1.bit.SOC1 = 1;
 
     AdcxRegs->ADCINTSEL1N2.bit.INT1SEL = 1; //end of SOC0 will set INT1 flag
     AdcxRegs->ADCINTSEL1N2.bit.INT1CONT = 1; //end of SOC0 will set INT1 flag
@@ -335,13 +347,58 @@ void InitDMAforADCb(volatile struct ADC_RESULT_REGS *AdcxResultRegs)
 // Configure DMA Channel
     DMADest   = &currents[0];              //Point DMA destination to the beginning of the array
     DMASource = &AdcbResultRegs.ADCRESULT0;    //Point DMA source to ADC result register base
+//    DMACH2AddrConfig(DMADest,DMASource);
+//    DMACH2BurstConfig(1,1,SIZE_CURR_ARR);
+//    DMACH2TransferConfig((SIZE_CURR_ARR)-1,0,0);
+//    DMACH2WrapConfig(0,0,0,1);
+//    DMACH2ModeConfig(DMA_ADCBINT1,PERINT_ENABLE,ONESHOT_DISABLE,CONT_ENABLE,SYNC_DISABLE,SYNC_SRC,
+//                     OVRFLOW_DISABLE,SIXTEEN_BIT,CHINT_END,CHINT_ENABLE);
+//    StartDMACH2();
+    DMADest   = &currents[0];              //Point DMA destination to the beginning of the array
+    DMASource = &AdcbResultRegs.ADCRESULT0;    //Point DMA source to ADC result register base
     DMACH2AddrConfig(DMADest,DMASource);
-    DMACH2BurstConfig(1,1,SIZE_CURR_ARR);
-    DMACH2TransferConfig((SIZE_CURR_ARR)-1,0,0);
-    DMACH2WrapConfig(0,0,0,1);
-    DMACH2ModeConfig(DMA_ADCBINT1,PERINT_ENABLE,ONESHOT_DISABLE,CONT_ENABLE,SYNC_DISABLE,SYNC_SRC,
-                     OVRFLOW_DISABLE,SIXTEEN_BIT,CHINT_END,CHINT_ENABLE);
-    StartDMACH2();
+    EALLOW;
+    // Set up SOURCE address:
+    DmaRegs.CH2.SRC_BEG_ADDR_SHADOW = (Uint32)DMASource;   // Point to beginning of source buffer.
+    DmaRegs.CH2.SRC_ADDR_SHADOW =     (Uint32)DMASource;
+    // Set up DESTINATION address:
+    DmaRegs.CH2.DST_BEG_ADDR_SHADOW = (Uint32)DMADest;  // Point to beginning of destination buffer.
+    DmaRegs.CH2.DST_ADDR_SHADOW =     (Uint32)DMADest;
+    // Set up BURST registers:
+    DmaRegs.CH2.BURST_SIZE.all = 1;     // Number of words(X-1) x-ferred in a burst.
+    DmaRegs.CH2.SRC_BURST_STEP = 1;  // Increment source addr between each word x-ferred.
+    DmaRegs.CH2.DST_BURST_STEP = 2*SIZE_CURR_ARR;  // Increment dest addr between each word x-ferred.
+    // Set up TRANSFER registers:
+    DmaRegs.CH2.TRANSFER_SIZE = (2*SIZE_CURR_ARR)-1;        // Number of bursts per transfer, DMA interrupt will occur after completed transfer.
+    DmaRegs.CH2.SRC_TRANSFER_STEP = 0; // TRANSFER_STEP is ignored when WRAP occurs.
+    DmaRegs.CH2.DST_TRANSFER_STEP = 0; // TRANSFER_STEP is ignored when WRAP occurs.
+    // Set up WRAP registers:
+    DmaRegs.CH2.SRC_WRAP_SIZE = 0; // Wrap source address after N bursts
+    DmaRegs.CH2.SRC_WRAP_STEP = 0; // Step for source wrap
+    DmaRegs.CH2.DST_WRAP_SIZE = 0; // Wrap destination address after N bursts.
+    DmaRegs.CH2.DST_WRAP_STEP = 1; // Step for destination wrap
+    // Set up MODE Register:
+    DmaClaSrcSelRegs.DMACHSRCSEL1.bit.CH2 = DMA_ADCBINT1;   // persel - Source select
+    DmaRegs.CH2.MODE.bit.PERINTSEL = 2;                     // PERINTSEL - Should be hard coded to channel, above now selects source
+    DmaRegs.CH2.MODE.bit.PERINTE = PERINT_ENABLE;           // PERINTE - Peripheral interrupt enable
+    DmaRegs.CH2.MODE.bit.ONESHOT = ONESHOT_DISABLE;         // ONESHOT - Oneshot enable
+//    DmaRegs.CH2.MODE.bit.CONTINUOUS = CONT_ENABLE;          // CONTINUOUS - Continuous enable
+    DmaRegs.CH2.MODE.bit.CONTINUOUS = CONT_DISABLE;          // CONTINUOUS - Continuous enable
+    DmaRegs.CH2.MODE.bit.OVRINTE = OVRFLOW_DISABLE;         // OVRINTE - Enable/disable the overflow interrupt
+    DmaRegs.CH2.MODE.bit.DATASIZE = SIXTEEN_BIT;            // DATASIZE - 16-bit/32-bit data size transfers
+    DmaRegs.CH2.MODE.bit.CHINTMODE = CHINT_END;             // CHINTMODE - Generate interrupt to CPU at beginning/end of transfer
+    DmaRegs.CH2.MODE.bit.CHINTE = CHINT_ENABLE;             // CHINTE - Channel Interrupt to  CPU enable
+    // Clear any spurious flags: Interrupt flags and sync error flags
+    DmaRegs.CH2.CONTROL.bit.PERINTCLR = 1;
+    DmaRegs.CH2.CONTROL.bit.ERRCLR = 1;
+    // Initialize PIE vector for CPU interrupt
+    PieCtrlRegs.PIEIER7.bit.INTx2 = 1;                      // Enable DMA CH2 interrupt in PIE
+    // Starts DMA Channel 2
+//    DmaRegs.CH2.CONTROL.bit.RUN = 1;
+    EDIS;
+//    DMACH2ModeConfig(DMA_ADCBINT1,PERINT_ENABLE,ONESHOT_DISABLE,CONT_ENABLE,SYNC_DISABLE,SYNC_SRC,
+//                     OVRFLOW_DISABLE,SIXTEEN_BIT,CHINT_END,CHINT_ENABLE);
+//    StartDMACH2();
 }
 
 

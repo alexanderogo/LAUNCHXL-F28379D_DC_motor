@@ -60,6 +60,7 @@ _epwm.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/includ
 _epwm.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_defaultisr.h
 _epwm.obj: ../_epwm.h
 _epwm.obj: ../_led.h
+_epwm.obj: ../_globals.h
 
 ../_epwm.c: 
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F28x_Project.h: 
@@ -121,3 +122,4 @@ C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_U
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_defaultisr.h: 
 ../_epwm.h: 
 ../_led.h: 
+../_globals.h: 

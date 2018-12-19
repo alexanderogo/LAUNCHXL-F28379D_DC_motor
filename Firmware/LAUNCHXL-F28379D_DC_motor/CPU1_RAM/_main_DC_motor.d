@@ -128,6 +128,7 @@ _main_DC_motor.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/comm
 _main_DC_motor.obj: ../_led.h
 _main_DC_motor.obj: ../_epwm.h
 _main_DC_motor.obj: ../_dac.h
+_main_DC_motor.obj: ../_globals.h
 
 ../_main_DC_motor.c: 
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F28x_Project.h: 
@@ -257,3 +258,4 @@ C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/device.h:
 ../_led.h: 
 ../_epwm.h: 
 ../_dac.h: 
+../_globals.h: 
