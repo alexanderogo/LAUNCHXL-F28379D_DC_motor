@@ -55,14 +55,14 @@ __interrupt void epwm3_int_isr(void)
 //    for (i = 0; i < 25; i++) {
 //        acc += current1[i + 25*((data_count + 1)%2)];
 //    }
-    static int16_t limit = 0;
-    current1f = (float)acc/25.0f;
-    if ((current1f < 1021) || (current1f > 1027)) {
-        limit++;
-        if (limit > 100) {
-            asm ("      ESTOP0");
-        }
-    }
+//    static int16_t limit = 0;
+//    current1f = (float)acc/25.0f;
+//    if ((current1f < 1021) || (current1f > 1027)) {
+//        limit++;
+//        if (limit > 100) {
+//            asm ("      ESTOP0");
+//        }
+//    }
     cntpwm++;
 //    EALLOW;
 //    SysCtrlRegs.WDKEY = 0xAA;                   // service WD #2

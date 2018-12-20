@@ -57,6 +57,7 @@
 #include "_dac.h"
 #include <stdint.h>
 #include "_globals.h"
+#include "_timer.h"
 
 extern volatile uint16_t DMA_Buf[4*SIZE_CURR_ARR];
 extern volatile uint16_t *currents;
@@ -138,6 +139,7 @@ void main(void)
     // Stop the ePWM clock
     //
     EALLOW;
+//    PieVectTable.TIMER0_INT = &cpu_timer0_isr;
     PieVectTable.EPWM1_TZ_INT = &epwm1_tzint_isr;
 //    PieVectTable.EPWM1_TZ_INT = &EPWM1_TZ_ISR;
     PieVectTable.EPWM3_INT = &epwm3_int_isr;
@@ -166,6 +168,7 @@ void main(void)
     InitADC(&AdcbRegs, 2, 3);
     DMAInitialize();
     InitDMAforADCb(&AdcbResultRegs);
+    initTIMER0();
 
     //
     // Start the ePWM clock
@@ -176,10 +179,11 @@ void main(void)
     //
     // Enable CPU INT which is connected to chosen INT:
     //
-    IER |= (M_INT2 | M_INT3 | M_INT7);
+    IER |= (M_INT1 | M_INT2 | M_INT3 | M_INT7);
     //
     // Enable chosen interrupts
     //
+//    PieCtrlRegs.PIEIER1.bit.INTx7 = 1;  // Enable TINT0 in the PIE: Group 1 __interrupt 7
     PieCtrlRegs.PIEIER2.bit.INTx1 = 1;  // 2.1 - ePWM1 Trip Zone Interrupt
     PieCtrlRegs.PIEIER2.bit.INTx2 = 1;  // 2.2 - ePWM2 Trip Zone Interrupt
     PieCtrlRegs.PIEIER3.bit.INTx3 = 1;  // 3.3 - ePWM3 Interrupt

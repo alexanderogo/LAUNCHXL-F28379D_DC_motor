@@ -17,6 +17,7 @@ ASM_SRCS += \
 ../F2837xD_usDelay.asm 
 
 C_SRCS += \
+../F2837xD_CpuTimers.c \
 ../F2837xD_DefaultISR.c \
 ../F2837xD_Dma.c \
 ../F2837xD_EPwm.c \
@@ -31,9 +32,11 @@ C_SRCS += \
 ../_epwm.c \
 ../_globals.c \
 ../_led.c \
-../_main_DC_motor.c 
+../_main_DC_motor.c \
+../_timer.c 
 
 C_DEPS += \
+./F2837xD_CpuTimers.d \
 ./F2837xD_DefaultISR.d \
 ./F2837xD_Dma.d \
 ./F2837xD_EPwm.d \
@@ -48,10 +51,12 @@ C_DEPS += \
 ./_epwm.d \
 ./_globals.d \
 ./_led.d \
-./_main_DC_motor.d 
+./_main_DC_motor.d \
+./_timer.d 
 
 OBJS += \
 ./F2837xD_CodeStartBranch.obj \
+./F2837xD_CpuTimers.obj \
 ./F2837xD_DefaultISR.obj \
 ./F2837xD_Dma.obj \
 ./F2837xD_EPwm.obj \
@@ -67,7 +72,8 @@ OBJS += \
 ./_epwm.obj \
 ./_globals.obj \
 ./_led.obj \
-./_main_DC_motor.obj 
+./_main_DC_motor.obj \
+./_timer.obj 
 
 ASM_DEPS += \
 ./F2837xD_CodeStartBranch.d \
@@ -75,6 +81,7 @@ ASM_DEPS += \
 
 OBJS__QUOTED += \
 "F2837xD_CodeStartBranch.obj" \
+"F2837xD_CpuTimers.obj" \
 "F2837xD_DefaultISR.obj" \
 "F2837xD_Dma.obj" \
 "F2837xD_EPwm.obj" \
@@ -90,9 +97,11 @@ OBJS__QUOTED += \
 "_epwm.obj" \
 "_globals.obj" \
 "_led.obj" \
-"_main_DC_motor.obj" 
+"_main_DC_motor.obj" \
+"_timer.obj" 
 
 C_DEPS__QUOTED += \
+"F2837xD_CpuTimers.d" \
 "F2837xD_DefaultISR.d" \
 "F2837xD_Dma.d" \
 "F2837xD_EPwm.d" \
@@ -107,7 +116,8 @@ C_DEPS__QUOTED += \
 "_epwm.d" \
 "_globals.d" \
 "_led.d" \
-"_main_DC_motor.d" 
+"_main_DC_motor.d" \
+"_timer.d" 
 
 ASM_DEPS__QUOTED += \
 "F2837xD_CodeStartBranch.d" \
@@ -118,6 +128,7 @@ ASM_SRCS__QUOTED += \
 "../F2837xD_usDelay.asm" 
 
 C_SRCS__QUOTED += \
+"../F2837xD_CpuTimers.c" \
 "../F2837xD_DefaultISR.c" \
 "../F2837xD_Dma.c" \
 "../F2837xD_EPwm.c" \
@@ -132,6 +143,7 @@ C_SRCS__QUOTED += \
 "../_epwm.c" \
 "../_globals.c" \
 "../_led.c" \
-"../_main_DC_motor.c" 
+"../_main_DC_motor.c" \
+"../_timer.c" 
 
 

@@ -11,6 +11,7 @@ GEN_CMDS__FLAG :=
 
 ORDERED_OBJS += \
 "./F2837xD_CodeStartBranch.obj" \
+"./F2837xD_CpuTimers.obj" \
 "./F2837xD_DefaultISR.obj" \
 "./F2837xD_Dma.obj" \
 "./F2837xD_EPwm.obj" \
@@ -27,6 +28,7 @@ ORDERED_OBJS += \
 "./_globals.obj" \
 "./_led.obj" \
 "./_main_DC_motor.obj" \
+"./_timer.obj" \
 "./device/device.obj" \
 "../2837xD_RAM_lnk_cpu1.cmd" \
 "../F2837xD_Headers_nonBIOS_cpu1.cmd" \
@@ -175,8 +177,8 @@ LAUNCHXL-F28379D_DC_motor.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(BIN_OUTPUTS__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "F2837xD_CodeStartBranch.obj" "F2837xD_DefaultISR.obj" "F2837xD_Dma.obj" "F2837xD_EPwm.obj" "F2837xD_GlobalVariableDefs.obj" "F2837xD_Gpio.obj" "F2837xD_PieCtrl.obj" "F2837xD_PieVect.obj" "F2837xD_Spi.obj" "F2837xD_SysCtrl.obj" "F2837xD_usDelay.obj" "_current_loop.obj" "_dac.obj" "_epwm.obj" "_globals.obj" "_led.obj" "_main_DC_motor.obj" "device\device.obj" 
-	-$(RM) "F2837xD_DefaultISR.d" "F2837xD_Dma.d" "F2837xD_EPwm.d" "F2837xD_GlobalVariableDefs.d" "F2837xD_Gpio.d" "F2837xD_PieCtrl.d" "F2837xD_PieVect.d" "F2837xD_Spi.d" "F2837xD_SysCtrl.d" "_current_loop.d" "_dac.d" "_epwm.d" "_globals.d" "_led.d" "_main_DC_motor.d" "device\device.d" 
+	-$(RM) "F2837xD_CodeStartBranch.obj" "F2837xD_CpuTimers.obj" "F2837xD_DefaultISR.obj" "F2837xD_Dma.obj" "F2837xD_EPwm.obj" "F2837xD_GlobalVariableDefs.obj" "F2837xD_Gpio.obj" "F2837xD_PieCtrl.obj" "F2837xD_PieVect.obj" "F2837xD_Spi.obj" "F2837xD_SysCtrl.obj" "F2837xD_usDelay.obj" "_current_loop.obj" "_dac.obj" "_epwm.obj" "_globals.obj" "_led.obj" "_main_DC_motor.obj" "_timer.obj" "device\device.obj" 
+	-$(RM) "F2837xD_CpuTimers.d" "F2837xD_DefaultISR.d" "F2837xD_Dma.d" "F2837xD_EPwm.d" "F2837xD_GlobalVariableDefs.d" "F2837xD_Gpio.d" "F2837xD_PieCtrl.d" "F2837xD_PieVect.d" "F2837xD_Spi.d" "F2837xD_SysCtrl.d" "_current_loop.d" "_dac.d" "_epwm.d" "_globals.d" "_led.d" "_main_DC_motor.d" "_timer.d" "device\device.d" 
 	-$(RM) "F2837xD_CodeStartBranch.d" "F2837xD_usDelay.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
