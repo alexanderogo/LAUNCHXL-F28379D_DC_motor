@@ -4,5 +4,5 @@
 
 USER_OBJS :=
 
-LIBS := -llibc.a
+LIBS := -lrts2800_fpu32_fast_supplement.lib -lrts2800_fpu32.lib -lc28x_fpu_dsp_library.lib -llibc.a
 

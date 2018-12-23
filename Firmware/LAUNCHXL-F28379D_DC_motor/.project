@@ -37,5 +37,17 @@
 			<name>C2000WARE_HEADERS_INCLUDE</name>
 			<value>$%7BCOM_TI_C2000WARE_SOFTWARE_PACKAGE_INSTALL_DIR%7D/device_support/f2837xd/headers/include</value>
 		</variable>
+		<variable>
+			<name>INSTALLROOT_TO_FIXEDPOINT</name>
+			<value>$%7BCOM_TI_C2000WARE_SOFTWARE_PACKAGE_INSTALL_DIR%7D/libraries/dsp/FixedPoint/c28</value>
+		</variable>
+		<variable>
+			<name>INSTALLROOT_TO_FPU</name>
+			<value>$%7BCOM_TI_C2000WARE_SOFTWARE_PACKAGE_INSTALL_DIR%7D/libraries/dsp/FPU/c28</value>
+		</variable>
+		<variable>
+			<name>INSTALLROOT_TO_FPUFASTRTS</name>
+			<value>$%7BCOM_TI_C2000WARE_SOFTWARE_PACKAGE_INSTALL_DIR%7D/libraries/math/FPUfastRTS/c28</value>
+		</variable>
 	</variableList>
 </projectDescription>

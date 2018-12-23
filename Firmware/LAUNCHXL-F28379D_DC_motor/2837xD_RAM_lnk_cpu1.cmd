@@ -72,6 +72,9 @@ SECTIONS
     ramfuncs    : > RAMM0      PAGE = 0   
    #endif
 #endif
+	firldb          : > RAMLS0,    PAGE = 0	// New
+	firfilt         : > RAMLS1,    PAGE = 0	// New
+	coefffilt       : > RAMLS2,    PAGE = 0	// New
 
    /* The following section definitions are required when using the IPC API Drivers */
     GROUP : > CPU1TOCPU2RAM, PAGE = 1

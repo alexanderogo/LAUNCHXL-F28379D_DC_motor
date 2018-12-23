@@ -11,12 +11,35 @@
 #include "_led.h"
 #include "_globals.h"
 
+//#include <filter.h>
+
 extern volatile uint16_t *current1;
 extern volatile uint16_t *current2;
 extern volatile float current1f;
 extern volatile float current2f;
 
+#define FIR_ORDER 25
 
+//#ifndef __cplusplus
+//#pragma DATA_SECTION(fir, "firfilt");
+//#else
+//#pragma DATA_SECTION("firfilt");
+//#endif
+//FIR32 fir= FIR32_DEFAULTS;
+//
+//#ifndef __cplusplus
+//#pragma DATA_SECTION(dbuffer,"firldb");
+//#else
+//#pragma DATA_SECTION("firfilt");
+//#endif
+//int32_t dbuffer[FIR_ORDER+1];
+//
+//#ifndef __cplusplus
+//#pragma DATA_SECTION(coeff, "coefffilt");
+//#else
+//#pragma DATA_SECTION("coefffilt");
+//#endif
+//const int32_t coeff[FIR_ORDER+1] = {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
 
 //
 // Globals
@@ -36,6 +59,7 @@ __interrupt void epwm3_int_isr(void)
     }
     int16_t i = 0;
     uint32_t acc = 0;
+
     uint16_t *it = current1 + 25*((d_count+2-1)%2);
 //    const int16_t offset = 25*((d_count+2-1)%2);
     #pragma MUST_ITERATE(25, 25)
@@ -44,11 +68,25 @@ __interrupt void epwm3_int_isr(void)
         acc += *it++;
 //        acc += it[i];
     }
-//    DELAY_US(5);
+    current1f = (float)acc/25.0f;
+    int16_t accs = acc/25;
+
+//    fir.order       = FIR_ORDER;
+//    fir.dbuffer_ptr = dbuffer;
+//    fir.coeff_ptr   =(int32_t *)coeff;
+//    fir.init(&fir);
+//    fir.input = accs;             //Input data
+//    fir.calc(&fir);             //FIR convolution operation
+//    accs = fir.output;     //Output data
+//    current1f = accs;
+
     int16_t data_count = 0;
     int32_t diff_addr = 0;
     diff_addr = DmaRegs.CH2.DST_ADDR_ACTIVE - DmaRegs.CH2.DST_BEG_ADDR_SHADOW;
     data_count = diff_addr/25;
+
+
+
 //    int16_t i = 0;
 //    uint32_t acc = 0;
 //    #pragma MUST_ITERATE(25, 25)

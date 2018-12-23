@@ -1,7 +1,7 @@
 ******************************************************************************
              TMS320C2000 Linker PC v18.1.3                     
 ******************************************************************************
->> Linked Thu Dec 20 12:24:05 2018
+>> Linked Sun Dec 23 15:27:19 2018
 
 OUTPUT FILE NAME:   <LAUNCHXL-F28379D_DC_motor.out>
 ENTRY POINT SYMBOL: "_c_int00"  address: 0000878b
@@ -15,7 +15,7 @@ PAGE 0:
   BEGIN                 00000000   00000002  00000002  00000000  RWIX
   RAMM0                 00000122   000002de  000002de  00000000  RWIX
   RAMLS0                00008000   00000800  000007fe  00000002  RWIX
-  RAMLS1                00008800   00000800  0000076a  00000096  RWIX
+  RAMLS1                00008800   00000800  00000711  000000ef  RWIX
   RAMLS2                00009000   00000800  00000000  00000800  RWIX
   RAMLS3                00009800   00000800  00000000  00000800  RWIX
   RAMLS4                0000a000   00000800  00000000  00000800  RWIX
@@ -350,6 +350,78 @@ DaccRegsFile
 *          1    00005c20    00000008     UNINITIALIZED
                   00005c20    00000008     F2837xD_GlobalVariableDefs.obj (DaccRegsFile)
 
+I2caRegsFile 
+*          1    00007300    00000022     UNINITIALIZED
+                  00007300    00000022     F2837xD_GlobalVariableDefs.obj (I2caRegsFile)
+
+I2cbRegsFile 
+*          1    00007340    00000022     UNINITIALIZED
+                  00007340    00000022     F2837xD_GlobalVariableDefs.obj (I2cbRegsFile)
+
+AdcaRegsFile 
+*          1    00007400    00000080     UNINITIALIZED
+                  00007400    00000080     F2837xD_GlobalVariableDefs.obj (AdcaRegsFile)
+
+AdcbRegsFile 
+*          1    00007480    00000080     UNINITIALIZED
+                  00007480    00000080     F2837xD_GlobalVariableDefs.obj (AdcbRegsFile)
+
+AdccRegsFile 
+*          1    00007500    00000080     UNINITIALIZED
+                  00007500    00000080     F2837xD_GlobalVariableDefs.obj (AdccRegsFile)
+
+AdcdRegsFile 
+*          1    00007580    00000080     UNINITIALIZED
+                  00007580    00000080     F2837xD_GlobalVariableDefs.obj (AdcdRegsFile)
+
+CanaRegsFile 
+*          1    00048000    00000164     UNINITIALIZED
+                  00048000    00000164     F2837xD_GlobalVariableDefs.obj (CanaRegsFile)
+
+CanbRegsFile 
+*          1    0004a000    00000164     UNINITIALIZED
+                  0004a000    00000164     F2837xD_GlobalVariableDefs.obj (CanbRegsFile)
+
+AnalogSubsysRegsFile 
+*          1    0005d180    00000048     UNINITIALIZED
+                  0005d180    00000048     F2837xD_GlobalVariableDefs.obj (AnalogSubsysRegsFile)
+
+Cla1SoftIntRegsFile 
+*          1    00000ce0    00000004     DSECT
+                  00000ce0    00000004     F2837xD_GlobalVariableDefs.obj (Cla1SoftIntRegsFile)
+
+Cmpss1RegsFile 
+*          1    00005c80    00000020     UNINITIALIZED
+                  00005c80    00000020     F2837xD_GlobalVariableDefs.obj (Cmpss1RegsFile)
+
+Cmpss2RegsFile 
+*          1    00005ca0    00000020     UNINITIALIZED
+                  00005ca0    00000020     F2837xD_GlobalVariableDefs.obj (Cmpss2RegsFile)
+
+Cmpss3RegsFile 
+*          1    00005cc0    00000020     UNINITIALIZED
+                  00005cc0    00000020     F2837xD_GlobalVariableDefs.obj (Cmpss3RegsFile)
+
+Cmpss4RegsFile 
+*          1    00005ce0    00000020     UNINITIALIZED
+                  00005ce0    00000020     F2837xD_GlobalVariableDefs.obj (Cmpss4RegsFile)
+
+Cmpss5RegsFile 
+*          1    00005d00    00000020     UNINITIALIZED
+                  00005d00    00000020     F2837xD_GlobalVariableDefs.obj (Cmpss5RegsFile)
+
+Cmpss6RegsFile 
+*          1    00005d20    00000020     UNINITIALIZED
+                  00005d20    00000020     F2837xD_GlobalVariableDefs.obj (Cmpss6RegsFile)
+
+Cmpss7RegsFile 
+*          1    00005d40    00000020     UNINITIALIZED
+                  00005d40    00000020     F2837xD_GlobalVariableDefs.obj (Cmpss7RegsFile)
+
+Cmpss8RegsFile 
+*          1    00005d60    00000020     UNINITIALIZED
+                  00005d60    00000020     F2837xD_GlobalVariableDefs.obj (Cmpss8RegsFile)
+
 Sdfm1RegsFile 
 *          1    00005e00    00000080     UNINITIALIZED
                   00005e00    00000080     F2837xD_GlobalVariableDefs.obj (Sdfm1RegsFile)
@@ -410,30 +482,6 @@ ScidRegsFile
 *          1    00007230    00000010     UNINITIALIZED
                   00007230    00000010     F2837xD_GlobalVariableDefs.obj (ScidRegsFile)
 
-I2caRegsFile 
-*          1    00007300    00000022     UNINITIALIZED
-                  00007300    00000022     F2837xD_GlobalVariableDefs.obj (I2caRegsFile)
-
-I2cbRegsFile 
-*          1    00007340    00000022     UNINITIALIZED
-                  00007340    00000022     F2837xD_GlobalVariableDefs.obj (I2cbRegsFile)
-
-AdcaRegsFile 
-*          1    00007400    00000080     UNINITIALIZED
-                  00007400    00000080     F2837xD_GlobalVariableDefs.obj (AdcaRegsFile)
-
-AdcbRegsFile 
-*          1    00007480    00000080     UNINITIALIZED
-                  00007480    00000080     F2837xD_GlobalVariableDefs.obj (AdcbRegsFile)
-
-AdccRegsFile 
-*          1    00007500    00000080     UNINITIALIZED
-                  00007500    00000080     F2837xD_GlobalVariableDefs.obj (AdccRegsFile)
-
-AdcdRegsFile 
-*          1    00007580    00000080     UNINITIALIZED
-                  00007580    00000080     F2837xD_GlobalVariableDefs.obj (AdcdRegsFile)
-
 InputXbarRegsFile 
 *          1    00007900    00000020     UNINITIALIZED
                   00007900    00000020     F2837xD_GlobalVariableDefs.obj (InputXbarRegsFile)
@@ -473,54 +521,6 @@ Emif1RegsFile
 Emif2RegsFile 
 *          1    00047800    00000070     UNINITIALIZED
                   00047800    00000070     F2837xD_GlobalVariableDefs.obj (Emif2RegsFile)
-
-CanaRegsFile 
-*          1    00048000    00000164     UNINITIALIZED
-                  00048000    00000164     F2837xD_GlobalVariableDefs.obj (CanaRegsFile)
-
-CanbRegsFile 
-*          1    0004a000    00000164     UNINITIALIZED
-                  0004a000    00000164     F2837xD_GlobalVariableDefs.obj (CanbRegsFile)
-
-AnalogSubsysRegsFile 
-*          1    0005d180    00000048     UNINITIALIZED
-                  0005d180    00000048     F2837xD_GlobalVariableDefs.obj (AnalogSubsysRegsFile)
-
-Cla1SoftIntRegsFile 
-*          1    00000ce0    00000004     DSECT
-                  00000ce0    00000004     F2837xD_GlobalVariableDefs.obj (Cla1SoftIntRegsFile)
-
-Cmpss1RegsFile 
-*          1    00005c80    00000020     UNINITIALIZED
-                  00005c80    00000020     F2837xD_GlobalVariableDefs.obj (Cmpss1RegsFile)
-
-Cmpss2RegsFile 
-*          1    00005ca0    00000020     UNINITIALIZED
-                  00005ca0    00000020     F2837xD_GlobalVariableDefs.obj (Cmpss2RegsFile)
-
-Cmpss3RegsFile 
-*          1    00005cc0    00000020     UNINITIALIZED
-                  00005cc0    00000020     F2837xD_GlobalVariableDefs.obj (Cmpss3RegsFile)
-
-Cmpss4RegsFile 
-*          1    00005ce0    00000020     UNINITIALIZED
-                  00005ce0    00000020     F2837xD_GlobalVariableDefs.obj (Cmpss4RegsFile)
-
-Cmpss5RegsFile 
-*          1    00005d00    00000020     UNINITIALIZED
-                  00005d00    00000020     F2837xD_GlobalVariableDefs.obj (Cmpss5RegsFile)
-
-Cmpss6RegsFile 
-*          1    00005d20    00000020     UNINITIALIZED
-                  00005d20    00000020     F2837xD_GlobalVariableDefs.obj (Cmpss6RegsFile)
-
-Cmpss7RegsFile 
-*          1    00005d40    00000020     UNINITIALIZED
-                  00005d40    00000020     F2837xD_GlobalVariableDefs.obj (Cmpss7RegsFile)
-
-Cmpss8RegsFile 
-*          1    00005d60    00000020     UNINITIALIZED
-                  00005d60    00000020     F2837xD_GlobalVariableDefs.obj (Cmpss8RegsFile)
 
 IpcRegsFile 
 *          1    00050000    00000024     UNINITIALIZED
@@ -601,22 +601,22 @@ CpuSysRegsFile
                   0000878b    00000056     rts2800_fpu32.lib : boot28.asm.obj (.text)
                   000087e1    0000001d     _dac.obj (.text)
 
-.text.3    0    00008800    0000076a     
+.text.3    0    00008800    00000711     
                   00008800    00000404     F2837xD_Dma.obj (.text)
-                  00008c04    000000d1     _epwm.obj (.text:retain)
-                  00008cd5    00000088     rts2800_fpu32.lib : fs_div28.asm.obj (.text)
-                  00008d5d    0000007c     F2837xD_CpuTimers.obj (.text)
-                  00008dd9    00000036     _timer.obj (.text:retain)
-                  00008e0f    0000002e     _main_DC_motor.obj (.text:retain)
-                  00008e3d    0000002a     rts2800_fpu32.lib : l_div28.asm.obj (.text)
-                  00008e67    00000029                       : exit.c.obj (.text)
-                  00008e90    00000028     F2837xD_PieCtrl.obj (.text)
-                  00008eb8    00000026     F2837xD_PieVect.obj (.text)
-                  00008ede    00000024     rts2800_fpu32.lib : cpy_tbl.c.obj (.text)
-                  00008f02    00000022                       : i_div28.asm.obj (.text)
-                  00008f24    00000020     _led.obj (.text)
-                  00008f44    0000001d     rts2800_fpu32.lib : memcpy.c.obj (.text)
-                  00008f61    00000009                       : _lock.c.obj (.text)
+                  00008c04    000000e7     _epwm.obj (.text:retain)
+                  00008ceb    0000007c     F2837xD_CpuTimers.obj (.text)
+                  00008d67    00000036     _timer.obj (.text:retain)
+                  00008d9d    0000002e     _main_DC_motor.obj (.text:retain)
+                  00008dcb    0000002a     rts2800_fpu32.lib : l_div28.asm.obj (.text)
+                  00008df5    00000029                       : exit.c.obj (.text)
+                  00008e1e    00000028     F2837xD_PieCtrl.obj (.text)
+                  00008e46    00000026     F2837xD_PieVect.obj (.text)
+                  00008e6c    00000024     rts2800_fpu32.lib : cpy_tbl.c.obj (.text)
+                  00008e90    00000022                       : i_div28.asm.obj (.text)
+                  00008eb2    00000020     _led.obj (.text)
+                  00008ed2    0000001d     rts2800_fpu32.lib : memcpy.c.obj (.text)
+                  00008eef    00000019     rts2800_fpu32_fast_supplement.lib : div_f32.obj (.text)
+                  00008f08    00000009     rts2800_fpu32.lib : _lock.c.obj (.text)
 
 .text.4    0    0000b000    00000800     
                   0000b000    00000585     F2837xD_DefaultISR.obj (.text:retain)
@@ -633,7 +633,7 @@ MODULE SUMMARY
        F2837xD_DefaultISR.obj           1413   0                  0                 
        F2837xD_SysCtrl.obj              1158   0                  0                 
        F2837xD_Dma.obj                  1028   0                  0                 
-       _epwm.obj                        982    15                 6                 
+       _epwm.obj                        1004   15                 6                 
        _main_DC_motor.obj               658    63                 24                
        F2837xD_Gpio.obj                 580    0                  0                 
        F2837xD_PieVect.obj              38     448                0                 
@@ -646,7 +646,7 @@ MODULE SUMMARY
        F2837xD_usDelay.obj              4      0                  0                 
        F2837xD_CodeStartBranch.obj      2      0                  0                 
     +--+--------------------------------+------+------------------+--------------------+
-       Total:                           6164   541                8863              
+       Total:                           6186   541                8863              
                                                                                     
     .\device\
        device.obj                       0      19                 0                 
@@ -658,8 +658,12 @@ MODULE SUMMARY
     +--+--------------------------------+------+------------------+--------------------+
        Total:                           4      88                 0                 
                                                                                     
-    C:\ti\ccsv8\tools\compiler\ti-cgt-c2000_18.1.3.LTS\lib\rts2800_fpu32.lib
-       fs_div28.asm.obj                 136    0                  0                 
+    C:/ti/c2000/C2000Ware_1_00_06_00/libraries/math/FPUfastRTS/c28/lib/rts2800_fpu32_fast_supplement.lib
+       div_f32.obj                      25     0                  0                 
+    +--+--------------------------------+------+------------------+--------------------+
+       Total:                           25     0                  0                 
+                                                                                    
+    C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/lib/rts2800_fpu32.lib
        boot28.asm.obj                   86     0                  0                 
        exit.c.obj                       41     14                 6                 
        l_div28.asm.obj                  42     0                  0                 
@@ -671,11 +675,11 @@ MODULE SUMMARY
        pre_init.c.obj                   2      0                  0                 
        startup.c.obj                    1      0                  0                 
     +--+--------------------------------+------+------------------+--------------------+
-       Total:                           441    24                 10                
+       Total:                           305    24                 10                
                                                                                     
        Stack:                           0      0                  256               
     +--+--------------------------------+------+------------------+--------------------+
-       Grand Total:                     6609   672                9129              
+       Grand Total:                     6520   672                9129              
 
 
 GLOBAL DATA SYMBOLS: SORTED BY DATA PAGE
@@ -820,7 +824,7 @@ address     data page           name
 0000aa34     2a8 (0000aa00)     _current1
 0000aa36     2a8 (0000aa00)     _current2
 0000aa38     2a8 (0000aa00)     _currents
-0000aa3c     2a8 (0000aa00)     _cntpwm
+0000aa3a     2a8 (0000aa00)     _cntpwm
 
 0000aa40     2a9 (0000aa40)     _CpuTimer1
 0000aa48     2a9 (0000aa40)     _CpuTimer2
@@ -891,14 +895,14 @@ GLOBAL SYMBOLS: SORTED ALPHABETICALLY BY Name
 page  address   name                                  
 ----  -------   ----                                  
 abs   ffffffff  .text                                 
-0     00008e67  C$$EXIT                               
-0     00008cd5  FS$$DIV                               
-0     00008f02  I$$DIV                                
-0     00008f13  I$$MOD                                
-0     00008e3d  L$$DIV                                
-0     00008e4c  L$$MOD                                
-0     00008e5a  UL$$DIV                               
-0     00008e61  UL$$MOD                               
+0     00008df5  C$$EXIT                               
+0     00008eef  FS$$DIV                               
+0     00008e90  I$$DIV                                
+0     00008ea1  I$$MOD                                
+0     00008dcb  L$$DIV                                
+0     00008dda  L$$MOD                                
+0     00008de8  UL$$DIV                               
+0     00008def  UL$$MOD                               
 0     0000b0be  _ADCA1_ISR                            
 0     0000b33e  _ADCA2_ISR                            
 0     0000b348  _ADCA3_ISR                            
@@ -960,7 +964,7 @@ abs   ffffffff  .text
 1     00005d20  _Cmpss6Regs                           
 1     00005d40  _Cmpss7Regs                           
 1     00005d60  _Cmpss8Regs                           
-0     00008d9e  _ConfigCpuTimer                       
+0     00008d2c  _ConfigCpuTimer                       
 1     0005d300  _CpuSysRegs                           
 1     0000aa50  _CpuTimer0                            
 1     00000c00  _CpuTimer0Regs                        
@@ -1093,7 +1097,7 @@ abs   ffffffff  .text
 1     00047800  _Emif2Regs                            
 1     00000d00  _EmuBMode                             
 1     00000d01  _EmuBootPins                          
-0     00008eaf  _EnableInterrupts                     
+0     00008e3d  _EnableInterrupts                     
 0     00000199  _F28x_usDelay                         
 0     0000b528  _FLASH_CORRECTABLE_ERROR_ISR          
 0     0000b3fc  _FPU_OVERFLOW_ISR                     
@@ -1132,7 +1136,7 @@ abs   ffffffff  .text
 0     0000b42e  _IPC3_ISR                             
 0     0000b6de  _InitADC                              
 0     000082f0  _InitAuxPll                           
-0     00008d5d  _InitCpuTimers                        
+0     00008ceb  _InitCpuTimers                        
 0     000087e1  _InitDAC                              
 0     000087ea  _InitDACx                             
 0     0000b75c  _InitDMAforADCa                       
@@ -1146,12 +1150,12 @@ abs   ffffffff  .text
 0     00008537  _InitGpioEPWM5                        
 0     00008549  _InitGpioEPWM6                        
 0     0000855b  _InitGpioEPWM8                        
-0     00008f24  _InitGpioLED                          
+0     00008eb2  _InitGpioLED                          
 0     00008490  _InitGpioTZ                           
 0     0000b6c0  _InitGpioUsed                         
 0     00008031  _InitPeripheralClocks                 
-0     00008e90  _InitPieCtrl                          
-0     00008eb8  _InitPieVectTable                     
+0     00008e1e  _InitPieCtrl                          
+0     00008e46  _InitPieVectTable                     
 0     00008000  _InitSysCtrl                          
 0     00008102  _InitSysPll                           
 0     000084a9  _InitTZ                               
@@ -1263,29 +1267,29 @@ abs   ffffffff  ___pinit__
 abs   ffffffff  ___text__                             
 0     000003e5  __args_main                           
 1     0000aa76  __lock                                
-0     00008f69  __nop                                 
-0     00008f65  __register_lock                       
-0     00008f61  __register_unlock                     
+0     00008f10  __nop                                 
+0     00008f0c  __register_lock                       
+0     00008f08  __register_unlock                     
 1     00000400  __stack                               
 0     0000b7ff  __system_post_cinit                   
 0     000003fe  __system_pre_init                     
 1     0000aa78  __unlock                              
-0     00008e67  _abort                                
+0     00008df5  _abort                                
 0     0000878b  _c_int00                              
 1     0000aa68  _cntdma                               
-1     0000aa3c  _cntpwm                               
-0     00008ede  _copy_in                              
-0     00008dd9  _cpu_timer0_isr                       
+1     0000aa3a  _cntpwm                               
+0     00008e6c  _copy_in                              
+0     00008d67  _cpu_timer0_isr                       
 1     0000aa34  _current1                             
 1     0000aa2e  _current1f                            
 1     0000aa36  _current2                             
 1     0000aa2c  _current2f                            
 1     0000aa38  _currents                             
-0     00008e0f  _dmach1_isr                           
-0     00008e25  _dmach2_isr                           
-0     00008c7b  _epwm1_tzint_isr                      
+0     00008d9d  _dmach1_isr                           
+0     00008db3  _dmach2_isr                           
+0     00008c91  _epwm1_tzint_isr                      
 0     00008c04  _epwm3_int_isr                        
-0     00008e69  _exit                                 
+0     00008df7  _exit                                 
 1     0000aa62  _freq_cpu_res                         
 1     0000aa58  _gpio8                                
 1     0000aa5b  _gpio9                                
@@ -1303,7 +1307,7 @@ abs   ffffffff  ___text__
 0     0000869e  _initEPWMxSyncOut                     
 0     0000b7ee  _initTIMER0                           
 0     0000b5c5  _main                                 
-0     00008f44  _memcpy                               
+0     00008ed2  _memcpy                               
 1     0000aa6a  _pwm1                                 
 1     0000aa64  _pwm2                                 
 1     0000aa66  _pwm3                                 
@@ -1429,31 +1433,31 @@ page  address   name
 0     00008be4  _DMACH5AddrConfig32bit                
 0     00008bf4  _DMACH6AddrConfig32bit                
 0     00008c04  _epwm3_int_isr                        
-0     00008c7b  _epwm1_tzint_isr                      
-0     00008cd5  FS$$DIV                               
-0     00008d5d  _InitCpuTimers                        
-0     00008d9e  _ConfigCpuTimer                       
-0     00008dd9  _cpu_timer0_isr                       
-0     00008e0f  _dmach1_isr                           
-0     00008e25  _dmach2_isr                           
-0     00008e3d  L$$DIV                                
-0     00008e4c  L$$MOD                                
-0     00008e5a  UL$$DIV                               
-0     00008e61  UL$$MOD                               
-0     00008e67  C$$EXIT                               
-0     00008e67  _abort                                
-0     00008e69  _exit                                 
-0     00008e90  _InitPieCtrl                          
-0     00008eaf  _EnableInterrupts                     
-0     00008eb8  _InitPieVectTable                     
-0     00008ede  _copy_in                              
-0     00008f02  I$$DIV                                
-0     00008f13  I$$MOD                                
-0     00008f24  _InitGpioLED                          
-0     00008f44  _memcpy                               
-0     00008f61  __register_unlock                     
-0     00008f65  __register_lock                       
-0     00008f69  __nop                                 
+0     00008c91  _epwm1_tzint_isr                      
+0     00008ceb  _InitCpuTimers                        
+0     00008d2c  _ConfigCpuTimer                       
+0     00008d67  _cpu_timer0_isr                       
+0     00008d9d  _dmach1_isr                           
+0     00008db3  _dmach2_isr                           
+0     00008dcb  L$$DIV                                
+0     00008dda  L$$MOD                                
+0     00008de8  UL$$DIV                               
+0     00008def  UL$$MOD                               
+0     00008df5  C$$EXIT                               
+0     00008df5  _abort                                
+0     00008df7  _exit                                 
+0     00008e1e  _InitPieCtrl                          
+0     00008e3d  _EnableInterrupts                     
+0     00008e46  _InitPieVectTable                     
+0     00008e6c  _copy_in                              
+0     00008e90  I$$DIV                                
+0     00008ea1  I$$MOD                                
+0     00008eb2  _InitGpioLED                          
+0     00008ed2  _memcpy                               
+0     00008eef  FS$$DIV                               
+0     00008f08  __register_unlock                     
+0     00008f0c  __register_lock                       
+0     00008f10  __nop                                 
 0     0000b000  _TIMER1_ISR                           
 0     0000b00a  _TIMER2_ISR                           
 0     0000b014  _DATALOG_ISR                          
@@ -1686,7 +1690,7 @@ page  address   name
 1     0000aa34  _current1                             
 1     0000aa36  _current2                             
 1     0000aa38  _currents                             
-1     0000aa3c  _cntpwm                               
+1     0000aa3a  _cntpwm                               
 1     0000aa40  _CpuTimer1                            
 1     0000aa48  _CpuTimer2                            
 1     0000aa50  _CpuTimer0                            
