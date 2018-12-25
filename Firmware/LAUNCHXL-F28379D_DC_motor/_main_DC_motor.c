@@ -59,7 +59,7 @@
 #include "_globals.h"
 #include "_timer.h"
 
-extern volatile uint16_t DMA_Buf[4*SIZE_CURR_ARR];
+extern volatile uint16_t DMA_Buf[2*CURR_TRFER_SZ*SIZE_CURR_BURST];
 extern volatile uint16_t *currents;
 extern volatile uint16_t *current1;
 extern volatile uint16_t *current2;
@@ -67,7 +67,7 @@ extern volatile uint16_t *current2;
 extern volatile uint16_t *DMADest;
 extern volatile uint16_t *DMASource;
 
-//#define SIZE_CURR_ARR       0x19U   //0x19U == 25U
+//#define SIZE_CURR_BURST       0x19U   //0x19U == 25U
 
 //
 // Main
@@ -76,7 +76,7 @@ extern volatile uint16_t *DMASource;
 //#define EPWM_TBPRD                  500U         // PWM period 50 sempl div 4 and 25
 
 //#pragma DATA_SECTION(DMA_Buf, "ramgs0");    // map the TX data to memory
-//volatile Uint16 DMA_Buf[4*SIZE_CURR_ARR];
+//volatile Uint16 DMA_Buf[4*SIZE_CURR_BURST];
 //volatile Uint16 *currents = DMA_Buf;
 //
 //volatile Uint16 *DMADest;
@@ -336,8 +336,8 @@ void InitDMAforADCa(volatile struct ADC_RESULT_REGS *AdcxResultRegs)
     DMADest   = &currents[0];              //Point DMA destination to the beginning of the array
     DMASource = &AdcaResultRegs.ADCRESULT0;    //Point DMA source to ADC result register base
     DMACH1AddrConfig(DMADest,DMASource);
-    DMACH1BurstConfig(1,1,SIZE_CURR_ARR);
-    DMACH1TransferConfig((SIZE_CURR_ARR)-1,0,0);
+    DMACH1BurstConfig(1,1,SIZE_CURR_BURST);
+    DMACH1TransferConfig((SIZE_CURR_BURST)-1,0,0);
     DMACH1WrapConfig(0,0,0,1);
     DMACH1ModeConfig(DMA_ADCAINT1,PERINT_ENABLE,ONESHOT_DISABLE,CONT_ENABLE,SYNC_DISABLE,SYNC_SRC,
                      OVRFLOW_DISABLE,SIXTEEN_BIT,CHINT_END,CHINT_ENABLE);
@@ -352,8 +352,8 @@ void InitDMAforADCb(volatile struct ADC_RESULT_REGS *AdcxResultRegs)
     DMADest   = &currents[0];              //Point DMA destination to the beginning of the array
     DMASource = &AdcbResultRegs.ADCRESULT0;    //Point DMA source to ADC result register base
 //    DMACH2AddrConfig(DMADest,DMASource);
-//    DMACH2BurstConfig(1,1,SIZE_CURR_ARR);
-//    DMACH2TransferConfig((SIZE_CURR_ARR)-1,0,0);
+//    DMACH2BurstConfig(1,1,SIZE_CURR_BURST);
+//    DMACH2TransferConfig((SIZE_CURR_BURST)-1,0,0);
 //    DMACH2WrapConfig(0,0,0,1);
 //    DMACH2ModeConfig(DMA_ADCBINT1,PERINT_ENABLE,ONESHOT_DISABLE,CONT_ENABLE,SYNC_DISABLE,SYNC_SRC,
 //                     OVRFLOW_DISABLE,SIXTEEN_BIT,CHINT_END,CHINT_ENABLE);
@@ -371,9 +371,9 @@ void InitDMAforADCb(volatile struct ADC_RESULT_REGS *AdcxResultRegs)
     // Set up BURST registers:
     DmaRegs.CH2.BURST_SIZE.all = 1;     // Number of words(X-1) x-ferred in a burst.
     DmaRegs.CH2.SRC_BURST_STEP = 1;  // Increment source addr between each word x-ferred.
-    DmaRegs.CH2.DST_BURST_STEP = 2*SIZE_CURR_ARR;  // Increment dest addr between each word x-ferred.
+    DmaRegs.CH2.DST_BURST_STEP = CURR_TRFER_SZ*SIZE_CURR_BURST;  // Increment dest addr between each word x-ferred.
     // Set up TRANSFER registers:
-    DmaRegs.CH2.TRANSFER_SIZE = (2*SIZE_CURR_ARR)-1;        // Number of bursts per transfer, DMA interrupt will occur after completed transfer.
+    DmaRegs.CH2.TRANSFER_SIZE = (CURR_TRFER_SZ*SIZE_CURR_BURST)-1;        // Number of bursts per transfer, DMA interrupt will occur after completed transfer.
     DmaRegs.CH2.SRC_TRANSFER_STEP = 0; // TRANSFER_STEP is ignored when WRAP occurs.
     DmaRegs.CH2.DST_TRANSFER_STEP = 0; // TRANSFER_STEP is ignored when WRAP occurs.
     // Set up WRAP registers:

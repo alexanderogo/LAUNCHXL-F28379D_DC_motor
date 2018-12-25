@@ -58,7 +58,11 @@ _current_loop.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/commo
 _current_loop.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_SysCtrl_defines.h
 _current_loop.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_Upp_defines.h
 _current_loop.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_defaultisr.h
+_current_loop.obj: C:/ti/c2000/C2000Ware_1_00_06_00/libraries/dsp/FixedPoint/c28/include/filter.h
+_current_loop.obj: C:/ti/c2000/C2000Ware_1_00_06_00/libraries/dsp/FixedPoint/c28/include/fir.h
+_current_loop.obj: C:/ti/c2000/C2000Ware_1_00_06_00/libraries/dsp/FixedPoint/c28/include/iir.h
 _current_loop.obj: ../_current_loop.h
+_current_loop.obj: ../_globals.h
 
 ../_current_loop.c: 
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F28x_Project.h: 
@@ -118,4 +122,8 @@ C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_D
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_SysCtrl_defines.h: 
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_Upp_defines.h: 
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_defaultisr.h: 
+C:/ti/c2000/C2000Ware_1_00_06_00/libraries/dsp/FixedPoint/c28/include/filter.h: 
+C:/ti/c2000/C2000Ware_1_00_06_00/libraries/dsp/FixedPoint/c28/include/fir.h: 
+C:/ti/c2000/C2000Ware_1_00_06_00/libraries/dsp/FixedPoint/c28/include/iir.h: 
 ../_current_loop.h: 
+../_globals.h: 

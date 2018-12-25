@@ -10,42 +10,62 @@
 #include "_epwm.h"
 #include "_led.h"
 #include "_globals.h"
-
-//#include <filter.h>
+#include <filter.h>
+#include <math.h>
 
 extern volatile uint16_t *current1;
 extern volatile uint16_t *current2;
 extern volatile float current1f;
 extern volatile float current2f;
 
-#define FIR_ORDER 25
+extern FIR32 fir_fixp_curr1;
+extern int32_t dbuf_curr1[FIR_ORDER+1];
+extern int32_t coeff_curr1[FIR_ORDER+1];
 
-//#ifndef __cplusplus
-//#pragma DATA_SECTION(fir, "firfilt");
-//#else
-//#pragma DATA_SECTION("firfilt");
-//#endif
-//FIR32 fir= FIR32_DEFAULTS;
-//
-//#ifndef __cplusplus
-//#pragma DATA_SECTION(dbuffer,"firldb");
-//#else
-//#pragma DATA_SECTION("firfilt");
-//#endif
-//int32_t dbuffer[FIR_ORDER+1];
-//
-//#ifndef __cplusplus
-//#pragma DATA_SECTION(coeff, "coefffilt");
-//#else
-//#pragma DATA_SECTION("coefffilt");
-//#endif
-//const int32_t coeff[FIR_ORDER+1] = {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
+/*
+#define FIR_ORDER 24
+//#define SIGNAL_LENGTH 100
+
+#ifndef __cplusplus
+#pragma DATA_SECTION(fir, "firfilt");
+#else
+#pragma DATA_SECTION("firfilt");
+#endif
+FIR32 fir= FIR32_DEFAULTS;
+
+// Define the Delay buffer for the "FIR_ORDER"th order filter
+// and place it in "firldb" section.
+// Its size should be FIR_ORDER+1
+// The delay line buffer must be aligned to a 256 word boundary
+#ifndef __cplusplus
+#pragma DATA_SECTION(dbuffer,"firldb");
+#else
+#pragma DATA_SECTION("firfilt");
+#endif
+int32_t dbuffer[FIR_ORDER+1];
+
+// Define Constant Coefficient Array  and place it in the "coefffilt"
+// section. The size of the array is FIR_ORDER+1
+#ifndef __cplusplus
+#pragma DATA_SECTION(coeff, "coefffilt");
+#else
+#pragma DATA_SECTION("coefffilt");
+#endif
+const int32_t coeff[FIR_ORDER+1] = {INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,\
+                                    INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,\
+                                    INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,\
+                                    INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,\
+                                    INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2};
+*/
 
 //
 // Globals
 //
-
+int32_t in_test = 123;
+int32_t divider = 0x3FFF;
 uint32_t cntpwm = 0;
+
+inline uint32_t mean_curr(const uint16_t *it);
 
 __interrupt void epwm3_int_isr(void)
 {
@@ -60,25 +80,24 @@ __interrupt void epwm3_int_isr(void)
     int16_t i = 0;
     uint32_t acc = 0;
 
-    uint16_t *it = current1 + 25*((d_count+2-1)%2);
-//    const int16_t offset = 25*((d_count+2-1)%2);
-    #pragma MUST_ITERATE(25, 25)
-    for (i = 0; i < 25; i++) {
-//        acc += current1[i + offset];
-        acc += *it++;
-//        acc += it[i];
-    }
-    current1f = (float)acc/25.0f;
-    int16_t accs = acc/25;
+//    uint16_t *it = current1 + 25*((d_count+2-1)%2);
+//    #pragma MUST_ITERATE(25, 25)
+//    for (i = 0; i < 25; i++) {
+//        acc += *it++;
+//    }
 
-//    fir.order       = FIR_ORDER;
-//    fir.dbuffer_ptr = dbuffer;
-//    fir.coeff_ptr   =(int32_t *)coeff;
-//    fir.init(&fir);
-//    fir.input = accs;             //Input data
-//    fir.calc(&fir);             //FIR convolution operation
-//    accs = fir.output;     //Output data
-//    current1f = accs;
+    current1f = (float)(mean_curr(current1 + SIZE_CURR_BURST*((d_count+CURR_TRFER_SZ - 1)%CURR_TRFER_SZ)))/25.0f;
+    int16_t accs = acc/25;
+    if (EPwm3IntCount == 1) {
+        fir_fixp_curr1.order       = FIR_ORDER;
+        fir_fixp_curr1.dbuffer_ptr = dbuf_curr1;
+        fir_fixp_curr1.coeff_ptr   =(int32_t *)coeff_curr1;
+        fir_fixp_curr1.init(&fir_fixp_curr1);
+    }
+
+    fir_fixp_curr1.input = in_test*divider;             //Input data
+    fir_fixp_curr1.calc(&fir_fixp_curr1);             //FIR convolution operation
+    current2f = (float)fir_fixp_curr1.output/(float)divider;
 
     int16_t data_count = 0;
     int32_t diff_addr = 0;
@@ -109,6 +128,43 @@ __interrupt void epwm3_int_isr(void)
 //    for(;;);
     EPwm3Regs.ETCLR.bit.INT = 0x1;
     PieCtrlRegs.PIEACK.all = PIEACK_GROUP3;
+}
+
+inline uint32_t mean_curr(const uint16_t *it)
+{
+    uint32_t acc = 0;
+
+    acc += *it++;
+    acc += *it++;
+    acc += *it++;
+    acc += *it++;
+    acc += *it++;
+
+    acc += *it++;
+    acc += *it++;
+    acc += *it++;
+    acc += *it++;
+    acc += *it++;
+
+    acc += *it++;
+    acc += *it++;
+    acc += *it++;
+    acc += *it++;
+    acc += *it++;
+
+    acc += *it++;
+    acc += *it++;
+    acc += *it++;
+    acc += *it++;
+    acc += *it++;
+
+    acc += *it++;
+    acc += *it++;
+    acc += *it++;
+    acc += *it++;
+    acc += *it++;
+
+    return acc;
 }
 
 __interrupt void epwm1_tzint_isr(void)
