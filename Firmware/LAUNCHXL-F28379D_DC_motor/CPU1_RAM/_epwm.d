@@ -62,7 +62,7 @@ _epwm.obj: ../_epwm.h
 _epwm.obj: ../_led.h
 _epwm.obj: ../_globals.h
 _epwm.obj: C:/ti/c2000/C2000Ware_1_00_06_00/libraries/dsp/FixedPoint/c28/include/filter.h
-_epwm.obj: C:/ti/c2000/C2000Ware_1_00_06_00/libraries/dsp/FixedPoint/c28/include/fir.h
+_epwm.obj: D:/Workspace/Projects/LAUNCHXL-F28379D_DC_motor/Firmware/LAUNCHXL-F28379D_DC_motor/fir.h
 _epwm.obj: C:/ti/c2000/C2000Ware_1_00_06_00/libraries/dsp/FixedPoint/c28/include/iir.h
 _epwm.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/math.h
 _epwm.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/_defs.h
@@ -129,7 +129,7 @@ C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_d
 ../_led.h: 
 ../_globals.h: 
 C:/ti/c2000/C2000Ware_1_00_06_00/libraries/dsp/FixedPoint/c28/include/filter.h: 
-C:/ti/c2000/C2000Ware_1_00_06_00/libraries/dsp/FixedPoint/c28/include/fir.h: 
+D:/Workspace/Projects/LAUNCHXL-F28379D_DC_motor/Firmware/LAUNCHXL-F28379D_DC_motor/fir.h: 
 C:/ti/c2000/C2000Ware_1_00_06_00/libraries/dsp/FixedPoint/c28/include/iir.h: 
 C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/math.h: 
 C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/_defs.h: 

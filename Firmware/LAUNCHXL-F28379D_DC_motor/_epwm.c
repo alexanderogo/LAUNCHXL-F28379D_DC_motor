@@ -21,6 +21,9 @@ extern volatile float current2f;
 extern FIR32 fir_fixp_curr1;
 extern int32_t dbuf_curr1[FIR_ORDER+1];
 extern int32_t coeff_curr1[FIR_ORDER+1];
+extern FIR32 fir_fixp_curr2;
+extern int32_t dbuf_curr2[FIR_ORDER+1];
+extern int32_t coeff_curr2[FIR_ORDER+1];
 
 /*
 #define FIR_ORDER 24
@@ -62,6 +65,8 @@ const int32_t coeff[FIR_ORDER+1] = {INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORD
 // Globals
 //
 int32_t in_test = 123;
+int32_t out_test = 0;
+float32 out_test_float = 0;
 int32_t divider = 0x3FFF;
 uint32_t cntpwm = 0;
 
@@ -77,8 +82,6 @@ __interrupt void epwm3_int_isr(void)
         DmaRegs.CH2.CONTROL.bit.RUN = 1;
         EDIS;
     }
-    int16_t i = 0;
-    uint32_t acc = 0;
 
 //    uint16_t *it = current1 + 25*((d_count+2-1)%2);
 //    #pragma MUST_ITERATE(25, 25)
@@ -87,39 +90,15 @@ __interrupt void epwm3_int_isr(void)
 //    }
 
     current1f = (float)(mean_curr(current1 + SIZE_CURR_BURST*((d_count+CURR_TRFER_SZ - 1)%CURR_TRFER_SZ)))/25.0f;
-    int16_t accs = acc/25;
-    if (EPwm3IntCount == 1) {
-        fir_fixp_curr1.order       = FIR_ORDER;
-        fir_fixp_curr1.dbuffer_ptr = dbuf_curr1;
-        fir_fixp_curr1.coeff_ptr   =(int32_t *)coeff_curr1;
-        fir_fixp_curr1.init(&fir_fixp_curr1);
-    }
-
+    current1f = (float)(mean_curr(current2 + SIZE_CURR_BURST*((d_count+CURR_TRFER_SZ - 1)%CURR_TRFER_SZ)))/25.0f;
     fir_fixp_curr1.input = in_test*divider;             //Input data
     fir_fixp_curr1.calc(&fir_fixp_curr1);             //FIR convolution operation
-    current2f = (float)fir_fixp_curr1.output/(float)divider;
+    out_test_float = (float)fir_fixp_curr1.output/(float)divider;
 
     int16_t data_count = 0;
     int32_t diff_addr = 0;
     diff_addr = DmaRegs.CH2.DST_ADDR_ACTIVE - DmaRegs.CH2.DST_BEG_ADDR_SHADOW;
     data_count = diff_addr/25;
-
-
-
-//    int16_t i = 0;
-//    uint32_t acc = 0;
-//    #pragma MUST_ITERATE(25, 25)
-//    for (i = 0; i < 25; i++) {
-//        acc += current1[i + 25*((data_count + 1)%2)];
-//    }
-//    static int16_t limit = 0;
-//    current1f = (float)acc/25.0f;
-//    if ((current1f < 1021) || (current1f > 1027)) {
-//        limit++;
-//        if (limit > 100) {
-//            asm ("      ESTOP0");
-//        }
-//    }
     cntpwm++;
 //    EALLOW;
 //    SysCtrlRegs.WDKEY = 0xAA;                   // service WD #2

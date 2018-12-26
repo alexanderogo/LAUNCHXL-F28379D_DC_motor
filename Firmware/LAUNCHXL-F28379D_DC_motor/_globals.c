@@ -24,7 +24,7 @@ volatile uint16_t *DMASource;
 //#define SIGNAL_LENGTH 100
 
 #ifndef __cplusplus
-#pragma DATA_SECTION(fir_fixp_curr1, "firfilt");
+#pragma DATA_SECTION(fir_fixp_curr2, "firfilt");
 #else
 #pragma DATA_SECTION("firfilt");
 #endif
@@ -36,7 +36,7 @@ FIR32 fir_fixp_curr2= FIR32_DEFAULTS;
 // Its size should be FIR_ORDER+1
 // The delay line buffer must be aligned to a 256 word boundary
 #ifndef __cplusplus
-#pragma DATA_SECTION(dbuf_curr1,"firldb");
+#pragma DATA_SECTION(dbuf_curr2,"firldb");
 #else
 #pragma DATA_SECTION("firfilt");
 #endif
@@ -46,7 +46,7 @@ int32_t dbuf_curr2[FIR_ORDER+1];
 // Define Constant Coefficient Array  and place it in the "coefffilt"
 // section. The size of the array is FIR_ORDER+1
 #ifndef __cplusplus
-#pragma DATA_SECTION(coeff, "coefffilt");
+#pragma DATA_SECTION(coeff_curr2, "coefffilt");
 #else
 #pragma DATA_SECTION("coefffilt");
 #endif

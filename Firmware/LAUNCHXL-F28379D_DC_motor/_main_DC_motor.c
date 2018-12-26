@@ -58,6 +58,7 @@
 #include <stdint.h>
 #include "_globals.h"
 #include "_timer.h"
+#include "_current_loop.h"
 
 extern volatile uint16_t DMA_Buf[2*CURR_TRFER_SZ*SIZE_CURR_BURST];
 extern volatile uint16_t *currents;
@@ -135,6 +136,9 @@ void main(void)
     IER = 0x0000;
     IFR = 0x0000;
     InitPieVectTable();
+
+    init_current_filters();
+
     //
     // Stop the ePWM clock
     //
