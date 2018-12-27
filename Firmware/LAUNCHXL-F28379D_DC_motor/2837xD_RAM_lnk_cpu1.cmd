@@ -77,9 +77,19 @@ SECTIONS
 //	coefffilt       : > RAMLS2,    PAGE = 0	// New
 
 	   /* Example specific sections */
-   firldb              : > RAMLS0,      PAGE = 0
-   firfilt             : > RAMLS1,      PAGE = 0
-   coefffilt           : > RAMLS2,      PAGE = 0
+   firldb_fixp_c1     align(0x100) > RAMLS0,      PAGE = 0
+   firldb_fixp_c2     align(0x100) > RAMLS0,      PAGE = 0
+   firfilt_fixp_c1               : > RAMLS1,      PAGE = 0
+   firfilt_fixp_c2               : > RAMLS1,      PAGE = 0
+   coefffilt_fixp_c1  align(0x100) > RAMLS2,      PAGE = 0
+   coefffilt_fixp_c2  align(0x100) > RAMLS2,      PAGE = 0
+
+   firldb_fp_c1       align(0x100) > RAMLS0,      PAGE = 0
+   firldb_fp_c2       align(0x100) > RAMLS0,      PAGE = 0
+   firfilt_fp_c1                 : > RAMLS1,      PAGE = 0
+   firfilt_fp_c2                 : > RAMLS1,      PAGE = 0
+   coefffilt_fp_c1    align(0x100) > RAMLS2,      PAGE = 0
+   coefffilt_fp_c2    align(0x100) > RAMLS2,      PAGE = 0
 //   sigIn               : > RAMLS3,      PAGE = 0
 //   sigOut              : > RAMLS4,      PAGE = 0
 

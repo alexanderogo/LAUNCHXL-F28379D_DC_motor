@@ -217,8 +217,8 @@ void main(void)
         fEPWMx2Ph2PinOutInv(&EPwm3Regs, pwm3);
 //        DacaVal = (DacaVal + 1)%4096;
 //        DacbVal = (DacbVal + 1)%4096;
-//        DacaRegs.DACVALS.all = DacaVal;
-//        DacbRegs.DACVALS.all = DacbVal;
+        DacaRegs.DACVALS.all = DacaVal;
+        DacbRegs.DACVALS.all = DacbVal;
         LED_BLUE_toggle();
 
 //        GpioDataRegs.GPATOGGLE.bit.GPIO31 = 1;

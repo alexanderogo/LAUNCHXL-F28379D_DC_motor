@@ -5,6 +5,7 @@
  *      Author: Alexander
  */
 #include "_globals.h"
+/*
 #include <stdint.h>
 #include <filter.h>
 #include "fpu_filter.h"
@@ -20,43 +21,58 @@ volatile float current2f;
 volatile uint16_t *DMADest;
 volatile uint16_t *DMASource;
 
-//#define FIR_ORDER 24
-//#define SIGNAL_LENGTH 100
+//#define FIR_ORDER_CURR 24
 
+#ifndef __cplusplus
+#pragma DATA_SECTION(fir_fixp_curr1, "firfilt");
+#else
+#pragma DATA_SECTION("firfilt");
+#endif
+FIR32 fir_fixp_curr1= FIR32_DEFAULTS;
 #ifndef __cplusplus
 #pragma DATA_SECTION(fir_fixp_curr2, "firfilt");
 #else
 #pragma DATA_SECTION("firfilt");
 #endif
-FIR32 fir_fixp_curr1= FIR32_DEFAULTS;
 FIR32 fir_fixp_curr2= FIR32_DEFAULTS;
 
-// Define the Delay buffer for the "FIR_ORDER"th order filter
+// Define the Delay buffer for the "FIR_ORDER_CURR"th order filter
 // and place it in "firldb" section.
-// Its size should be FIR_ORDER+1
+// Its size should be FIR_ORDER_CURR+1
 // The delay line buffer must be aligned to a 256 word boundary
+#ifndef __cplusplus
+#pragma DATA_SECTION(dbuf_curr1,"firldb");
+#else
+#pragma DATA_SECTION("firfilt");
+#endif
+int32_t dbuf_curr1[FIR_ORDER_CURR+1];
 #ifndef __cplusplus
 #pragma DATA_SECTION(dbuf_curr2,"firldb");
 #else
 #pragma DATA_SECTION("firfilt");
 #endif
-int32_t dbuf_curr1[FIR_ORDER+1];
-int32_t dbuf_curr2[FIR_ORDER+1];
+int32_t dbuf_curr2[FIR_ORDER_CURR+1];
 
 // Define Constant Coefficient Array  and place it in the "coefffilt"
-// section. The size of the array is FIR_ORDER+1
+// section. The size of the array is FIR_ORDER_CURR+1
+#ifndef __cplusplus
+#pragma DATA_SECTION(coeff_curr1, "coefffilt");
+#else
+#pragma DATA_SECTION("coefffilt");
+#endif
+const int32_t coeff_curr1[FIR_ORDER_CURR+1] = {INT32_MAX/(FIR_ORDER_CURR+1)*2,INT32_MAX/(FIR_ORDER_CURR+1)*2,INT32_MAX/(FIR_ORDER_CURR+1)*2,INT32_MAX/(FIR_ORDER_CURR+1)*2,INT32_MAX/(FIR_ORDER_CURR+1)*2,\
+                                    INT32_MAX/(FIR_ORDER_CURR+1)*2,INT32_MAX/(FIR_ORDER_CURR+1)*2,INT32_MAX/(FIR_ORDER_CURR+1)*2,INT32_MAX/(FIR_ORDER_CURR+1)*2,INT32_MAX/(FIR_ORDER_CURR+1)*2,\
+                                    INT32_MAX/(FIR_ORDER_CURR+1)*2,INT32_MAX/(FIR_ORDER_CURR+1)*2,INT32_MAX/(FIR_ORDER_CURR+1)*2,INT32_MAX/(FIR_ORDER_CURR+1)*2,INT32_MAX/(FIR_ORDER_CURR+1)*2,\
+                                    INT32_MAX/(FIR_ORDER_CURR+1)*2,INT32_MAX/(FIR_ORDER_CURR+1)*2,INT32_MAX/(FIR_ORDER_CURR+1)*2,INT32_MAX/(FIR_ORDER_CURR+1)*2,INT32_MAX/(FIR_ORDER_CURR+1)*2,\
+                                    INT32_MAX/(FIR_ORDER_CURR+1)*2,INT32_MAX/(FIR_ORDER_CURR+1)*2,INT32_MAX/(FIR_ORDER_CURR+1)*2,INT32_MAX/(FIR_ORDER_CURR+1)*2,INT32_MAX/(FIR_ORDER_CURR+1)*2};
 #ifndef __cplusplus
 #pragma DATA_SECTION(coeff_curr2, "coefffilt");
 #else
 #pragma DATA_SECTION("coefffilt");
 #endif
-const int32_t coeff_curr1[FIR_ORDER+1] = {INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,\
-                                    INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,\
-                                    INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,\
-                                    INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,\
-                                    INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2};
-const int32_t coeff_curr2[FIR_ORDER+1] = {INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,\
-                                    INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,\
-                                    INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,\
-                                    INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,\
-                                    INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2,INT32_MAX/(FIR_ORDER+1)*2};
+const int32_t coeff_curr2[FIR_ORDER_CURR+1] = {INT32_MAX/(FIR_ORDER_CURR+1)*2,INT32_MAX/(FIR_ORDER_CURR+1)*2,INT32_MAX/(FIR_ORDER_CURR+1)*2,INT32_MAX/(FIR_ORDER_CURR+1)*2,INT32_MAX/(FIR_ORDER_CURR+1)*2,\
+                                    INT32_MAX/(FIR_ORDER_CURR+1)*2,INT32_MAX/(FIR_ORDER_CURR+1)*2,INT32_MAX/(FIR_ORDER_CURR+1)*2,INT32_MAX/(FIR_ORDER_CURR+1)*2,INT32_MAX/(FIR_ORDER_CURR+1)*2,\
+                                    INT32_MAX/(FIR_ORDER_CURR+1)*2,INT32_MAX/(FIR_ORDER_CURR+1)*2,INT32_MAX/(FIR_ORDER_CURR+1)*2,INT32_MAX/(FIR_ORDER_CURR+1)*2,INT32_MAX/(FIR_ORDER_CURR+1)*2,\
+                                    INT32_MAX/(FIR_ORDER_CURR+1)*2,INT32_MAX/(FIR_ORDER_CURR+1)*2,INT32_MAX/(FIR_ORDER_CURR+1)*2,INT32_MAX/(FIR_ORDER_CURR+1)*2,INT32_MAX/(FIR_ORDER_CURR+1)*2,\
+                                    INT32_MAX/(FIR_ORDER_CURR+1)*2,INT32_MAX/(FIR_ORDER_CURR+1)*2,INT32_MAX/(FIR_ORDER_CURR+1)*2,INT32_MAX/(FIR_ORDER_CURR+1)*2,INT32_MAX/(FIR_ORDER_CURR+1)*2};
+*/

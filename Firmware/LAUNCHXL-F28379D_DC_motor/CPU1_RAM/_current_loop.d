@@ -61,8 +61,12 @@ _current_loop.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/commo
 _current_loop.obj: C:/ti/c2000/C2000Ware_1_00_06_00/libraries/dsp/FixedPoint/c28/include/filter.h
 _current_loop.obj: D:/Workspace/Projects/LAUNCHXL-F28379D_DC_motor/Firmware/LAUNCHXL-F28379D_DC_motor/fir.h
 _current_loop.obj: C:/ti/c2000/C2000Ware_1_00_06_00/libraries/dsp/FixedPoint/c28/include/iir.h
-_current_loop.obj: ../_current_loop.h
+_current_loop.obj: C:/ti/c2000/C2000Ware_1_00_06_00/libraries/dsp/FPU/c28/include/fpu_filter.h
+_current_loop.obj: C:/ti/c2000/C2000Ware_1_00_06_00/libraries/dsp/FPU/c28/include/fpu_types.h
+_current_loop.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/float.h
+_current_loop.obj: C:/ti/c2000/C2000Ware_1_00_06_00/libraries/dsp/FPU/c28/include/fpu_vector.h
 _current_loop.obj: ../_globals.h
+_current_loop.obj: ../_current_loop.h
 
 ../_current_loop.c: 
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F28x_Project.h: 
@@ -125,5 +129,9 @@ C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_d
 C:/ti/c2000/C2000Ware_1_00_06_00/libraries/dsp/FixedPoint/c28/include/filter.h: 
 D:/Workspace/Projects/LAUNCHXL-F28379D_DC_motor/Firmware/LAUNCHXL-F28379D_DC_motor/fir.h: 
 C:/ti/c2000/C2000Ware_1_00_06_00/libraries/dsp/FixedPoint/c28/include/iir.h: 
-../_current_loop.h: 
+C:/ti/c2000/C2000Ware_1_00_06_00/libraries/dsp/FPU/c28/include/fpu_filter.h: 
+C:/ti/c2000/C2000Ware_1_00_06_00/libraries/dsp/FPU/c28/include/fpu_types.h: 
+C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/float.h: 
+C:/ti/c2000/C2000Ware_1_00_06_00/libraries/dsp/FPU/c28/include/fpu_vector.h: 
 ../_globals.h: 
+../_current_loop.h: 
