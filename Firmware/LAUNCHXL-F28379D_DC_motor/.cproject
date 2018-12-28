@@ -45,6 +45,7 @@
 								<option id="com.ti.ccstudio.buildDefinitions.C2000_18.1.compilerID.INCLUDE_PATH.566110897" name="Add dir to #include search path (--include_path, -I)" superClass="com.ti.ccstudio.buildDefinitions.C2000_18.1.compilerID.INCLUDE_PATH" valueType="includePath">
 									<listOptionValue builtIn="false" value="${COM_TI_C2000WARE_SOFTWARE_PACKAGE_INCLUDE_PATH}"/>
 									<listOptionValue builtIn="false" value="${PROJECT_ROOT}"/>
+									<listOptionValue builtIn="false" value="${INSTALLROOT_TO_DCL}/include"/>
 									<listOptionValue builtIn="false" value="${INSTALLROOT_TO_FIXEDPOINT}/include"/>
 									<listOptionValue builtIn="false" value="${INSTALLROOT_TO_FPU}/include"/>
 									<listOptionValue builtIn="false" value="${INSTALLROOT_TO_FPUFASTRTS}/include"/>
