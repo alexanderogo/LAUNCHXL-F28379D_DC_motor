@@ -12,6 +12,7 @@
 #include "fpu_vector.h"
 #include "_globals.h"
 #include "_current_loop.h"
+#include "DCLF32.h"
 
 
 #pragma DATA_SECTION(DMA_Buf, "ramgs0");    // map the TX data to memory
@@ -30,17 +31,17 @@ volatile uint16_t *DMASource;
 //#define FIR_ORDER_CURR 24
 
 #ifndef __cplusplus
-#pragma DATA_SECTION(fir_fixp_curr1, "firfilt_fixp_c1");
+#pragma DATA_SECTION(firFXc1, "firfilt_fixp_c1");
 #else
 #pragma DATA_SECTION("firfilt_fixp_c1");
 #endif
-FIR32 fir_fixp_curr1= FIR32_DEFAULTS;
+FIR32 firFXc1= FIR32_DEFAULTS;
 #ifndef __cplusplus
-#pragma DATA_SECTION(fir_fixp_curr2, "firfilt_fixp_c2");
+#pragma DATA_SECTION(firFXc2, "firfilt_fixp_c2");
 #else
 #pragma DATA_SECTION("firfilt_fixp_c2");
 #endif
-FIR32 fir_fixp_curr2= FIR32_DEFAULTS;
+FIR32 firFXc2= FIR32_DEFAULTS;
 
 #ifdef __cplusplus
 #pragma DATA_SECTION("firfilt_fp_c1")
@@ -131,22 +132,22 @@ const float coeff_fp_c2[FPU_FIR_ORDER_CURR+1] = {1/(float)(FPU_FIR_ORDER_CURR+1)
                                                  1/(float)(FPU_FIR_ORDER_CURR+1),1/(float)(FPU_FIR_ORDER_CURR+1),1/(float)(FPU_FIR_ORDER_CURR+1),1/(float)(FPU_FIR_ORDER_CURR+1),1/(float)(FPU_FIR_ORDER_CURR+1),\
                                                  1/(float)(FPU_FIR_ORDER_CURR+1),1/(float)(FPU_FIR_ORDER_CURR+1),1/(float)(FPU_FIR_ORDER_CURR+1),1/(float)(FPU_FIR_ORDER_CURR+1),1/(float)(FPU_FIR_ORDER_CURR+1)};
 
-
+DCL_PID pid1 = PID_DEFAULTS;
 
 
 void init_filter_fixp_current1(void)
 {
-    fir_fixp_curr1.order       = FIR_ORDER_CURR;
-    fir_fixp_curr1.dbuffer_ptr = dbuf_curr1;
-    fir_fixp_curr1.coeff_ptr   =(int32_t *)coeff_curr1;
-    fir_fixp_curr1.init(&fir_fixp_curr1);
+    firFXc1.order       = FIR_ORDER_CURR;
+    firFXc1.dbuffer_ptr = dbuf_curr1;
+    firFXc1.coeff_ptr   =(int32_t *)coeff_curr1;
+    firFXc1.init(&firFXc1);
 }
 void init_filter_fixp_current2(void)
 {
-    fir_fixp_curr2.order       = FIR_ORDER_CURR;
-    fir_fixp_curr2.dbuffer_ptr = dbuf_curr2;
-    fir_fixp_curr2.coeff_ptr   =(int32_t *)coeff_curr2;
-    fir_fixp_curr2.init(&fir_fixp_curr2);
+    firFXc2.order       = FIR_ORDER_CURR;
+    firFXc2.dbuffer_ptr = dbuf_curr2;
+    firFXc2.coeff_ptr   =(int32_t *)coeff_curr2;
+    firFXc2.init(&firFXc2);
 }
 void init_filter_fp_current1(void)
 {
@@ -169,5 +170,21 @@ void init_current_filters(void)
     init_filter_fixp_current2();
     init_filter_fp_current1();
     init_filter_fp_current2();
+}
+
+void init_current_PID(void)
+{
+    pid1.Kp = 10.0f;
+    pid1.Ki = 0.0f;
+    pid1.Kd = 0.0f;
+    pid1.Kr = 1.0f;
+    pid1.c1 = 0.0f;
+    pid1.c2 = 0.0f;
+    pid1.d2 = 0.0f;
+    pid1.d3 = 0.0f;
+    pid1.i10 = 0.0f;
+    pid1.i14 = 1.0f;
+    pid1.Umax = 100.0f;
+    pid1.Umin = -100.0f;
 }
 

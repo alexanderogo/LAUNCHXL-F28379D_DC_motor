@@ -93,6 +93,16 @@ SECTIONS
 //   sigIn               : > RAMLS3,      PAGE = 0
 //   sigOut              : > RAMLS4,      PAGE = 0
 
+		/* Digital Controller Library functions */
+	dclfuncs		: > RAMLS4,		PAGE = 0
+	dcl32funcs		: > RAMLS4,		PAGE = 0
+
+		/* data buffers */
+//    pDataLogSection	: > RAML5,		PAGE = 1	align(2)
+//    qDataLogSection	: > RAML6,		PAGE = 1	align(2)
+//    rDataLogSection	: > RAML7,		PAGE = 1	align(2)
+//    sDataLogSection	: > RAML8,		PAGE = 1	align(2)
+
    /* The following section definitions are required when using the IPC API Drivers */
     GROUP : > CPU1TOCPU2RAM, PAGE = 1
     {

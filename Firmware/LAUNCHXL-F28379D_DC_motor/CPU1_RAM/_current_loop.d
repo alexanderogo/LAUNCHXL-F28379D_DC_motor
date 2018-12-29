@@ -67,6 +67,11 @@ _current_loop.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/fl
 _current_loop.obj: C:/ti/c2000/C2000Ware_1_00_06_00/libraries/dsp/FPU/c28/include/fpu_vector.h
 _current_loop.obj: ../_globals.h
 _current_loop.obj: ../_current_loop.h
+_current_loop.obj: C:/ti/c2000/C2000Ware_1_00_06_00/libraries/control/DCL/c28/include/DCLF32.h
+_current_loop.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/math.h
+_current_loop.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/_defs.h
+_current_loop.obj: C:/ti/c2000/C2000Ware_1_00_06_00/libraries/control/DCL/c28/include/DCL.h
+_current_loop.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/complex.h
 
 ../_current_loop.c: 
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F28x_Project.h: 
@@ -135,3 +140,8 @@ C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/float.h:
 C:/ti/c2000/C2000Ware_1_00_06_00/libraries/dsp/FPU/c28/include/fpu_vector.h: 
 ../_globals.h: 
 ../_current_loop.h: 
+C:/ti/c2000/C2000Ware_1_00_06_00/libraries/control/DCL/c28/include/DCLF32.h: 
+C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/math.h: 
+C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/_defs.h: 
+C:/ti/c2000/C2000Ware_1_00_06_00/libraries/control/DCL/c28/include/DCL.h: 
+C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/complex.h: 

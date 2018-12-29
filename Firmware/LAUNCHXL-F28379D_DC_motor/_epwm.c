@@ -14,18 +14,16 @@
 #include <math.h>
 #include "_current_loop.h"
 #include "fpu_filter.h"
+#include "DCLF32.h"
+
 
 extern volatile uint16_t *current1;
 extern volatile uint16_t *current2;
 extern volatile float current1f;
 extern volatile float current2f;
 
-extern FIR32 fir_fixp_curr1;
-extern int32_t dbuf_curr1[FIR_ORDER_CURR+1];
-extern int32_t coeff_curr1[FIR_ORDER_CURR+1];
-extern FIR32 fir_fixp_curr2;
-extern int32_t dbuf_curr2[FIR_ORDER_CURR+1];
-extern int32_t coeff_curr2[FIR_ORDER_CURR+1];
+extern FIR32 firFXc1;
+extern FIR32 firFXc2;
 extern FIR_FP firFPc1;
 extern FIR_FP firFPc2;
 
@@ -39,6 +37,20 @@ int32_t divider = 0x3FF7;
 uint32_t cntpwm = 0;
 float32 curr1_test[50];
 float32 curr2_test[50];
+float32 c1fp = 0;
+float32 c2fp = 0;
+float32 c1fx = 0;
+float32 c2fx = 0;
+
+// global  variables
+long IdleLoopCount = 0;
+long IsrCount = 0;
+float rk = 0.0f;           // reference
+float yk = 0.0f;           // feedback
+float lk = 1.0f;           // saturation
+float uk = 0.0f;           // output
+
+extern DCL_PID pid1;
 
 inline float mean_curr(const uint16_t *it);
 
@@ -64,15 +76,27 @@ __interrupt void epwm3_int_isr(void)
     firFPc1.input = current1f;
     firFPc1.calc(&firFPc1);
     curr1_test[EPwm3IntCount%50] = firFPc1.output;
-//    firFPc2.input = current2f;
-//    firFPc2.calc(&firFPc2);
-    curr2_test[EPwm3IntCount%50] = current1f; //firFPc2.output;
-//    fir_fixp_curr1.input = in_test*divider + (FIR_ORDER_CURR+1)/2;             //Input data
-//    fir_fixp_curr1.calc(&fir_fixp_curr1);             //FIR convolution operation
-//    out_test = fir_fixp_curr1.output;
-//    out_test_float = (float)fir_fixp_curr1.output/(float)divider;
+    c1fp = firFPc1.output;
+    firFPc2.input = current2f;
+    firFPc2.calc(&firFPc2);
+    curr2_test[EPwm3IntCount%50] = firFPc2.output;
+    c2fp = firFPc2.output;
 
+    firFXc1.input = current1f*divider + (FIR_ORDER_CURR + 1)/2;
+    firFXc1.calc(&firFXc1);
+    c1fx = (float)firFXc1.output/(float)divider;
+    firFXc2.input = current2f*divider + (FIR_ORDER_CURR + 1)/2;
+    firFXc2.calc(&firFXc2);
+    c2fx = (float)firFXc2.output/(float)divider;
 
+//    firFXc1.input = in_test*divider + (FIR_ORDER_CURR+1)/2;             //Input data
+//    firFXc1.calc(&firFXc1);             //FIR convolution operation
+//    out_test = firFXc1.output;
+//    out_test_float = (float)firFXc1.output/(float)divider;
+    yk = uk;
+    if (EPwm3IntCount%1000 == 0) {
+        uk = DCL_runPID_C2(&pid1, rk, yk, lk);
+    }
     int16_t data_count = 0;
     int32_t diff_addr = 0;
     diff_addr = DmaRegs.CH2.DST_ADDR_ACTIVE - DmaRegs.CH2.DST_BEG_ADDR_SHADOW;

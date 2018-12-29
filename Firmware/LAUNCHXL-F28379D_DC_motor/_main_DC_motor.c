@@ -138,6 +138,7 @@ void main(void)
     InitPieVectTable();
 
     init_current_filters();
+    init_current_PID();
 
     //
     // Stop the ePWM clock

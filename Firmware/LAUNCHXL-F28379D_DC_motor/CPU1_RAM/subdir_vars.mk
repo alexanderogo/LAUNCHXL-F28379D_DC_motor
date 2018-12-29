@@ -13,6 +13,8 @@ LIB_SRCS += \
 ../driverlib.lib 
 
 ASM_SRCS += \
+../DCL_PID_C1.asm \
+../DCL_clamp_C1.asm \
 ../F2837xD_CodeStartBranch.asm \
 ../F2837xD_usDelay.asm 
 
@@ -55,6 +57,8 @@ C_DEPS += \
 ./_timer.d 
 
 OBJS += \
+./DCL_PID_C1.obj \
+./DCL_clamp_C1.obj \
 ./F2837xD_CodeStartBranch.obj \
 ./F2837xD_CpuTimers.obj \
 ./F2837xD_DefaultISR.obj \
@@ -76,10 +80,14 @@ OBJS += \
 ./_timer.obj 
 
 ASM_DEPS += \
+./DCL_PID_C1.d \
+./DCL_clamp_C1.d \
 ./F2837xD_CodeStartBranch.d \
 ./F2837xD_usDelay.d 
 
 OBJS__QUOTED += \
+"DCL_PID_C1.obj" \
+"DCL_clamp_C1.obj" \
 "F2837xD_CodeStartBranch.obj" \
 "F2837xD_CpuTimers.obj" \
 "F2837xD_DefaultISR.obj" \
@@ -120,10 +128,14 @@ C_DEPS__QUOTED += \
 "_timer.d" 
 
 ASM_DEPS__QUOTED += \
+"DCL_PID_C1.d" \
+"DCL_clamp_C1.d" \
 "F2837xD_CodeStartBranch.d" \
 "F2837xD_usDelay.d" 
 
 ASM_SRCS__QUOTED += \
+"../DCL_PID_C1.asm" \
+"../DCL_clamp_C1.asm" \
 "../F2837xD_CodeStartBranch.asm" \
 "../F2837xD_usDelay.asm" 
 

@@ -70,6 +70,9 @@ _epwm.obj: ../_current_loop.h
 _epwm.obj: C:/ti/c2000/C2000Ware_1_00_06_00/libraries/dsp/FPU/c28/include/fpu_filter.h
 _epwm.obj: C:/ti/c2000/C2000Ware_1_00_06_00/libraries/dsp/FPU/c28/include/fpu_types.h
 _epwm.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/float.h
+_epwm.obj: C:/ti/c2000/C2000Ware_1_00_06_00/libraries/control/DCL/c28/include/DCLF32.h
+_epwm.obj: C:/ti/c2000/C2000Ware_1_00_06_00/libraries/control/DCL/c28/include/DCL.h
+_epwm.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/complex.h
 
 ../_epwm.c: 
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F28x_Project.h: 
@@ -141,3 +144,6 @@ C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/_defs.h:
 C:/ti/c2000/C2000Ware_1_00_06_00/libraries/dsp/FPU/c28/include/fpu_filter.h: 
 C:/ti/c2000/C2000Ware_1_00_06_00/libraries/dsp/FPU/c28/include/fpu_types.h: 
 C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/float.h: 
+C:/ti/c2000/C2000Ware_1_00_06_00/libraries/control/DCL/c28/include/DCLF32.h: 
+C:/ti/c2000/C2000Ware_1_00_06_00/libraries/control/DCL/c28/include/DCL.h: 
+C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/complex.h: 
