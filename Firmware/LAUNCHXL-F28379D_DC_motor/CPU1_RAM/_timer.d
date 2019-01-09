@@ -6,13 +6,13 @@ _timer.obj: ../_led.h
 _timer.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F28x_Project.h
 _timer.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_Cla_typedefs.h
 _timer.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/headers/include/F2837xD_device.h
-_timer.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/assert.h
-_timer.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/_ti_config.h
-_timer.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/linkage.h
-_timer.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/stdarg.h
-_timer.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/stdbool.h
-_timer.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/stddef.h
-_timer.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/stdint.h
+_timer.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/assert.h
+_timer.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/_ti_config.h
+_timer.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/linkage.h
+_timer.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stdarg.h
+_timer.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stdbool.h
+_timer.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stddef.h
+_timer.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stdint.h
 _timer.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/headers/include/F2837xD_adc.h
 _timer.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/headers/include/F2837xD_analogsubsys.h
 _timer.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/headers/include/F2837xD_cla.h
@@ -60,6 +60,7 @@ _timer.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/inclu
 _timer.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_SysCtrl_defines.h
 _timer.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_Upp_defines.h
 _timer.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_defaultisr.h
+_timer.obj: ../_spi.h
 
 ../_timer.c: 
 ../_timer.h: 
@@ -67,13 +68,13 @@ _timer.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/inclu
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F28x_Project.h: 
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_Cla_typedefs.h: 
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/headers/include/F2837xD_device.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/assert.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/_ti_config.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/linkage.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/stdarg.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/stdbool.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/stddef.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/stdint.h: 
+C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/assert.h: 
+C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/_ti_config.h: 
+C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/linkage.h: 
+C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stdarg.h: 
+C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stdbool.h: 
+C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stddef.h: 
+C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stdint.h: 
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/headers/include/F2837xD_adc.h: 
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/headers/include/F2837xD_analogsubsys.h: 
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/headers/include/F2837xD_cla.h: 
@@ -121,3 +122,4 @@ C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_D
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_SysCtrl_defines.h: 
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_Upp_defines.h: 
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_defaultisr.h: 
+../_spi.h: 

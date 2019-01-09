@@ -13,7 +13,6 @@ LIB_SRCS += \
 ../driverlib.lib 
 
 ASM_SRCS += \
-../DCL_PID_C1.asm \
 ../DCL_clamp_C1.asm \
 ../F2837xD_CodeStartBranch.asm \
 ../F2837xD_usDelay.asm 
@@ -29,12 +28,15 @@ C_SRCS += \
 ../F2837xD_PieVect.c \
 ../F2837xD_Spi.c \
 ../F2837xD_SysCtrl.c \
+../_adc.c \
 ../_current_loop.c \
 ../_dac.c \
 ../_epwm.c \
+../_force_loop.c \
 ../_globals.c \
 ../_led.c \
 ../_main_DC_motor.c \
+../_spi.c \
 ../_timer.c 
 
 C_DEPS += \
@@ -48,16 +50,18 @@ C_DEPS += \
 ./F2837xD_PieVect.d \
 ./F2837xD_Spi.d \
 ./F2837xD_SysCtrl.d \
+./_adc.d \
 ./_current_loop.d \
 ./_dac.d \
 ./_epwm.d \
+./_force_loop.d \
 ./_globals.d \
 ./_led.d \
 ./_main_DC_motor.d \
+./_spi.d \
 ./_timer.d 
 
 OBJS += \
-./DCL_PID_C1.obj \
 ./DCL_clamp_C1.obj \
 ./F2837xD_CodeStartBranch.obj \
 ./F2837xD_CpuTimers.obj \
@@ -71,22 +75,23 @@ OBJS += \
 ./F2837xD_Spi.obj \
 ./F2837xD_SysCtrl.obj \
 ./F2837xD_usDelay.obj \
+./_adc.obj \
 ./_current_loop.obj \
 ./_dac.obj \
 ./_epwm.obj \
+./_force_loop.obj \
 ./_globals.obj \
 ./_led.obj \
 ./_main_DC_motor.obj \
+./_spi.obj \
 ./_timer.obj 
 
 ASM_DEPS += \
-./DCL_PID_C1.d \
 ./DCL_clamp_C1.d \
 ./F2837xD_CodeStartBranch.d \
 ./F2837xD_usDelay.d 
 
 OBJS__QUOTED += \
-"DCL_PID_C1.obj" \
 "DCL_clamp_C1.obj" \
 "F2837xD_CodeStartBranch.obj" \
 "F2837xD_CpuTimers.obj" \
@@ -100,12 +105,15 @@ OBJS__QUOTED += \
 "F2837xD_Spi.obj" \
 "F2837xD_SysCtrl.obj" \
 "F2837xD_usDelay.obj" \
+"_adc.obj" \
 "_current_loop.obj" \
 "_dac.obj" \
 "_epwm.obj" \
+"_force_loop.obj" \
 "_globals.obj" \
 "_led.obj" \
 "_main_DC_motor.obj" \
+"_spi.obj" \
 "_timer.obj" 
 
 C_DEPS__QUOTED += \
@@ -119,22 +127,23 @@ C_DEPS__QUOTED += \
 "F2837xD_PieVect.d" \
 "F2837xD_Spi.d" \
 "F2837xD_SysCtrl.d" \
+"_adc.d" \
 "_current_loop.d" \
 "_dac.d" \
 "_epwm.d" \
+"_force_loop.d" \
 "_globals.d" \
 "_led.d" \
 "_main_DC_motor.d" \
+"_spi.d" \
 "_timer.d" 
 
 ASM_DEPS__QUOTED += \
-"DCL_PID_C1.d" \
 "DCL_clamp_C1.d" \
 "F2837xD_CodeStartBranch.d" \
 "F2837xD_usDelay.d" 
 
 ASM_SRCS__QUOTED += \
-"../DCL_PID_C1.asm" \
 "../DCL_clamp_C1.asm" \
 "../F2837xD_CodeStartBranch.asm" \
 "../F2837xD_usDelay.asm" 
@@ -150,12 +159,15 @@ C_SRCS__QUOTED += \
 "../F2837xD_PieVect.c" \
 "../F2837xD_Spi.c" \
 "../F2837xD_SysCtrl.c" \
+"../_adc.c" \
 "../_current_loop.c" \
 "../_dac.c" \
 "../_epwm.c" \
+"../_force_loop.c" \
 "../_globals.c" \
 "../_led.c" \
 "../_main_DC_motor.c" \
+"../_spi.c" \
 "../_timer.c" 
 
 

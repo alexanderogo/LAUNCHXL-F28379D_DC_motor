@@ -15,6 +15,7 @@
 #include "_current_loop.h"
 #include "fpu_filter.h"
 #include "DCLF32.h"
+#include "_spi.h"
 
 
 extern volatile uint16_t *current1;
@@ -49,6 +50,12 @@ float rk = 0.0f;           // reference
 float yk = 0.0f;           // feedback
 float lk = 1.0f;           // saturation
 float uk = 0.0f;           // output
+uint16_t byte_spi1 = 0x7FFE;
+uint16_t byte_spi2 = 0x7FFE;
+int16_t byte_cnt = 0;
+uint32_t ang_per_div = 10;
+uint16_t angl_adr_msg = 0x7FFE; // dynamic comp. 0xFFFF
+uint16_t angl_get_arr[4] = {0};
 
 extern DCL_PID pid1;
 
@@ -62,7 +69,40 @@ __interrupt void epwm3_int_isr(void)
     if (d_count == 0) {
         EALLOW;
         DmaRegs.CH2.CONTROL.bit.RUN = 1;
+        DmaRegs.CH3.CONTROL.bit.RUN = 1;
         EDIS;
+    }
+
+
+    switch (EPwm3IntCount%10) {
+    case 1:
+        CS1_SPIA_on();
+        SpiaRegs.SPITXBUF = 0x7FFE;
+        break;
+    case 2:
+        CS1_SPIA_off();
+        angl_get_arr[0] = (SpiaRegs.SPIRXBUF & 0x3FFF);
+        CS2_SPIA_on();
+        SpiaRegs.SPITXBUF = 0x7FFE;
+        break;
+    case 3:
+        CS2_SPIA_off();
+        angl_get_arr[1] = (SpiaRegs.SPIRXBUF & 0x3FFF);
+        CS3_SPIA_on();
+        SpiaRegs.SPITXBUF = 0x7FFE;
+        break;
+    case 4:
+        CS3_SPIA_off();
+        angl_get_arr[2] = (SpiaRegs.SPIRXBUF & 0x3FFF);
+        CS4_SPIA_on();
+        SpiaRegs.SPITXBUF = 0x7FFE;
+        break;
+    case 0:
+        CS4_SPIA_off();
+        angl_get_arr[3] = (SpiaRegs.SPIRXBUF & 0x3FFF);
+        break;
+    default:
+        break;
     }
 
 //    uint16_t *it = current1 + 25*((d_count+2-1)%2);
@@ -107,6 +147,29 @@ __interrupt void epwm3_int_isr(void)
 //    EDIS;
 //    asm ("      ESTOP0");
 //    for(;;);
+
+//    if (EPwm3IntCount%10 == 0) {
+//        if (EPwm3IntCount%20 == 0) {
+//            SpiaRegs.SPITXBUF = byte_spi1;//0xAAAA;
+//        } else {
+//            SpiaRegs.SPITXBUF = byte_spi2;
+//        }
+//    }
+//    if (EPwm3IntCount%2 == 0) {
+//        CS2_SPIA_off();
+//    } else {
+//        CS2_SPIA_on();
+//    }
+//    CS1_SPIA_off();
+//    if (EPwm3IntCount%10 == 0) {
+//        CS1_SPIA_on();
+//        SpiaRegs.SPITXBUF = byte_spi1;
+////        static int16_t cnt_msg = 0;
+////        if (cnt_msg < 4) {
+////            SpiaRegs.SPITXBUF = byte_spi1;
+////            cnt_msg++;
+////        }
+//    }
     EPwm3Regs.ETCLR.bit.INT = 0x1;
     PieCtrlRegs.PIEACK.all = PIEACK_GROUP3;
 }
@@ -183,15 +246,26 @@ void InitGpioTZ(void)
     //
     // Initialization GPIOs as inputs
     //
-    GpioCtrlRegs.GPAPUD.bit.GPIO6 = 0;      // Enable pullup on GPIOXX
-    GpioCtrlRegs.GPAMUX1.bit.GPIO6 = 0;     // GPIOXX is GPIO
-    GpioCtrlRegs.GPAQSEL1.bit.GPIO6 = 1;    // set Qualification (3 samples)
-    GpioCtrlRegs.GPADIR.bit.GPIO6 = 0;      // GPIOXX is input
 
-    GpioCtrlRegs.GPAPUD.bit.GPIO7 = 0;      // Enable pullup on GPIOXX
-    GpioCtrlRegs.GPAMUX1.bit.GPIO7 = 0;     // GPIOXX is GPIO
-    GpioCtrlRegs.GPAQSEL1.bit.GPIO7 = 1;    // set Qualification (3 samples)
-    GpioCtrlRegs.GPADIR.bit.GPIO7 = 0;      // GPIOXX is input
+//    GpioCtrlRegs.GPAPUD.bit.GPIO6 = 0;      // Enable pullup on GPIOXX
+//    GpioCtrlRegs.GPAMUX1.bit.GPIO6 = 0;     // GPIOXX is GPIO
+//    GpioCtrlRegs.GPAQSEL1.bit.GPIO6 = 1;    // set Qualification (3 samples)
+//    GpioCtrlRegs.GPADIR.bit.GPIO6 = 0;      // GPIOXX is input
+//
+//    GpioCtrlRegs.GPAPUD.bit.GPIO7 = 0;      // Enable pullup on GPIOXX
+//    GpioCtrlRegs.GPAMUX1.bit.GPIO7 = 0;     // GPIOXX is GPIO
+//    GpioCtrlRegs.GPAQSEL1.bit.GPIO7 = 1;    // set Qualification (3 samples)
+//    GpioCtrlRegs.GPADIR.bit.GPIO7 = 0;      // GPIOXX is input
+
+    GpioCtrlRegs.GPDPUD.bit.GPIO105 = 0;      // Enable pullup on GPIOXX
+    GpioCtrlRegs.GPDMUX1.bit.GPIO105 = 0;     // GPIOXX is GPIO
+    GpioCtrlRegs.GPDQSEL1.bit.GPIO105 = 1;    // set Qualification (3 samples)
+    GpioCtrlRegs.GPDDIR.bit.GPIO105 = 0;      // GPIOXX is input
+
+    GpioCtrlRegs.GPDPUD.bit.GPIO104 = 0;      // Enable pullup on GPIOXX
+    GpioCtrlRegs.GPDMUX1.bit.GPIO104 = 0;     // GPIOXX is GPIO
+    GpioCtrlRegs.GPDQSEL1.bit.GPIO104 = 1;    // set Qualification (3 samples)
+    GpioCtrlRegs.GPDDIR.bit.GPIO104 = 0;      // GPIOXX is input
 }
 
 void InitTZ(void)
@@ -203,8 +277,8 @@ void InitTZ(void)
     InitGpioTZ();
 
     EALLOW;
-    InputXbarRegs.INPUT1SELECT = 6;
-    InputXbarRegs.INPUT2SELECT = 7;
+    InputXbarRegs.INPUT1SELECT = 105;
+    InputXbarRegs.INPUT2SELECT = 104;
     EDIS;
 
     EALLOW;
@@ -241,6 +315,51 @@ void InitTZ(void)
 //    InputXbarRegs.INPUT1SELECT = 6;
 //    InputXbarRegs.INPUT2SELECT = 7;
 //    EDIS;
+}
+
+void InitGpioGS(void)
+{
+    EALLOW;
+    GpioCtrlRegs.GPBPUD.bit.GPIO32 = 0;     // Enable pullup on GPIOXX
+    GpioDataRegs.GPBSET.bit.GPIO32 = 1;     // Load output latch
+    GpioCtrlRegs.GPBMUX1.bit.GPIO32 = 0;    // GPIOXX is GPIO
+    GpioCtrlRegs.GPBDIR.bit.GPIO32 = 1;     // GPIOXX is output
+
+    GpioCtrlRegs.GPCPUD.bit.GPIO67 = 0;     // Enable pullup on GPIOXX
+    GpioDataRegs.GPCSET.bit.GPIO67 = 1;     // Load output latch
+    GpioCtrlRegs.GPCMUX1.bit.GPIO67 = 0;    // GPIOXX is GPIO
+    GpioCtrlRegs.GPCDIR.bit.GPIO67 = 1;     // GPIOXX is output
+
+    GpioCtrlRegs.GPDPUD.bit.GPIO111 = 0;     // Enable pullup on GPIOXX
+    GpioDataRegs.GPDSET.bit.GPIO111 = 1;     // Load output latch
+    GpioCtrlRegs.GPDMUX1.bit.GPIO111 = 0;    // GPIOXX is GPIO
+    GpioCtrlRegs.GPDDIR.bit.GPIO111 = 1;     // GPIOXX is output
+
+    GpioCtrlRegs.GPAPUD.bit.GPIO22 = 0;     // Enable pullup on GPIOXX
+    GpioDataRegs.GPASET.bit.GPIO22 = 1;     // Load output latch
+    GpioCtrlRegs.GPAMUX2.bit.GPIO22 = 0;    // GPIOXX is GPIO
+    GpioCtrlRegs.GPADIR.bit.GPIO22 = 1;     // GPIOXX is output
+
+    GpioCtrlRegs.GPCPUD.bit.GPIO95 = 0;     // Enable pullup on GPIOXX
+    GpioDataRegs.GPCSET.bit.GPIO95 = 1;     // Load output latch
+    GpioCtrlRegs.GPCMUX2.bit.GPIO95 = 0;    // GPIOXX is GPIO
+    GpioCtrlRegs.GPCDIR.bit.GPIO95 = 1;     // GPIOXX is output
+
+    GpioCtrlRegs.GPDPUD.bit.GPIO97 = 0;     // Enable pullup on GPIOXX
+    GpioDataRegs.GPDSET.bit.GPIO97 = 1;     // Load output latch
+    GpioCtrlRegs.GPDMUX1.bit.GPIO97 = 0;    // GPIOXX is GPIO
+    GpioCtrlRegs.GPDDIR.bit.GPIO97 = 1;     // GPIOXX is output
+
+    GpioCtrlRegs.GPCPUD.bit.GPIO94 = 0;     // Enable pullup on GPIOXX
+    GpioDataRegs.GPCSET.bit.GPIO94 = 1;     // Load output latch
+    GpioCtrlRegs.GPCMUX2.bit.GPIO94 = 0;    // GPIOXX is GPIO
+    GpioCtrlRegs.GPCDIR.bit.GPIO94 = 1;     // GPIOXX is output
+
+    GpioCtrlRegs.GPBPUD.bit.GPIO52 = 0;     // Enable pullup on GPIOXX
+    GpioDataRegs.GPBSET.bit.GPIO52 = 1;     // Load output latch
+    GpioCtrlRegs.GPBMUX2.bit.GPIO52 = 0;    // GPIOXX is GPIO
+    GpioCtrlRegs.GPBDIR.bit.GPIO52 = 1;     // GPIOXX is output
+    EDIS;
 }
 
 void InitGpioEPWM1(void)

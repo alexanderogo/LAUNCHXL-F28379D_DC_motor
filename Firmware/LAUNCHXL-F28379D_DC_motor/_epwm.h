@@ -19,6 +19,8 @@ __interrupt void epwm3_int_isr(void);
 void InitGpioTZ(void);
 void InitTZ(void);
 
+void InitGpioGS(void);
+
 void initEPWM(void);
 void initEPWM1(void); //example
 void InitGpioEPWM1(void);

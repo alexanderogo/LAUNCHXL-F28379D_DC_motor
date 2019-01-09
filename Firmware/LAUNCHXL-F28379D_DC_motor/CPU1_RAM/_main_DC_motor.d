@@ -4,13 +4,13 @@ _main_DC_motor.obj: ../_main_DC_motor.c
 _main_DC_motor.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F28x_Project.h
 _main_DC_motor.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_Cla_typedefs.h
 _main_DC_motor.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/headers/include/F2837xD_device.h
-_main_DC_motor.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/assert.h
-_main_DC_motor.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/_ti_config.h
-_main_DC_motor.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/linkage.h
-_main_DC_motor.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/stdarg.h
-_main_DC_motor.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/stdbool.h
-_main_DC_motor.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/stddef.h
-_main_DC_motor.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/stdint.h
+_main_DC_motor.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/assert.h
+_main_DC_motor.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/_ti_config.h
+_main_DC_motor.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/linkage.h
+_main_DC_motor.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stdarg.h
+_main_DC_motor.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stdbool.h
+_main_DC_motor.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stddef.h
+_main_DC_motor.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stdint.h
 _main_DC_motor.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/headers/include/F2837xD_adc.h
 _main_DC_motor.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/headers/include/F2837xD_analogsubsys.h
 _main_DC_motor.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/headers/include/F2837xD_cla.h
@@ -131,18 +131,20 @@ _main_DC_motor.obj: ../_dac.h
 _main_DC_motor.obj: ../_globals.h
 _main_DC_motor.obj: ../_timer.h
 _main_DC_motor.obj: ../_current_loop.h
+_main_DC_motor.obj: ../_spi.h
+_main_DC_motor.obj: ../_adc.h
 
 ../_main_DC_motor.c: 
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F28x_Project.h: 
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_Cla_typedefs.h: 
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/headers/include/F2837xD_device.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/assert.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/_ti_config.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/linkage.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/stdarg.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/stdbool.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/stddef.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/stdint.h: 
+C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/assert.h: 
+C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/_ti_config.h: 
+C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/linkage.h: 
+C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stdarg.h: 
+C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stdbool.h: 
+C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stddef.h: 
+C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stdint.h: 
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/headers/include/F2837xD_adc.h: 
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/headers/include/F2837xD_analogsubsys.h: 
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/headers/include/F2837xD_cla.h: 
@@ -263,3 +265,5 @@ C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/device.h:
 ../_globals.h: 
 ../_timer.h: 
 ../_current_loop.h: 
+../_spi.h: 
+../_adc.h: 

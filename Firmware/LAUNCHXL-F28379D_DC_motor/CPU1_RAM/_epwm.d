@@ -4,13 +4,13 @@ _epwm.obj: ../_epwm.c
 _epwm.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F28x_Project.h
 _epwm.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_Cla_typedefs.h
 _epwm.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/headers/include/F2837xD_device.h
-_epwm.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/assert.h
-_epwm.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/_ti_config.h
-_epwm.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/linkage.h
-_epwm.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/stdarg.h
-_epwm.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/stdbool.h
-_epwm.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/stddef.h
-_epwm.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/stdint.h
+_epwm.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/assert.h
+_epwm.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/_ti_config.h
+_epwm.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/linkage.h
+_epwm.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stdarg.h
+_epwm.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stdbool.h
+_epwm.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stddef.h
+_epwm.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stdint.h
 _epwm.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/headers/include/F2837xD_adc.h
 _epwm.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/headers/include/F2837xD_analogsubsys.h
 _epwm.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/headers/include/F2837xD_cla.h
@@ -64,27 +64,28 @@ _epwm.obj: ../_globals.h
 _epwm.obj: C:/ti/c2000/C2000Ware_1_00_06_00/libraries/dsp/FixedPoint/c28/include/filter.h
 _epwm.obj: D:/Workspace/Projects/LAUNCHXL-F28379D_DC_motor/Firmware/LAUNCHXL-F28379D_DC_motor/fir.h
 _epwm.obj: C:/ti/c2000/C2000Ware_1_00_06_00/libraries/dsp/FixedPoint/c28/include/iir.h
-_epwm.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/math.h
-_epwm.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/_defs.h
+_epwm.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/math.h
+_epwm.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/_defs.h
 _epwm.obj: ../_current_loop.h
 _epwm.obj: C:/ti/c2000/C2000Ware_1_00_06_00/libraries/dsp/FPU/c28/include/fpu_filter.h
 _epwm.obj: C:/ti/c2000/C2000Ware_1_00_06_00/libraries/dsp/FPU/c28/include/fpu_types.h
-_epwm.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/float.h
+_epwm.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/float.h
 _epwm.obj: C:/ti/c2000/C2000Ware_1_00_06_00/libraries/control/DCL/c28/include/DCLF32.h
 _epwm.obj: C:/ti/c2000/C2000Ware_1_00_06_00/libraries/control/DCL/c28/include/DCL.h
-_epwm.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/complex.h
+_epwm.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/complex.h
+_epwm.obj: ../_spi.h
 
 ../_epwm.c: 
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F28x_Project.h: 
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_Cla_typedefs.h: 
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/headers/include/F2837xD_device.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/assert.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/_ti_config.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/linkage.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/stdarg.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/stdbool.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/stddef.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/stdint.h: 
+C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/assert.h: 
+C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/_ti_config.h: 
+C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/linkage.h: 
+C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stdarg.h: 
+C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stdbool.h: 
+C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stddef.h: 
+C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stdint.h: 
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/headers/include/F2837xD_adc.h: 
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/headers/include/F2837xD_analogsubsys.h: 
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/headers/include/F2837xD_cla.h: 
@@ -138,12 +139,13 @@ C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_d
 C:/ti/c2000/C2000Ware_1_00_06_00/libraries/dsp/FixedPoint/c28/include/filter.h: 
 D:/Workspace/Projects/LAUNCHXL-F28379D_DC_motor/Firmware/LAUNCHXL-F28379D_DC_motor/fir.h: 
 C:/ti/c2000/C2000Ware_1_00_06_00/libraries/dsp/FixedPoint/c28/include/iir.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/math.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/_defs.h: 
+C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/math.h: 
+C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/_defs.h: 
 ../_current_loop.h: 
 C:/ti/c2000/C2000Ware_1_00_06_00/libraries/dsp/FPU/c28/include/fpu_filter.h: 
 C:/ti/c2000/C2000Ware_1_00_06_00/libraries/dsp/FPU/c28/include/fpu_types.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/float.h: 
+C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/float.h: 
 C:/ti/c2000/C2000Ware_1_00_06_00/libraries/control/DCL/c28/include/DCLF32.h: 
 C:/ti/c2000/C2000Ware_1_00_06_00/libraries/control/DCL/c28/include/DCL.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/complex.h: 
+C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/complex.h: 
+../_spi.h: 

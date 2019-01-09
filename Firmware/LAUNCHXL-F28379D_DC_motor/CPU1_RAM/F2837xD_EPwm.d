@@ -2,13 +2,13 @@
 
 F2837xD_EPwm.obj: ../F2837xD_EPwm.c
 F2837xD_EPwm.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/headers/include/F2837xD_device.h
-F2837xD_EPwm.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/assert.h
-F2837xD_EPwm.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/_ti_config.h
-F2837xD_EPwm.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/linkage.h
-F2837xD_EPwm.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/stdarg.h
-F2837xD_EPwm.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/stdbool.h
-F2837xD_EPwm.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/stddef.h
-F2837xD_EPwm.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/stdint.h
+F2837xD_EPwm.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/assert.h
+F2837xD_EPwm.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/_ti_config.h
+F2837xD_EPwm.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/linkage.h
+F2837xD_EPwm.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stdarg.h
+F2837xD_EPwm.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stdbool.h
+F2837xD_EPwm.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stddef.h
+F2837xD_EPwm.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stdint.h
 F2837xD_EPwm.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/headers/include/F2837xD_adc.h
 F2837xD_EPwm.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/headers/include/F2837xD_analogsubsys.h
 F2837xD_EPwm.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/headers/include/F2837xD_cla.h
@@ -59,13 +59,13 @@ F2837xD_EPwm.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common
 
 ../F2837xD_EPwm.c: 
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/headers/include/F2837xD_device.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/assert.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/_ti_config.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/linkage.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/stdarg.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/stdbool.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/stddef.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.3.LTS/include/stdint.h: 
+C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/assert.h: 
+C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/_ti_config.h: 
+C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/linkage.h: 
+C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stdarg.h: 
+C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stdbool.h: 
+C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stddef.h: 
+C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stdint.h: 
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/headers/include/F2837xD_adc.h: 
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/headers/include/F2837xD_analogsubsys.h: 
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/headers/include/F2837xD_cla.h: 

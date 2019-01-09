@@ -59,7 +59,9 @@
 #include "_globals.h"
 #include "_timer.h"
 #include "_current_loop.h"
-
+#include "_spi.h"
+#include "_adc.h"
+/*
 extern volatile uint16_t DMA_Buf[2*CURR_TRFER_SZ*SIZE_CURR_BURST];
 extern volatile uint16_t *currents;
 extern volatile uint16_t *current1;
@@ -67,7 +69,7 @@ extern volatile uint16_t *current2;
 
 extern volatile uint16_t *DMADest;
 extern volatile uint16_t *DMASource;
-
+*/
 //#define SIZE_CURR_BURST       0x19U   //0x19U == 25U
 
 //
@@ -98,11 +100,13 @@ extern volatile uint16_t *DMASource;
 //
 
 void InitGpioUsed(void);
-void InitADC(volatile struct ADC_REGS *AdcxRegs, uint16_t channel1, uint16_t channel2);
-void InitDMAforADCa(volatile struct ADC_RESULT_REGS *AdcxResultRegs);
-void InitDMAforADCb(volatile struct ADC_RESULT_REGS *AdcxResultRegs);
-__interrupt void dmach1_isr(void);
-__interrupt void dmach2_isr(void);
+
+//__interrupt void dmach1_isr(void);
+//__interrupt void dmach2_isr(void);
+//
+//void InitADC(volatile struct ADC_REGS *AdcxRegs, uint16_t channel1, uint16_t channel2);
+//void InitDMAforADCa(volatile struct ADC_RESULT_REGS *AdcxResultRegs);
+//void InitDMAforADCb(volatile struct ADC_RESULT_REGS *AdcxResultRegs);
 
 
 //
@@ -117,7 +121,7 @@ int64_t i = 0;
 float freq_cpu_res = 0;
 uint16_t gpio8 = 1;
 uint16_t gpio9 = 1;
-uint32_t cntdma = 0;
+//uint32_t cntdma = 0;
 
 volatile float pwm1 = 0.1;
 volatile float pwm2 = 0.2;
@@ -126,6 +130,8 @@ volatile float pwm4 = 0.4;
 
 volatile int16_t DacaVal = 1024;
 volatile int16_t DacbVal = 2048;
+
+extern uint16_t angl_get_arr[4];
 
 void main(void)
 {
@@ -148,8 +154,10 @@ void main(void)
     PieVectTable.EPWM1_TZ_INT = &epwm1_tzint_isr;
 //    PieVectTable.EPWM1_TZ_INT = &EPWM1_TZ_ISR;
     PieVectTable.EPWM3_INT = &epwm3_int_isr;
-    PieVectTable.DMA_CH1_INT= &dmach1_isr;
-    PieVectTable.DMA_CH2_INT= &dmach2_isr;
+//    PieVectTable.DMA_CH2_INT= &dmach2_isr;
+//    PieVectTable.DMA_CH3_INT= &dmach3_isr;
+    PieVectTable.SPIA_RX_INT = &spia_rx_int_isr;
+    PieVectTable.SPIA_TX_INT = &spia_tx_int_isr;
     EDIS;
     //
     // Stop the ePWM clock
@@ -165,15 +173,20 @@ void main(void)
     GpioDataRegs.GPASET.bit.GPIO15 = 1;
     InitTZ();
     initEPWM();
+    InitGpioGS();
     InitGpioLED();
     InitDAC();
     DacaRegs.DACVALS.all = DacaVal;
     DacbRegs.DACVALS.all = DacbVal;
     DELAY_US(1e+3);
-    InitADC(&AdcbRegs, 2, 3);
     DMAInitialize();
-    InitDMAforADCb(&AdcbResultRegs);
-    initTIMER0();
+    InitADCforCurrents();
+    InitADCforForces();
+//    InitADC(&AdcbRegs, 2, 3);
+//    DMAInitialize();
+//    InitDMAforADCb(&AdcbResultRegs);
+//    initTIMER0();
+    InitSPIA();
 
     //
     // Start the ePWM clock
@@ -184,7 +197,7 @@ void main(void)
     //
     // Enable CPU INT which is connected to chosen INT:
     //
-    IER |= (M_INT1 | M_INT2 | M_INT3 | M_INT7);
+    IER |= (M_INT1 | M_INT2 | M_INT3 | M_INT6 | M_INT7);
     //
     // Enable chosen interrupts
     //
@@ -192,7 +205,12 @@ void main(void)
     PieCtrlRegs.PIEIER2.bit.INTx1 = 1;  // 2.1 - ePWM1 Trip Zone Interrupt
     PieCtrlRegs.PIEIER2.bit.INTx2 = 1;  // 2.2 - ePWM2 Trip Zone Interrupt
     PieCtrlRegs.PIEIER3.bit.INTx3 = 1;  // 3.3 - ePWM3 Interrupt
-    PieCtrlRegs.PIEIER7.bit.INTx1 = 1;   // DMA1
+    PieCtrlRegs.PIEIER6.bit.INTx1 = 1;  // 6.1 - SPIA Receive Interrupt
+    PieCtrlRegs.PIEIER6.bit.INTx2 = 1;  // 6.2 - SPIA Transmit Interrupt
+//    PieCtrlRegs.PIEIER7.bit.INTx2 = 1;  // DMA2
+//    PieCtrlRegs.PIEIER7.bit.INTx3 = 1;  // DMA2
+
+
     //
     // Enable Global Interrupt (INTM) and realtime interrupt (DBGM)
     //
@@ -222,6 +240,31 @@ void main(void)
         DacbRegs.DACVALS.all = DacbVal;
         LED_BLUE_toggle();
 
+//        CS1_SPIA_on();
+//        SpiaRegs.SPITXBUF = 0x7FFE;
+//        DELAY_US(1e+3);
+//        CS1_SPIA_off();
+//        angl_get_arr[0] = (SpiaRegs.SPIRXBUF & 0x3FFF);
+//
+//        CS2_SPIA_on();
+//        SpiaRegs.SPITXBUF = 0x7FFE;
+//        DELAY_US(1e+3);
+//        CS2_SPIA_off();
+//        angl_get_arr[1] = (SpiaRegs.SPIRXBUF & 0x3FFF);
+//
+//        CS3_SPIA_on();
+//        SpiaRegs.SPITXBUF = 0x7FFE;
+//        DELAY_US(1e+3);
+//        CS3_SPIA_off();
+//        angl_get_arr[2] = (SpiaRegs.SPIRXBUF & 0x3FFF);
+//
+//        CS4_SPIA_on();
+//        SpiaRegs.SPITXBUF = 0x7FFE;
+//        DELAY_US(1e+3);
+//        CS4_SPIA_off();
+//        angl_get_arr[3] = (SpiaRegs.SPIRXBUF & 0x3FFF);
+
+
 //        GpioDataRegs.GPATOGGLE.bit.GPIO31 = 1;
 //        GpioDataRegs.GPBTOGGLE.bit.GPIO34 = 1;
 //        GpioDataRegs.GPASET.bit.GPIO14 = 1;
@@ -249,167 +292,10 @@ void InitGpioUsed(void)
     GpioCtrlRegs.GPAMUX1.bit.GPIO15 = 0;    // GPIOXX is GPIO
     GpioCtrlRegs.GPADIR.bit.GPIO15 = 1;     // GPIOXX is output
 
-    EDIS;
-}
 
-__interrupt void dmach1_isr(void)
-{
-    static uint32_t dmach1_int_count = 0;
-    dmach1_int_count++;
-    //
-    // Acknowledge this interrupt to receive more interrupts from group 7
-    //
-    PieCtrlRegs.PIEACK.all = PIEACK_GROUP7;
-}
-
-__interrupt void dmach2_isr(void)
-{
-    static uint32_t dmach2_int_count = 0;
-    dmach2_int_count++;
-    cntdma++;
-    //
-    // Acknowledge this interrupt to receive more interrupts from group 7
-    //
-    PieCtrlRegs.PIEACK.all = PIEACK_GROUP7;
-}
-
-void InitADC(volatile struct ADC_REGS *AdcxRegs, uint16_t channel1, uint16_t channel2)
-{
-    //Uint16 channel = 1;
-
-    /*Uint16 acqps;
-
-    //determine minimum acquisition window (in SYSCLKS) based on resolution
-    if(ADC_RESOLUTION_12BIT == AdcxRegs->ADCCTL2.bit.RESOLUTION){
-        acqps = 14; //75ns
-    }
-    else { //resolution is 16-bit
-        acqps = 63; //320ns
-    }*/
-
-    //Select the channels to convert and end of conversion flag
-    EALLOW;
-    //AdcxRegs->ADCBURSTCTL.bit.BURSTEN = 1; //Enable ADC burst mode
-    //AdcxRegs->ADCBURSTCTL.bit.BURSTTRIGSEL = 5; //CPU1 Timer 2 will trigger burst of conversions
-    //AdcxRegs->ADCBURSTCTL.bit.BURSTSIZE = 16*SIZE_ARR_CURR*SIZE_ARR_CURR - 1;
-
-    AdcxRegs->ADCSOC0CTL.bit.CHSEL = channel1;  //SOC0 will convert pin A0
-    AdcxRegs->ADCSOC0CTL.bit.ACQPS = 36;//(Uint16)(PWM_PERIOD / SIZE_ARR_CURR); //sample window is 100 SYSCLK cycles
-    AdcxRegs->ADCSOC0CTL.bit.TRIGSEL = 15; //5; //trigger on ePWM1 SOCA/C
-
-    AdcxRegs->ADCSOC1CTL.bit.CHSEL = channel2;  //SOC0 will convert pin A0
-    AdcxRegs->ADCSOC1CTL.bit.ACQPS = 36;//(Uint16)(PWM_PERIOD / SIZE_ARR_CURR); //sample window is 100 SYSCLK cycles
-    AdcxRegs->ADCSOC1CTL.bit.TRIGSEL = 15; //5; //trigger on ePWM1 SOCA/C
-//    AdcxRegs->ADCINTSOCSEL1.bit.SOC0 = 1;
-//    AdcxRegs->ADCINTSOCSEL1.bit.SOC1 = 1;
-
-    AdcxRegs->ADCINTSEL1N2.bit.INT1SEL = 1; //end of SOC0 will set INT1 flag
-    AdcxRegs->ADCINTSEL1N2.bit.INT1CONT = 1; //end of SOC0 will set INT1 flag
-    AdcxRegs->ADCINTSEL1N2.bit.INT1E = 1;   //enable INT1 flag
-    AdcxRegs->ADCINTFLGCLR.bit.ADCINT1 = 1; //make sure INT1 flag is cleared
-
-    /*AdcxRegs->ADCINTSEL1N2.bit.INT2SEL = 1; //end of SOC0 will set INT1 flag
-    AdcxRegs->ADCINTSEL1N2.bit.INT2CONT = 1; //end of SOC0 will set INT1 flag
-    AdcxRegs->ADCINTSEL1N2.bit.INT2E = 1;   //enable INT1 flag
-    AdcxRegs->ADCINTFLGCLR.bit.ADCINT2 = 1; //make sure INT1 flag is cleared
-*/
-
-    //write configurations
-    AdcxRegs->ADCCTL2.bit.PRESCALE = 6; //set ADCCLK divider to /4
-    AdcxRegs->ADCCTL2.bit.RESOLUTION = 0; //12bit
-    AdcxRegs->ADCCTL2.bit.SIGNALMODE = 0; //single-end
-    //AdcxRegs->ADCCTL2.bit.PRESCALE = 14; //set ADCCLK divider to /8
-   // AdcSetMode(ADC_ADCA, ADC_RESOLUTION_12BIT, ADC_SIGNALMODE_SINGLE);
-
-    //Set pulse positions to late
-    AdcxRegs->ADCCTL1.bit.INTPULSEPOS = 1;
-
-    //power up the ADC
-    AdcxRegs->ADCCTL1.bit.ADCPWDNZ = 1;
-
-    //delay for 1ms to allow ADC time to power up
-    DELAY_US(1000);
 
     EDIS;
 }
-
-void InitDMAforADCa(volatile struct ADC_RESULT_REGS *AdcxResultRegs)
-{
-//    DMAInitialize();
-
-// Configure DMA Channel
-    DMADest   = &currents[0];              //Point DMA destination to the beginning of the array
-    DMASource = &AdcaResultRegs.ADCRESULT0;    //Point DMA source to ADC result register base
-    DMACH1AddrConfig(DMADest,DMASource);
-    DMACH1BurstConfig(1,1,SIZE_CURR_BURST);
-    DMACH1TransferConfig((SIZE_CURR_BURST)-1,0,0);
-    DMACH1WrapConfig(0,0,0,1);
-    DMACH1ModeConfig(DMA_ADCAINT1,PERINT_ENABLE,ONESHOT_DISABLE,CONT_ENABLE,SYNC_DISABLE,SYNC_SRC,
-                     OVRFLOW_DISABLE,SIXTEEN_BIT,CHINT_END,CHINT_ENABLE);
-    StartDMACH1();
-}
-
-void InitDMAforADCb(volatile struct ADC_RESULT_REGS *AdcxResultRegs)
-{
-//    DMAInitialize();
-
-// Configure DMA Channel
-    DMADest   = &currents[0];              //Point DMA destination to the beginning of the array
-    DMASource = &AdcbResultRegs.ADCRESULT0;    //Point DMA source to ADC result register base
-//    DMACH2AddrConfig(DMADest,DMASource);
-//    DMACH2BurstConfig(1,1,SIZE_CURR_BURST);
-//    DMACH2TransferConfig((SIZE_CURR_BURST)-1,0,0);
-//    DMACH2WrapConfig(0,0,0,1);
-//    DMACH2ModeConfig(DMA_ADCBINT1,PERINT_ENABLE,ONESHOT_DISABLE,CONT_ENABLE,SYNC_DISABLE,SYNC_SRC,
-//                     OVRFLOW_DISABLE,SIXTEEN_BIT,CHINT_END,CHINT_ENABLE);
-//    StartDMACH2();
-    DMADest   = &currents[0];              //Point DMA destination to the beginning of the array
-    DMASource = &AdcbResultRegs.ADCRESULT0;    //Point DMA source to ADC result register base
-    DMACH2AddrConfig(DMADest,DMASource);
-    EALLOW;
-    // Set up SOURCE address:
-    DmaRegs.CH2.SRC_BEG_ADDR_SHADOW = (Uint32)DMASource;   // Point to beginning of source buffer.
-    DmaRegs.CH2.SRC_ADDR_SHADOW =     (Uint32)DMASource;
-    // Set up DESTINATION address:
-    DmaRegs.CH2.DST_BEG_ADDR_SHADOW = (Uint32)DMADest;  // Point to beginning of destination buffer.
-    DmaRegs.CH2.DST_ADDR_SHADOW =     (Uint32)DMADest;
-    // Set up BURST registers:
-    DmaRegs.CH2.BURST_SIZE.all = 1;     // Number of words(X-1) x-ferred in a burst.
-    DmaRegs.CH2.SRC_BURST_STEP = 1;  // Increment source addr between each word x-ferred.
-    DmaRegs.CH2.DST_BURST_STEP = CURR_TRFER_SZ*SIZE_CURR_BURST;  // Increment dest addr between each word x-ferred.
-    // Set up TRANSFER registers:
-    DmaRegs.CH2.TRANSFER_SIZE = (CURR_TRFER_SZ*SIZE_CURR_BURST)-1;        // Number of bursts per transfer, DMA interrupt will occur after completed transfer.
-    DmaRegs.CH2.SRC_TRANSFER_STEP = 0; // TRANSFER_STEP is ignored when WRAP occurs.
-    DmaRegs.CH2.DST_TRANSFER_STEP = 0; // TRANSFER_STEP is ignored when WRAP occurs.
-    // Set up WRAP registers:
-    DmaRegs.CH2.SRC_WRAP_SIZE = 0; // Wrap source address after N bursts
-    DmaRegs.CH2.SRC_WRAP_STEP = 0; // Step for source wrap
-    DmaRegs.CH2.DST_WRAP_SIZE = 0; // Wrap destination address after N bursts.
-    DmaRegs.CH2.DST_WRAP_STEP = 1; // Step for destination wrap
-    // Set up MODE Register:
-    DmaClaSrcSelRegs.DMACHSRCSEL1.bit.CH2 = DMA_ADCBINT1;   // persel - Source select
-    DmaRegs.CH2.MODE.bit.PERINTSEL = 2;                     // PERINTSEL - Should be hard coded to channel, above now selects source
-    DmaRegs.CH2.MODE.bit.PERINTE = PERINT_ENABLE;           // PERINTE - Peripheral interrupt enable
-    DmaRegs.CH2.MODE.bit.ONESHOT = ONESHOT_DISABLE;         // ONESHOT - Oneshot enable
-//    DmaRegs.CH2.MODE.bit.CONTINUOUS = CONT_ENABLE;          // CONTINUOUS - Continuous enable
-    DmaRegs.CH2.MODE.bit.CONTINUOUS = CONT_DISABLE;          // CONTINUOUS - Continuous enable
-    DmaRegs.CH2.MODE.bit.OVRINTE = OVRFLOW_DISABLE;         // OVRINTE - Enable/disable the overflow interrupt
-    DmaRegs.CH2.MODE.bit.DATASIZE = SIXTEEN_BIT;            // DATASIZE - 16-bit/32-bit data size transfers
-    DmaRegs.CH2.MODE.bit.CHINTMODE = CHINT_END;             // CHINTMODE - Generate interrupt to CPU at beginning/end of transfer
-    DmaRegs.CH2.MODE.bit.CHINTE = CHINT_ENABLE;             // CHINTE - Channel Interrupt to  CPU enable
-    // Clear any spurious flags: Interrupt flags and sync error flags
-    DmaRegs.CH2.CONTROL.bit.PERINTCLR = 1;
-    DmaRegs.CH2.CONTROL.bit.ERRCLR = 1;
-    // Initialize PIE vector for CPU interrupt
-    PieCtrlRegs.PIEIER7.bit.INTx2 = 1;                      // Enable DMA CH2 interrupt in PIE
-    // Starts DMA Channel 2
-//    DmaRegs.CH2.CONTROL.bit.RUN = 1;
-    EDIS;
-//    DMACH2ModeConfig(DMA_ADCBINT1,PERINT_ENABLE,ONESHOT_DISABLE,CONT_ENABLE,SYNC_DISABLE,SYNC_SRC,
-//                     OVRFLOW_DISABLE,SIXTEEN_BIT,CHINT_END,CHINT_ENABLE);
-//    StartDMACH2();
-}
-
 
 //
 // End of File
