@@ -37,8 +37,8 @@ void initEPWMxB(volatile struct EPWM_REGS *EPwmxRegs);
 void initEPWMxInt(volatile struct EPWM_REGS *EPwmxRegs);
 void initEPWMxSyncIn(volatile struct EPWM_REGS *EPwmxRegs, uint16_t tbphs);
 void initEPWMxSyncOut(volatile struct EPWM_REGS *EPwmxRegs);
-void initEPWMxASyncSOC(volatile struct EPWM_REGS *EPwmxRegs);
-void initEPWMxBSyncSOC(volatile struct EPWM_REGS *EPwmxRegs);
+void initEPWMxASyncSOC(volatile struct EPWM_REGS *EPwmxRegs, uint16_t soc_period_divider);
+void initEPWMxBSyncSOC(volatile struct EPWM_REGS *EPwmxRegs, uint16_t soc_period_divider);
 
 //inline void EPWMxA1Ph1PinOut(volatile struct EPWM_REGS *EPwmxRegs, int32_t out);
 //inline void fEPWMxA1Ph1PinOut(volatile struct EPWM_REGS *EPwmxRegs, float out);

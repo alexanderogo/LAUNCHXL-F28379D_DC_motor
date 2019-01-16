@@ -74,6 +74,7 @@ _epwm.obj: C:/ti/c2000/C2000Ware_1_00_06_00/libraries/control/DCL/c28/include/DC
 _epwm.obj: C:/ti/c2000/C2000Ware_1_00_06_00/libraries/control/DCL/c28/include/DCL.h
 _epwm.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/complex.h
 _epwm.obj: ../_spi.h
+_epwm.obj: ../_angle_loop.h
 
 ../_epwm.c: 
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F28x_Project.h: 
@@ -149,3 +150,4 @@ C:/ti/c2000/C2000Ware_1_00_06_00/libraries/control/DCL/c28/include/DCLF32.h:
 C:/ti/c2000/C2000Ware_1_00_06_00/libraries/control/DCL/c28/include/DCL.h: 
 C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/complex.h: 
 ../_spi.h: 
+../_angle_loop.h: 

@@ -48,17 +48,11 @@ void InitSPI(volatile struct SPI_REGS *SpixRegs)
     //
     // Initialize SPI FIFO registers
     //
-//    SpiaRegs.SPIFFTX.all = 0xC021;          // Enable FIFOs, set TX FIFO level to 2
-    SpiaRegs.SPIFFTX.all = 0xC001;          // Enable FIFOs, set TX FIFO level to 2
-//    SpiaRegs.SPIFFTX.bit.TXFFIENA = 1;      // TX FIFO Interrupt Enable
-//    SpiaRegs.SPIFFRX.all = 0x0021;          // Set RX FIFO level to 2
-    SpiaRegs.SPIFFRX.all = 0x0001;          // Set RX FIFO level to 2
-//    SpiaRegs.SPIFFRX.bit.RXFFIENA = 1;      // RX FIFO Interrupt Enable
-
+    SpiaRegs.SPIFFTX.all = 0xA040;          // Disable FIFOs, disable FIFO INT, set TX FIFO level to 0
+//    SpiaRegs.SPIFFTX.all = 0xE062;          // Enable FIFOs, enable FIFO INT, set TX FIFO level to 0
+    SpiaRegs.SPIFFRX.all = 0x2040;          // Disable FIFOs, disable FIFO INT, Set RX FIFO level to 0
+//    SpiaRegs.SPIFFRX.all = 0x2062;          // Enable FIFOs, enable FIFO INT, Set RX FIFO level to 2
     SpiaRegs.SPIFFCT.all = 0x00;
-
-    SpiaRegs.SPIFFTX.bit.TXFIFO=1;
-    SpiaRegs.SPIFFRX.bit.RXFIFORESET=1;
 
     // Initialize SPI-A
 
@@ -81,7 +75,7 @@ void InitSPI(volatile struct SPI_REGS *SpixRegs)
     SpiaRegs.SPICTL.bit.SPIINTENA = 0;
 
     // Set the baud rate
-    SpiaRegs.SPIBRR.bit.SPI_BIT_RATE = ((200E6 / 4) / 4000E3) - 1;
+    SpiaRegs.SPIBRR.bit.SPI_BIT_RATE = ((200E6 / 4) / 2000E3) - 1;
 
     // Set FREE bit
     // Halting on a breakpoint will not halt the SPI

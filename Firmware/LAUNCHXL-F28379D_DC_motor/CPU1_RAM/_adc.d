@@ -60,6 +60,7 @@ _adc.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include
 _adc.obj: C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_defaultisr.h
 _adc.obj: ../_current_loop.h
 _adc.obj: ../_globals.h
+_adc.obj: ../_adc.h
 
 ../_adc.c: 
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F28x_Project.h: 
@@ -121,3 +122,4 @@ C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_U
 C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/F2837xD_defaultisr.h: 
 ../_current_loop.h: 
 ../_globals.h: 
+../_adc.h: 

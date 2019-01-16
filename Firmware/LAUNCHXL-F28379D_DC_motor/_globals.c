@@ -5,6 +5,37 @@
  *      Author: Alexander
  */
 #include "_globals.h"
+#include "F28x_Project.h"
+#include <stdint.h>
+
+
+#pragma DATA_SECTION(voltage, "ramgs0");    // map the TX data to memory
+volatile uint16_t voltage[SIZE_VOLTAGE_BURST*NUM_VOLT_CH*VOLT_BUF_SZ];
+
+//struct DRIVE_ANG_SENS {
+//    uint16_t sr_load;
+//    uint16_t sr_rotor;
+//};
+//struct ANGLES {
+//    struct DRIVE_ANG_SENS drive1;
+//    struct DRIVE_ANG_SENS drive2;
+//};
+//struct DRIVE_ANG_SENS_FILT {
+//    float32 sr_load;
+//    float32 sr_rotor;
+//};
+//struct ANGLES_FILT {
+//    struct DRIVE_ANG_SENS_FILT drive1;
+//    struct DRIVE_ANG_SENS_FILT drive2;
+//};
+/*
+static volatile struct ANGLES angles;
+static volatile struct ANGLES_FILT anglesf;
+
+struct ANGLES get_angles(void) { return angles; }
+void set_angles(const volatile struct ANGLES *angl) { angles = *angl; }
+volatile struct ANGLES *angles_ptr(void) { return &angles; }
+*/
 /*
 #include <stdint.h>
 #include <filter.h>

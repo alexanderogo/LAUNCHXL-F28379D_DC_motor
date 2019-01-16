@@ -59,6 +59,7 @@
 #include "_globals.h"
 #include "_timer.h"
 #include "_current_loop.h"
+#include "_angle_loop.h"
 #include "_spi.h"
 #include "_adc.h"
 /*
@@ -145,6 +146,7 @@ void main(void)
 
     init_current_filters();
     init_current_PID();
+    init_ang_loop();
 
     //
     // Stop the ePWM clock
@@ -154,8 +156,9 @@ void main(void)
     PieVectTable.EPWM1_TZ_INT = &epwm1_tzint_isr;
 //    PieVectTable.EPWM1_TZ_INT = &EPWM1_TZ_ISR;
     PieVectTable.EPWM3_INT = &epwm3_int_isr;
-//    PieVectTable.DMA_CH2_INT= &dmach2_isr;
-//    PieVectTable.DMA_CH3_INT= &dmach3_isr;
+    PieVectTable.DMA_CH2_INT= &dmach2_isr;
+    PieVectTable.DMA_CH3_INT= &dmach3_isr;
+    PieVectTable.DMA_CH4_INT= &dmach4_isr;
     PieVectTable.SPIA_RX_INT = &spia_rx_int_isr;
     PieVectTable.SPIA_TX_INT = &spia_tx_int_isr;
     EDIS;
@@ -182,6 +185,7 @@ void main(void)
     DMAInitialize();
     InitADCforCurrents();
     InitADCforForces();
+    InitADCforVoltages();
 //    InitADC(&AdcbRegs, 2, 3);
 //    DMAInitialize();
 //    InitDMAforADCb(&AdcbResultRegs);
@@ -208,7 +212,8 @@ void main(void)
     PieCtrlRegs.PIEIER6.bit.INTx1 = 1;  // 6.1 - SPIA Receive Interrupt
     PieCtrlRegs.PIEIER6.bit.INTx2 = 1;  // 6.2 - SPIA Transmit Interrupt
 //    PieCtrlRegs.PIEIER7.bit.INTx2 = 1;  // DMA2
-//    PieCtrlRegs.PIEIER7.bit.INTx3 = 1;  // DMA2
+//    PieCtrlRegs.PIEIER7.bit.INTx3 = 1;  // DMA3
+//    PieCtrlRegs.PIEIER7.bit.INTx4 = 1;  // DMA4
 
 
     //

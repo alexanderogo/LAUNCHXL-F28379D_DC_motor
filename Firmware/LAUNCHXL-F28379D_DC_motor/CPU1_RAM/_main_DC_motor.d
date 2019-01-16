@@ -131,6 +131,7 @@ _main_DC_motor.obj: ../_dac.h
 _main_DC_motor.obj: ../_globals.h
 _main_DC_motor.obj: ../_timer.h
 _main_DC_motor.obj: ../_current_loop.h
+_main_DC_motor.obj: ../_angle_loop.h
 _main_DC_motor.obj: ../_spi.h
 _main_DC_motor.obj: ../_adc.h
 
@@ -265,5 +266,6 @@ C:/ti/c2000/C2000Ware_1_00_06_00/device_support/f2837xd/common/include/device.h:
 ../_globals.h: 
 ../_timer.h: 
 ../_current_loop.h: 
+../_angle_loop.h: 
 ../_spi.h: 
 ../_adc.h: 

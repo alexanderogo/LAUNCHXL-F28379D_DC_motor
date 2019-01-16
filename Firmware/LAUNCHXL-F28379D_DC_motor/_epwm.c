@@ -16,6 +16,7 @@
 #include "fpu_filter.h"
 #include "DCLF32.h"
 #include "_spi.h"
+#include "_angle_loop.h"
 
 
 extern volatile uint16_t *current1;
@@ -57,6 +58,8 @@ uint32_t ang_per_div = 10;
 uint16_t angl_adr_msg = 0x7FFE; // dynamic comp. 0xFFFF
 uint16_t angl_get_arr[4] = {0};
 
+uint32_t glob_cnt1 = 0;
+
 extern DCL_PID pid1;
 
 inline float mean_curr(const uint16_t *it);
@@ -66,50 +69,22 @@ __interrupt void epwm3_int_isr(void)
     static uint32_t EPwm3IntCount = 0;
     EPwm3IntCount++;
     int16_t d_count = (EPwm3IntCount-1)%2;
-    if (d_count == 0) {
+    if (EPwm3IntCount == 1) {
         EALLOW;
         DmaRegs.CH2.CONTROL.bit.RUN = 1;
         DmaRegs.CH3.CONTROL.bit.RUN = 1;
+        DmaRegs.CH4.CONTROL.bit.RUN = 1;
         EDIS;
     }
+    VECTOR2F target_ang = {0, 0};
+    angle_loop_calc(target_ang, 8);
+//    get_angle(8);
 
-
-    switch (EPwm3IntCount%10) {
-    case 1:
-        CS1_SPIA_on();
-        SpiaRegs.SPITXBUF = 0x7FFE;
-        break;
-    case 2:
-        CS1_SPIA_off();
-        angl_get_arr[0] = (SpiaRegs.SPIRXBUF & 0x3FFF);
-        CS2_SPIA_on();
-        SpiaRegs.SPITXBUF = 0x7FFE;
-        break;
-    case 3:
-        CS2_SPIA_off();
-        angl_get_arr[1] = (SpiaRegs.SPIRXBUF & 0x3FFF);
-        CS3_SPIA_on();
-        SpiaRegs.SPITXBUF = 0x7FFE;
-        break;
-    case 4:
-        CS3_SPIA_off();
-        angl_get_arr[2] = (SpiaRegs.SPIRXBUF & 0x3FFF);
-        CS4_SPIA_on();
-        SpiaRegs.SPITXBUF = 0x7FFE;
-        break;
-    case 0:
-        CS4_SPIA_off();
-        angl_get_arr[3] = (SpiaRegs.SPIRXBUF & 0x3FFF);
-        break;
-    default:
-        break;
-    }
-
-//    uint16_t *it = current1 + 25*((d_count+2-1)%2);
 //    #pragma MUST_ITERATE(25, 25)
 //    for (i = 0; i < 25; i++) {
 //        acc += *it++;
 //    }
+    glob_cnt1++;
 
     current1f = mean_curr(current1 + SIZE_CURR_BURST*((d_count+CURR_TRFER_SZ - 1)%CURR_TRFER_SZ)); // conversation (uint16_t*)
     current2f = mean_curr(current2 + SIZE_CURR_BURST*((d_count+CURR_TRFER_SZ - 1)%CURR_TRFER_SZ)); // conversation (uint16_t*)
@@ -321,7 +296,8 @@ void InitGpioGS(void)
 {
     EALLOW;
     GpioCtrlRegs.GPBPUD.bit.GPIO32 = 0;     // Enable pullup on GPIOXX
-    GpioDataRegs.GPBSET.bit.GPIO32 = 1;     // Load output latch
+//    GpioDataRegs.GPBSET.bit.GPIO32 = 1;     // Load output latch
+    GpioDataRegs.GPBCLEAR.bit.GPIO32 = 1;     // Load output latch
     GpioCtrlRegs.GPBMUX1.bit.GPIO32 = 0;    // GPIOXX is GPIO
     GpioCtrlRegs.GPBDIR.bit.GPIO32 = 1;     // GPIOXX is output
 
@@ -619,20 +595,20 @@ void initEPWMxSyncOut(volatile struct EPWM_REGS *EPwmxRegs)
     EPwmxRegs->TBCTL.bit.SYNCOSEL = 1;           // generate a syncout if CTR = 0
 }
 
-void initEPWMxASyncSOC(volatile struct EPWM_REGS *EPwmxRegs)
+void initEPWMxASyncSOC(volatile struct EPWM_REGS *EPwmxRegs, uint16_t soc_period_divider)
 {
-    EPwmxRegs->ETPS.bit.SOCACNT = 0x1;           // 1 event has occurred.
-    EPwmxRegs->ETPS.bit.SOCAPRD = 0x1;           // Generate the EPWMxSOCA pulse on the first event
-    EPwmxRegs->ETSEL.bit.SOCASEL = 0x1;          // Enable event time-base counter equal to zero. (TBCTR = 0x0000)
-    EPwmxRegs->ETSEL.bit.SOCAEN = 0x1;           // Enable EPWMxSOCA pulse
+    EPwmxRegs->ETPS.bit.SOCACNT = 0x1;                  // 1 event has occurred.
+    EPwmxRegs->ETPS.bit.SOCAPRD = soc_period_divider;   // Generate the EPWMxSOCA pulse on the first event
+    EPwmxRegs->ETSEL.bit.SOCASEL = 0x1;                 // Enable event time-base counter equal to zero. (TBCTR = 0x0000)
+    EPwmxRegs->ETSEL.bit.SOCAEN = 0x1;                  // Enable EPWMxSOCA pulse
 }
 
-void initEPWMxBSyncSOC(volatile struct EPWM_REGS *EPwmxRegs)
+void initEPWMxBSyncSOC(volatile struct EPWM_REGS *EPwmxRegs, uint16_t soc_period_divider)
 {
-    EPwmxRegs->ETPS.bit.SOCBCNT = 0x1;           // 1 event has occurred.
-    EPwmxRegs->ETPS.bit.SOCBPRD = 0x1;           // Generate the EPWMxSOCB pulse on the first event
-    EPwmxRegs->ETSEL.bit.SOCBSEL = 0x1;          // Enable event time-base counter equal to zero. (TBCTR = 0x0000)
-    EPwmxRegs->ETSEL.bit.SOCBEN = 0x1;           // Enable EPWMxSOCB pulse
+    EPwmxRegs->ETPS.bit.SOCBCNT = 0x1;                  // 1 event has occurred.
+    EPwmxRegs->ETPS.bit.SOCBPRD = soc_period_divider;   // Generate the EPWMxSOCB pulse on the N event
+    EPwmxRegs->ETSEL.bit.SOCBSEL = 0x1;                 // Enable event time-base counter equal to zero. (TBCTR = 0x0000)
+    EPwmxRegs->ETSEL.bit.SOCBEN = 0x1;                  // Enable EPWMxSOCB pulse
 }
 
 void initEPWM(void)
@@ -675,7 +651,17 @@ void initEPWM(void)
     initEPWMxB(&EPwm6Regs);
     initEPWMxInt(&EPwm6Regs);
     initEPWMxSyncIn(&EPwm6Regs, 0);
-    initEPWMxASyncSOC(&EPwm6Regs);
+    initEPWMxASyncSOC(&EPwm6Regs, 1);
+    initEPWMxBSyncSOC(&EPwm6Regs, 2);
+//    initEPWMxBSyncSOC(&EPwm6Regs);
+
+    initEPWMxMODE(&EPwm12Regs, EPWM_TBPRD/50);
+    initEPWMxA(&EPwm12Regs);
+    initEPWMxB(&EPwm12Regs);
+//    initEPWMxInt(&EPwm12Regs);
+    initEPWMxSyncIn(&EPwm12Regs, 0);
+    initEPWMxASyncSOC(&EPwm12Regs, 1);
+    initEPWMxBSyncSOC(&EPwm12Regs, 2);
 //    initEPWMxBSyncSOC(&EPwm6Regs);
 
 //    EPWMxA1Ph1PinOut(&EPwm1Regs, 100);

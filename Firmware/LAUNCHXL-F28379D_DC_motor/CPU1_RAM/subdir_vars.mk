@@ -13,7 +13,7 @@ LIB_SRCS += \
 ../driverlib.lib 
 
 ASM_SRCS += \
-../DCL_clamp_C1.asm \
+../DCL_PID_C4.asm \
 ../F2837xD_CodeStartBranch.asm \
 ../F2837xD_usDelay.asm 
 
@@ -29,6 +29,7 @@ C_SRCS += \
 ../F2837xD_Spi.c \
 ../F2837xD_SysCtrl.c \
 ../_adc.c \
+../_angle_loop.c \
 ../_current_loop.c \
 ../_dac.c \
 ../_epwm.c \
@@ -51,6 +52,7 @@ C_DEPS += \
 ./F2837xD_Spi.d \
 ./F2837xD_SysCtrl.d \
 ./_adc.d \
+./_angle_loop.d \
 ./_current_loop.d \
 ./_dac.d \
 ./_epwm.d \
@@ -62,7 +64,7 @@ C_DEPS += \
 ./_timer.d 
 
 OBJS += \
-./DCL_clamp_C1.obj \
+./DCL_PID_C4.obj \
 ./F2837xD_CodeStartBranch.obj \
 ./F2837xD_CpuTimers.obj \
 ./F2837xD_DefaultISR.obj \
@@ -76,6 +78,7 @@ OBJS += \
 ./F2837xD_SysCtrl.obj \
 ./F2837xD_usDelay.obj \
 ./_adc.obj \
+./_angle_loop.obj \
 ./_current_loop.obj \
 ./_dac.obj \
 ./_epwm.obj \
@@ -87,12 +90,12 @@ OBJS += \
 ./_timer.obj 
 
 ASM_DEPS += \
-./DCL_clamp_C1.d \
+./DCL_PID_C4.d \
 ./F2837xD_CodeStartBranch.d \
 ./F2837xD_usDelay.d 
 
 OBJS__QUOTED += \
-"DCL_clamp_C1.obj" \
+"DCL_PID_C4.obj" \
 "F2837xD_CodeStartBranch.obj" \
 "F2837xD_CpuTimers.obj" \
 "F2837xD_DefaultISR.obj" \
@@ -106,6 +109,7 @@ OBJS__QUOTED += \
 "F2837xD_SysCtrl.obj" \
 "F2837xD_usDelay.obj" \
 "_adc.obj" \
+"_angle_loop.obj" \
 "_current_loop.obj" \
 "_dac.obj" \
 "_epwm.obj" \
@@ -128,6 +132,7 @@ C_DEPS__QUOTED += \
 "F2837xD_Spi.d" \
 "F2837xD_SysCtrl.d" \
 "_adc.d" \
+"_angle_loop.d" \
 "_current_loop.d" \
 "_dac.d" \
 "_epwm.d" \
@@ -139,12 +144,12 @@ C_DEPS__QUOTED += \
 "_timer.d" 
 
 ASM_DEPS__QUOTED += \
-"DCL_clamp_C1.d" \
+"DCL_PID_C4.d" \
 "F2837xD_CodeStartBranch.d" \
 "F2837xD_usDelay.d" 
 
 ASM_SRCS__QUOTED += \
-"../DCL_clamp_C1.asm" \
+"../DCL_PID_C4.asm" \
 "../F2837xD_CodeStartBranch.asm" \
 "../F2837xD_usDelay.asm" 
 
@@ -160,6 +165,7 @@ C_SRCS__QUOTED += \
 "../F2837xD_Spi.c" \
 "../F2837xD_SysCtrl.c" \
 "../_adc.c" \
+"../_angle_loop.c" \
 "../_current_loop.c" \
 "../_dac.c" \
 "../_epwm.c" \
