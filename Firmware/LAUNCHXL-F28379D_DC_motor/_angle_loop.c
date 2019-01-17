@@ -8,6 +8,10 @@
 #ifndef ANGLE_LOOP_C_
 #define ANGLE_LOOP_C_
 
+//
+// Included Files
+//
+
 #include "F28x_Project.h"
 #include <stdint.h>
 #include <math.h>
@@ -17,10 +21,22 @@
 #include "_globals.h"
 #include "_angle_loop.h"
 
+//
+// Defines
+//
+
 #define ANG_FILT_ORDER  3 // filter order = N - 1
 //#ifndef M_PI
 #define M_PI            3.14159265358979323846  /* pi */
 //#endif
+
+//
+// Globals
+//
+
+//
+// Statics
+//
 
 //static volatile struct ANGLES angles;
 //static volatile struct ANGLES_FILT anglesf;
@@ -84,21 +100,22 @@ static DCL_PID *pid_ang1_ptr = &pid_ang1;
 static DCL_PID pid_ang2 = PID_DEFAULTS;
 static DCL_PID *pid_ang2_ptr = &pid_ang2;
 
+//
+// Test
+//
 
+static float rka = 1.0f;           // reference
+static float yka = 0.0f;           // feedback
+static float lka = 1.0f;           // saturation
+static float uka = 0.0f;           // output
 
-volatile VECTOR2F *ang_load_sr_ptr(void) { return &ang_load_sr; }
-volatile VECTOR2F *ang_rotor_sr_ptr(void) { return &ang_rotor_sr; }
-volatile VECTOR2F *ang_load_ptr(void) { return &ang_load; }
-volatile VECTOR2F *ang_rotor_ptr(void) { return &ang_rotor; }
-volatile VECTOR2F *ang_load_filt_ptr(void) { return &ang_load_filt; }
-volatile VECTOR2F *ang_rotor_filt_ptr(void) { return &ang_rotor_filt; }
-volatile VECTOR2F *ang_err_load_ptr(void) { return &ang_err_load; }
-volatile VECTOR2F *ang_err_rotor_ptr(void) { return &ang_err_rotor; }
-volatile VECTOR2F *ang_controller_out_ptr(void) { return &ang_controller_out; }
-volatile VECTOR2F *ang_target_load_ptr(void) { return &ang_target_load; }
-VECTOR2F get_ang_target_load(void) { return ang_target_load; }
-void set_ang_target_load(const volatile VECTOR2F *angles) { ang_target_load = *angles; }
+//
+// External function Prototypes
+//
 
+//
+// Function Prototypes
+//
 
 void init_fp_filter(FIR_FP *filt, int order, float *dbuf_ptr, const float *coeff_ptr);
 void init_ang_PID(DCL_PID *pid);
@@ -109,10 +126,24 @@ VECTOR2F ang_filt_calc(FIR_FP *firFP1, FIR_FP *firFP2, VECTOR2F *angle);
 VECTOR2F ang_err_calc(VECTOR2F *signal_target, VECTOR2F *signal_current);
 VECTOR2F ang_controller_calc(VECTOR2F *signal);
 
-static float rka = 1.0f;           // reference
-static float yka = 0.0f;           // feedback
-static float lka = 1.0f;           // saturation
-static float uka = 0.0f;           // output
+//
+// Function
+//
+
+inline volatile VECTOR2F *ang_load_sr_ptr(void) { return &ang_load_sr; }
+inline volatile VECTOR2F *ang_rotor_sr_ptr(void) { return &ang_rotor_sr; }
+inline volatile VECTOR2F *ang_load_ptr(void) { return &ang_load; }
+inline volatile VECTOR2F *ang_rotor_ptr(void) { return &ang_rotor; }
+inline volatile VECTOR2F *ang_load_filt_ptr(void) { return &ang_load_filt; }
+inline volatile VECTOR2F *ang_rotor_filt_ptr(void) { return &ang_rotor_filt; }
+inline volatile VECTOR2F *ang_err_load_ptr(void) { return &ang_err_load; }
+inline volatile VECTOR2F *ang_err_rotor_ptr(void) { return &ang_err_rotor; }
+inline volatile VECTOR2F *ang_controller_out_ptr(void) { return &ang_controller_out; }
+inline volatile VECTOR2F *ang_target_load_ptr(void) { return &ang_target_load; }
+inline VECTOR2F get_ang_target_load(void) { return ang_target_load; }
+inline void set_ang_target_load(const volatile VECTOR2F *angles) { ang_target_load = *angles; }
+
+
 
 void init_ang_loop(void)
 {

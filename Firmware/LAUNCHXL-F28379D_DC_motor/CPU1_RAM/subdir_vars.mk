@@ -38,7 +38,8 @@ C_SRCS += \
 ../_led.c \
 ../_main_DC_motor.c \
 ../_spi.c \
-../_timer.c 
+../_timer.c \
+../_velosity_loop.c 
 
 C_DEPS += \
 ./F2837xD_CpuTimers.d \
@@ -61,7 +62,8 @@ C_DEPS += \
 ./_led.d \
 ./_main_DC_motor.d \
 ./_spi.d \
-./_timer.d 
+./_timer.d \
+./_velosity_loop.d 
 
 OBJS += \
 ./DCL_PID_C4.obj \
@@ -87,7 +89,8 @@ OBJS += \
 ./_led.obj \
 ./_main_DC_motor.obj \
 ./_spi.obj \
-./_timer.obj 
+./_timer.obj \
+./_velosity_loop.obj 
 
 ASM_DEPS += \
 ./DCL_PID_C4.d \
@@ -118,7 +121,8 @@ OBJS__QUOTED += \
 "_led.obj" \
 "_main_DC_motor.obj" \
 "_spi.obj" \
-"_timer.obj" 
+"_timer.obj" \
+"_velosity_loop.obj" 
 
 C_DEPS__QUOTED += \
 "F2837xD_CpuTimers.d" \
@@ -141,7 +145,8 @@ C_DEPS__QUOTED += \
 "_led.d" \
 "_main_DC_motor.d" \
 "_spi.d" \
-"_timer.d" 
+"_timer.d" \
+"_velosity_loop.d" 
 
 ASM_DEPS__QUOTED += \
 "DCL_PID_C4.d" \
@@ -174,6 +179,7 @@ C_SRCS__QUOTED += \
 "../_led.c" \
 "../_main_DC_motor.c" \
 "../_spi.c" \
-"../_timer.c" 
+"../_timer.c" \
+"../_velosity_loop.c" 
 
 
