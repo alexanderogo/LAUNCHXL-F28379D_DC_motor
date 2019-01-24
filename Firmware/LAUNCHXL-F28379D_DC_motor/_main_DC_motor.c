@@ -161,6 +161,9 @@ void main(void)
     PieVectTable.DMA_CH4_INT= &dmach4_isr;
     PieVectTable.SPIA_RX_INT = &spia_rx_int_isr;
     PieVectTable.SPIA_TX_INT = &spia_tx_int_isr;
+    PieVectTable.PIE73_RESERVED_INT = &angle_int_isr1;
+    PieVectTable.PIE81_RESERVED_INT = &angle_int_isr2;
+    PieVectTable.PIE82_RESERVED_INT = &angle_int_isr3;
     EDIS;
     //
     // Stop the ePWM clock
@@ -201,7 +204,7 @@ void main(void)
     //
     // Enable CPU INT which is connected to chosen INT:
     //
-    IER |= (M_INT1 | M_INT2 | M_INT3 | M_INT6 | M_INT7);
+    IER |= (M_INT1 | M_INT2 | M_INT3 | M_INT6 | M_INT7 | M_INT9 | M_INT11);
     //
     // Enable chosen interrupts
     //
@@ -214,6 +217,9 @@ void main(void)
 //    PieCtrlRegs.PIEIER7.bit.INTx2 = 1;  // DMA2
 //    PieCtrlRegs.PIEIER7.bit.INTx3 = 1;  // DMA3
 //    PieCtrlRegs.PIEIER7.bit.INTx4 = 1;  // DMA4
+    PieCtrlRegs.PIEIER9.bit.INTx9 = 1;      // 9.9 - User Software Interrupt
+    PieCtrlRegs.PIEIER11.bit.INTx9 = 1;     // 11.9 - User Software Interrupt
+    PieCtrlRegs.PIEIER11.bit.INTx10 = 1;    // 11.10 - User Software Interrupt
 
 
     //

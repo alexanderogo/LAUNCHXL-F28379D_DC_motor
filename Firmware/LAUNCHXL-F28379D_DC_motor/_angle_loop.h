@@ -27,6 +27,10 @@ struct ANGLES_FILT {
     struct DRIVE_ANG_SENS_FILT drive2;
 };
 
+__interrupt void angle_int_isr1(void);
+__interrupt void angle_int_isr2(void);
+__interrupt void angle_int_isr3(void);
+
 void init_ang_loop(void);
 //void angle_loop_calc(float32 ang_target, uint32_t divider);
 void angle_loop_calc(VECTOR2F ang_target, uint32_t divider);

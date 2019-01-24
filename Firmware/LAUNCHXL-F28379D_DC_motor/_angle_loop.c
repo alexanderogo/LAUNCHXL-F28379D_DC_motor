@@ -38,8 +38,6 @@
 // Statics
 //
 
-//static volatile struct ANGLES angles;
-//static volatile struct ANGLES_FILT anglesf;
 static volatile VECTOR2F ang_load_sr;
 static volatile VECTOR2F ang_rotor_sr;
 static volatile VECTOR2F ang_load;
@@ -127,23 +125,108 @@ VECTOR2F ang_err_calc(VECTOR2F *signal_target, VECTOR2F *signal_current);
 VECTOR2F ang_controller_calc(VECTOR2F *signal);
 
 //
-// Function
+// Interrupt Function
 //
 
-inline volatile VECTOR2F *ang_load_sr_ptr(void) { return &ang_load_sr; }
-inline volatile VECTOR2F *ang_rotor_sr_ptr(void) { return &ang_rotor_sr; }
-inline volatile VECTOR2F *ang_load_ptr(void) { return &ang_load; }
-inline volatile VECTOR2F *ang_rotor_ptr(void) { return &ang_rotor; }
-inline volatile VECTOR2F *ang_load_filt_ptr(void) { return &ang_load_filt; }
-inline volatile VECTOR2F *ang_rotor_filt_ptr(void) { return &ang_rotor_filt; }
-inline volatile VECTOR2F *ang_err_load_ptr(void) { return &ang_err_load; }
-inline volatile VECTOR2F *ang_err_rotor_ptr(void) { return &ang_err_rotor; }
-inline volatile VECTOR2F *ang_controller_out_ptr(void) { return &ang_controller_out; }
-inline volatile VECTOR2F *ang_target_load_ptr(void) { return &ang_target_load; }
-inline VECTOR2F get_ang_target_load(void) { return ang_target_load; }
-inline void set_ang_target_load(const volatile VECTOR2F *angles) { ang_target_load = *angles; }
+__interrupt void angle_int_isr1(void)       //
+{
+    uint16_t TempPIEIER;
+    TempPIEIER = PieCtrlRegs.PIEIER9.all;   // Save PIEIER register for later
+    IER |= M_INT9;                          // Set global priority by adjusting IER
+    IER &= M_INT9;
+    PieCtrlRegs.PIEIER9.all &= 0x00FF;      // Set group priority by adjusting PIEIER2 to allow INT2.2 to interrupt current ISR
+    PieCtrlRegs.PIEACK.all = 0xFFFF;        // Enable PIE interrupts
+    asm("   NOP");                          // Wait one cycle
+    EINT;                                   // Clear INTM to enable interrupts
+    //
+    // Insert ISR Code here.......
+    // for now just insert a delay
+    //
+    static uint32_t user_int1_count = 0;
+    user_int1_count++;
+    DELAY_US(1);
+    //
+    // Restore registers saved:
+    //
+    DINT;
+    PieCtrlRegs.PIEIER9.all = TempPIEIER;
+    PieCtrlRegs.PIEACK.all = PIEACK_GROUP11;
+}
 
+__interrupt void angle_int_isr2(void)        //
+{
+    uint16_t TempPIEIER;
+    TempPIEIER = PieCtrlRegs.PIEIER11.all;  // Save PIEIER register for later
+    IER |= M_INT11;                         // Set global priority by adjusting IER
+    IER &= M_INT11;
+    PieCtrlRegs.PIEIER11.all &= 0x00FF;     // Set group priority by adjusting PIEIER2 to allow INT2.2 to interrupt current ISR
+    PieCtrlRegs.PIEACK.all = 0xFFFF;        // Enable PIE interrupts
+    asm("   NOP");                          // Wait one cycle
+    EINT;                                   // Clear INTM to enable interrupts
+    //
+    // Insert ISR Code here.......
+    // for now just insert a delay
+    //
+    static uint32_t user_int2_count = 0;
+    user_int2_count++;
+    DELAY_US(1);
+    //
+    // Restore registers saved:
+    //
+    DINT;
+    PieCtrlRegs.PIEIER11.all = TempPIEIER;
+    PieCtrlRegs.PIEACK.all = PIEACK_GROUP11;
+}
 
+__interrupt void angle_int_isr3(void)       //
+{
+    uint16_t TempPIEIER;
+    TempPIEIER = PieCtrlRegs.PIEIER11.all;  // Save PIEIER register for later
+    IER |= M_INT11;                         // Set global priority by adjusting IER
+    IER &= M_INT11;
+    IER |= M_INT9;
+    PieCtrlRegs.PIEIER9.all &= 0xFFFF;     // Set group priority by adjusting PIEIER1 to allow INT2.2 to interrupt current ISR
+    PieCtrlRegs.PIEIER11.all &= 0x01FF;     // Set group priority by adjusting PIEIER1 to allow INT2.2 to interrupt current ISR
+    PieCtrlRegs.PIEACK.all = 0xFFFF;        // Enable PIE interrupts
+    asm("   NOP");                          // Wait one cycle
+    EINT;                                   // Clear INTM to enable interrupts
+    //
+    // Insert ISR Code here.......
+    // for now just insert a delay
+    //
+    static uint32_t user_int3_count = 0;
+    user_int3_count++;
+    PieCtrlRegs.PIEIFR9.bit.INTx9 = 1;
+    PieCtrlRegs.PIEIFR11.bit.INTx9 = 1;
+    DELAY_US(5);
+    //
+    // Restore registers saved:
+    //
+    DINT;
+    PieCtrlRegs.PIEIER11.all = TempPIEIER;
+    PieCtrlRegs.PIEACK.all = PIEACK_GROUP11;
+}
+
+//
+// Inline Function
+//
+
+volatile VECTOR2F *ang_load_sr_ptr(void) { return &ang_load_sr; }
+volatile VECTOR2F *ang_rotor_sr_ptr(void) { return &ang_rotor_sr; }
+volatile VECTOR2F *ang_load_ptr(void) { return &ang_load; }
+volatile VECTOR2F *ang_rotor_ptr(void) { return &ang_rotor; }
+volatile VECTOR2F *ang_load_filt_ptr(void) { return &ang_load_filt; }
+volatile VECTOR2F *ang_rotor_filt_ptr(void) { return &ang_rotor_filt; }
+volatile VECTOR2F *ang_err_load_ptr(void) { return &ang_err_load; }
+volatile VECTOR2F *ang_err_rotor_ptr(void) { return &ang_err_rotor; }
+volatile VECTOR2F *ang_controller_out_ptr(void) { return &ang_controller_out; }
+volatile VECTOR2F *ang_target_load_ptr(void) { return &ang_target_load; }
+VECTOR2F get_ang_target_load(void) { return ang_target_load; }
+void set_ang_target_load(const volatile VECTOR2F *angles) { ang_target_load = *angles; }
+
+//
+// Function
+//
 
 void init_ang_loop(void)
 {
@@ -190,6 +273,11 @@ void angle_loop_calc(VECTOR2F ang_target, uint32_t divider)
         *ang_load_filt_ptr() = ang_filt_calc(firFPang1ptr, firFPang2ptr, ang_load_ptr());
         *ang_err_load_ptr() = ang_err_calc(ang_target_load_ptr(), ang_load_filt_ptr());
         *ang_controller_out_ptr() = ang_controller_calc(ang_err_load_ptr());
+    }
+    if (phase == 4) {
+//        PieCtrlRegs.PIEIFR9.bit.INTx9 = 1;
+//        PieCtrlRegs.PIEIFR11.bit.INTx9 = 1;
+        PieCtrlRegs.PIEIFR11.bit.INTx10 = 1;
     }
     angle_count++;
 }

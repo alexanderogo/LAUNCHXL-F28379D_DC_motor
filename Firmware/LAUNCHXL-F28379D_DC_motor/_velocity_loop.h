@@ -5,10 +5,10 @@
  *      Author: Alexander
  */
 
-#ifndef VELOSITY_LOOP_H_
-#define VELOSITY_LOOP_H_
+#ifndef VELOCITY_LOOP_H_
+#define VELOCITY_LOOP_H_
 
 
 
 
-#endif /* VELOSITY_LOOP_H_ */
+#endif /* VELOCITY_LOOP_H_ */

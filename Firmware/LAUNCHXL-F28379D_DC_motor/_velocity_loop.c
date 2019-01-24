@@ -13,7 +13,6 @@
 // Defines
 //
 
-
 //
 // Globals
 //
@@ -28,6 +27,14 @@
 
 //
 // Function Prototypes
+//
+
+//
+// Inline Function
+//
+
+//
+// Interrupt Function
 //
 
 //
